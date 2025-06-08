@@ -52,12 +52,6 @@
             background-color: #95a5a6;
             cursor: not-allowed;
         }
-        #language-buttons {
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
         #question, #score, #result, #mentor, #leaderboard, #hint, #progress, #explanation, #era-info, #streak-counter {
             margin: 20px 0;
             font-size: 19px;
@@ -141,9 +135,7 @@
         }
         #timeline {
             height: 30px;
-            background: linear-gradient(90deg, 
-                #ff7675, #74b9ff, #55efc4, #ffeaa7, 
-                #a29bfe, #fd79a8, #fdcb6e, #00b894);
+            background: linear-gradient(90deg, #ff7675, #74b9ff, #55efc4, #ffeaa7, #a29bfe);
             margin: 30px 0;
             border-radius: 15px;
             position: relative;
@@ -252,11 +244,6 @@
             color: #27ae60;
             font-style: italic;
             margin-top: 8px;
-        }
-        #streak-fire {
-            color: #e74c3c;
-            margin-left: 5px;
-            display: none;
         }
         .difficulty-indicator {
             display: inline-block;
@@ -466,11 +453,6 @@
                 <a href="fashion.html" class="keyword-tag">Fashion</a>
             </div>
         </div>
-        <div id="language-buttons">
-            <button onclick="setLanguage('zh')" aria-label="Switch to Chinese">中文</button>
-            <button onclick="setLanguage('en')" aria-label="Switch to English">English</button>
-            <button onclick="setLanguage('ja')" aria-label="Switch to Japanese">日本語</button>
-        </div>
         <h1 id="title">World History Explorer</h1>
         
         <div id="timeline">
@@ -487,6 +469,7 @@
         <div id="era-info">Current Era: Ancient Civilizations</div>
         <div id="question-timer"><div id="timer-bar"></div></div>
         <div id="mentor">Mentor: Not selected<br><img id="mentor-img" src="" style="display: none;"></div>
+        <div id="mentor-bonus"></div>
         
         <div id="score-display">
             <div id="score">Score: 0</div>
@@ -503,40 +486,40 @@
         <div id="question-counter">Questions Answered: 0</div>
         
         <div>
-            <button id="next-question" onclick="debouncedNextQuestion()" aria-label="Get New Question">New Question</button>
-            <button id="hint-button" onclick="showHint()" style="background-color: #27ae60;" aria-label="Show Hint">Hint</button>
-            <button id="reset-score" onclick="resetScore()" style="background-color: #e74c3c;" aria-label="Reset Score">Reset Score</button>
+            <button id="next-question" aria-label="Get New Question">New Question</button>
+            <button id="hint-button" style="background-color: #27ae60;" aria-label="Show Hint">Hint</button>
+            <button id="reset-score" style="background-color: #e74c3c;" aria-label="Reset Score">Reset Score</button>
         </div>
     </div>
 
     <div id="sound-controls">
-        <button id="music-toggle" onclick="toggleMusic()" aria-label="Toggle Music">🎵</button>
-        <button id="sound-toggle" onclick="toggleSound()" aria-label="Toggle Sound">🔊</button>
+        <button id="music-toggle" aria-label="Toggle Music">🎵</button>
+        <button id="sound-toggle" aria-label="Toggle Sound">🔊</button>
     </div>
 
-    <div id="achievement-badge" onclick="toggleAchievements()" title="View Achievements" aria-label="View Achievements">🏆</div>
+    <div id="achievement-badge" title="View Achievements" aria-label="View Achievements">🏆</div>
     
     <div id="achievements">
         <h3 id="achievements-title">Achievements</h3>
         <div id="achievements-list"></div>
     </div>
 
-    <div id="settings-button" onclick="showSettings()" title="Open Settings" aria-label="Open Settings">⚙️</div>
+    <div id="settings-button" title="Open Settings" aria-label="Open Settings">⚙️</div>
     
     <div id="settings-panel" role="dialog" aria-labelledby="settings-title">
-        <button id="close-settings" onclick="hideSettings()" aria-label="Close Settings">×</button>
+        <button id="close-settings" aria-label="Close Settings">×</button>
         <h2 id="settings-title">Settings</h2>
         <div class="settings-option">
             <label id="music-label">Background Music</label>
-            <button onclick="toggleMusic()" id="music-toggle-setting" aria-label="Toggle Background Music">Disable Music</button>
+            <button id="music-toggle-setting" aria-label="Toggle Background Music">Disable Music</button>
         </div>
         <div class="settings-option">
             <label id="sound-label">Sound Effects</label>
-            <button onclick="toggleSound()" id="sound-toggle-setting" aria-label="Toggle Sound Effects">Disable Sound</button>
+            <button id="sound-toggle-setting" aria-label="Toggle Sound Effects">Disable Sound</button>
         </div>
         <div class="settings-option">
             <label id="timer-label">Question Timer</label>
-            <button onclick="toggleTimer()" id="timer-toggle-setting" aria-label="Toggle Question Timer">Disable Timer</button>
+            <button id="timer-toggle-setting" aria-label="Toggle Question Timer">Disable Timer</button>
         </div>
         <div class="settings-option">
             <label id="difficulty-label">Difficulty Level</label>
@@ -589,13 +572,42 @@
     </audio>
 
     <script>
-        // Initialize score and highScore from localStorage
-        let score = localStorage.getItem('score_1.0') ? parseInt(localStorage.getItem('score_1.0')) : 0;
-        let highScore = localStorage.getItem('highScore_1.0') ? parseInt(localStorage.getItem('highScore_1.0')) : 0;
+        // XLSX File Handling
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+            return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+            if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+                try {
+                    var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                    var firstSheetName = workbook.SheetNames[0];
+                    var worksheet = workbook.Sheets[firstSheetName];
+                    var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                    var filteredData = jsonData.filter(row => row.some(filledCell));
+                    var headerRowIndex = filteredData.findIndex((row, index) =>
+                        row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                    );
+                    if (headerRowIndex === -1 || headerRowIndex > 25) {
+                        headerRowIndex = 0;
+                    }
+                    var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex));
+                    csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                    return csv;
+                } catch (e) {
+                    console.error('XLSX parsing error:', e);
+                    return "";
+                }
+            }
+            return gk_fileData[filename] || "";
+        }
 
         // Game State
+        let score = parseInt(localStorage.getItem('score')) || 0;
+        let highScore = parseInt(localStorage.getItem('highScore')) || 0;
         let currentQuestion = null;
-        let language = 'en';
         let currentMentor = null;
         let correctAnswers = 0;
         let unlockedCivilizations = ['Mesopotamia', 'Ancient Egypt'];
@@ -607,482 +619,179 @@
         let highestStreak = 0;
         let totalQuestionsAnswered = 0;
         let timerEnabled = false;
-        let timerInterval;
+        let timerInterval = null;
         let difficulty = 'medium';
         let isProcessing = false;
         let questionHistory = [];
 
         const translations = {
-            title: { en: 'World History Explorer', zh: '世界历史探险家', ja: '世界歴史探検者' },
-            newQuestion: { en: 'New Question', zh: '新问题', ja: '新しい質問' },
-            hint: { en: 'Hint', zh: '提示', ja: 'ヒント' },
-            resetScore: { en: 'Reset Score', zh: '重置分数', ja: 'スコアをリセット' },
-            settings: { en: 'Settings', zh: '设置', ja: '設定' },
-            musicLabel: { en: 'Background Music', zh: '背景音乐', ja: '背景音楽' },
-            soundLabel: { en: 'Sound Effects', zh: '音效', ja: '効果音' },
-            timerLabel: { en: 'Question Timer', zh: '问题计时器', ja: '質問タイマー' },
-            difficultyLabel: { en: 'Difficulty Level', zh: '难度级别', ja: '難易度' },
-            achievements: { en: 'Achievements', zh: '成就', ja: '実績' },
-            score: { en: 'Score', zh: '分数', ja: 'スコア' },
-            highScore: { en: 'High Score', zh: '最高分', ja: 'ハイスコア' },
-            streak: { en: 'Streak', zh: '连胜', ja: '連続正解' },
-            unlockedCivs: { en: 'Unlocked Civilizations', zh: '解锁的文明', ja: '解放された文明' },
-            currentEra: { en: 'Current Era', zh: '当前时代', ja: '現在の時代' },
-            questionsAnswered: { en: 'Questions Answered', zh: '已回答问题', ja: '回答した質問' },
-            noQuestions: { en: 'No more questions! Try unlocking more civilizations or eras.', zh: '没有更多问题！尝试解锁更多文明或时代。', ja: 'これ以上の質問はありません！さらに文明や時代を解放してください。' },
-            scoreReset: { en: 'Score reset!', zh: '分数已重置！', ja: 'スコアがリセットされました！' },
-            mentorNotSelected: { en: 'Mentor: Not selected', zh: '导师：未选择', ja: '指導者：未選択' },
-            selectMentor: { en: 'Select Mentor', zh: '选择导师', ja: '指導者を選択' },
-            noMentorHint: { en: 'Hint: Please select a mentor first', zh: '提示：请先选择一位导师', ja: 'ヒント：まず指導者を選択してください' },
-            noQuestionHint: { en: 'Hint: Please start a question first', zh: '提示：请先开始一个问题', ja: 'ヒント：まず質問を始めてください' },
-            correct: { en: 'Correct! Earned {points} points (Streak x{streak})', zh: '正确！获得 {points} 分（连胜 x{streak}）', ja: '正解！{points} ポイント獲得（連続 x{streak}）' },
-            wrong: { en: 'Wrong!', zh: '错误！', ja: '不正解！' },
-            civUnlocked: { en: 'New civilization unlocked: {civ}', zh: '新文明解锁：{civ}', ja: '新しい文明が解放されました：{civ}' },
-            eraUnlocked: { en: 'New era unlocked: {era}', zh: '新时代解锁：{era}', ja: '新しい時代が解放されました：{era}' },
-            achievementUnlocked: { en: 'Achievement Unlocked: {name}', zh: '成就解锁：{name}', ja: '実績解放：{name}' }
+            title: 'World History Explorer',
+            newQuestion: 'New Question',
+            hint: 'Hint',
+            resetScore: 'Reset Score',
+            settings: 'Settings',
+            musicLabel: 'Background Music',
+            soundLabel: 'Sound Effects',
+            timerLabel: 'Question Timer',
+            difficultyLabel: 'Difficulty Level',
+            achievements: 'Achievements',
+            score: 'Score',
+            highScore: 'High Score',
+            streak: 'Streak',
+            unlockedCivs: 'Unlocked Civilizations',
+            currentEra: 'Current Era',
+            questionsAnswered: 'Questions Answered',
+            noQuestions: 'No more questions! Try unlocking more civilizations or eras.',
+            scoreReset: 'Score reset!',
+            mentor: 'Mentor',
+            mentorBonus: 'Mentor Bonus',
+            mentorNotSelected: 'Mentor: Not selected',
+            selectMentor: 'Select Mentor',
+            noMentorHint: 'Hint: Please select a mentor first',
+            noQuestionHint: 'Hint: Please start a question first',
+            correct: 'Correct! Earned {points} points (Streak x{streak})',
+            wrong: 'Wrong!',
+            civUnlocked: 'New civilization unlocked: {civ}',
+            eraUnlocked: 'New era unlocked: {era}',
+            achievementUnlocked: 'Achievement Unlocked: {name}',
+            enable: 'Enable',
+            disable: 'Disable'
         };
 
         const achievements = {
-            firstAnswer: { 
-                earned: false, 
-                name: { en: 'First Answer', zh: '首次回答', ja: '初回答' }, 
-                desc: { en: 'Answer your first question', zh: '回答你的第一个问题', ja: '最初の質問に答える' } 
-            },
-            fiveStreak: { 
-                earned: false, 
-                name: { en: 'Five Streak', zh: '五连胜', ja: '5連続正解' }, 
-                desc: { en: 'Answer 5 questions correctly in a row', zh: '连续正确回答5个问题', ja: '5問連続で正解する' } 
-            },
-            unlockAll: { 
-                earned: false, 
-                name: { en: 'Unlock Master', zh: '解锁大师', ja: '解放マスター' }, 
-                desc: { en: 'Unlock all civilizations and eras', zh: '解锁所有文明和时代', ja: 'すべての文明と時代を解放する' } 
-            },
-            perfectScore: { 
-                earned: false, 
-                name: { en: 'Perfect Score', zh: '完美分数', ja: '完璧なスコア' }, 
-                desc: { en: 'Reach 1000 points', zh: '达到1000分', ja: '1000ポイントに到達する' } 
-            },
-            historyBuff: { 
-                earned: false, 
-                name: { en: 'History Buff', zh: '历史爱好者', ja: '歴史愛好家' }, 
-                desc: { en: 'Answer 50 questions', zh: '回答50个问题', ja: '50問に答える' } 
-            }
+            firstAnswer: { earned: false, name: 'First Answer', desc: 'Answer your first question' },
+            fiveStreak: { earned: false, name: 'Five Streak', desc: 'Answer 5 questions correctly in a row' },
+            unlockAll: { earned: false, name: 'Unlock Master', desc: 'Unlock all civilizations and eras' },
+            perfectScore: { earned: false, name: 'Perfect Score', desc: 'Reach 1000 points' },
+            historyBuff: { earned: false, name: 'History Buff', desc: 'Answer 50 questions' }
         };
 
         const mentors = {
             herodotus: { 
-                name: { en: 'Herodotus', zh: '希罗多德', ja: 'ヘロドトス' }, 
+                name: 'Herodotus', 
                 bonus: 1.3,
-                hintStyle: { en: 'Father of History says: ', zh: '历史之父说：', ja: '歴史の父は言う：' },
+                hintStyle: 'Father of History says: ',
                 img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Herodotus_Met_91.8.jpg/220px-Herodotus_Met_91.8.jpg',
                 specialty: ['Ancient Greece', 'Ancient Persia'],
-                quote: { en: '"History is the record of human actions"', zh: '“历史是人类行为的记录”', ja: '「歴史は人間の行動の記録である」' }
+                quote: '"History is the record of human actions"'
             },
             simaqian: { 
-                name: { en: 'Sima Qian', zh: '司马迁', ja: '司馬遷' }, 
+                name: 'Sima Qian', 
                 bonus: 1.4,
-                hintStyle: { en: 'Grand Historian notes: ', zh: '大史学家记录：', ja: '大歴史家は記す：' },
+                hintStyle: 'Grand Historian notes: ',
                 img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Sima_Qian.jpg/220px-Sima_Qian.jpg',
                 specialty: ['Ancient China', 'Han Dynasty'],
-                quote: { en: '"To explore the relation between heaven and man"', zh: '“探索天人关系”', ja: '「天と人の関係を探る」' }
+                quote: '"To explore the relation between heaven and man"'
             },
             ibnkhaldun: { 
-                name: { en: 'Ibn Khaldun', zh: '伊本·赫勒敦', ja: 'イブン・ハルドゥーン' }, 
+                name: 'Ibn Khaldun', 
                 bonus: 1.5,
-                hintStyle: { en: 'Father of Sociology suggests: ', zh: '社会学之父建议：', ja: '社会学の父は提案する：' },
+                hintStyle: 'Father of Sociology suggests: ',
                 img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Ibn_Khaldun.jpg/220px-Ibn_Khaldun.jpg',
                 specialty: ['Islamic Civilization', 'Middle Ages'],
-                quote: { en: '"History is the mirror of human society"', zh: '“历史是人类社会的镜子”', ja: '「歴史は人間社会の鏡である」' }
+                quote: '"History is the mirror of human society"'
             }
         };
 
         const eras = [
-            { 
-                name: { en: 'Ancient Civilizations', zh: '古代文明', ja: '古代文明' }, 
-                civilizations: ['Mesopotamia', 'Ancient Egypt', 'Ancient India', 'Ancient China'], 
-                position: 0,
-                color: '#ff7675' 
-            },
-            { 
-                name: { en: 'Classical Age', zh: '古典时代', ja: '古典時代' }, 
-                civilizations: ['Ancient Greece', 'Ancient Rome', 'Persian Empire', 'Qin-Han'], 
-                position: 25,
-                color: '#74b9ff' 
-            },
-            { 
-                name: { en: 'Middle Ages', zh: '中世纪', ja: '中世' }, 
-                civilizations: ['Byzantine', 'Islamic Civilization', 'Tang-Song', 'Feudal Europe'], 
-                position: 50,
-                color: '#55efc4' 
-            },
-            { 
-                name: { en: 'Early Modern', zh: '早期现代', ja: '近世' }, 
-                civilizations: ['Renaissance', 'Age of Exploration', 'Ming-Qing', 'Ottoman'], 
-                position: 75,
-                color: '#ffeaa7' 
-            },
-            { 
-                name: { en: 'Modern World', zh: '现代世界', ja: '現代世界' }, 
-                civilizations: ['Industrial Revolution', 'Colonial Era', 'World Wars', 'Contemporary'], 
-                position: 100,
-                color: '#a29bfe' 
-            }
+            { name: 'Ancient Civilizations', civilizations: ['Mesopotamia', 'Ancient Egypt', 'Ancient India', 'Ancient China'], position: 0, color: '#ff7675' },
+            { name: 'Classical Age', civilizations: ['Ancient Greece', 'Ancient Rome', 'Persian Empire', 'Qin-Han'], position: 25, color: '#74b9ff' },
+            { name: 'Middle Ages', civilizations: ['Byzantine', 'Islamic Civilization', 'Tang-Song', 'Feudal Europe'], position: 50, color: '#55efc4' },
+            { name: 'Early Modern', civilizations: ['Renaissance', 'Age of Exploration', 'Ming-Qing', 'Ottoman'], position: 75, color: '#ffeaa7' },
+            { name: 'Modern World', civilizations: ['Industrial Revolution', 'Colonial Era', 'World Wars', 'Contemporary'], position: 100, color: '#a29bfe' }
         ];
 
         const questions = [
             {
                 civilizations: ['Mesopotamia'],
                 era: 'Ancient Civilizations',
-                question: { 
-                    en: 'Which civilization developed the world\'s earliest known writing system?', 
-                    zh: '哪个文明发展了世界上已知的最早书写系统？', 
-                    ja: '世界で最も古い既知の文字体系を開発した文明はどれ？' 
-                },
-                choices: { 
-                    en: ['Ancient Egypt', 'Mesopotamia', 'Ancient India', 'Ancient China'], 
-                    zh: ['古埃及', '美索不达米亚', '古印度', '古中国'], 
-                    ja: ['古代エジプト', 'メソポタミア', '古代インド', '古代中国'] 
-                },
+                question: 'Which civilization developed the world\'s earliest known writing system?',
+                choices: ['Ancient Egypt', 'Mesopotamia', 'Ancient India', 'Ancient China'],
                 answer: 1,
-                explanation: { 
-                    en: 'The Sumerians of Mesopotamia developed cuneiform script around 3400 BCE, the earliest known writing system.', 
-                    zh: '美索不达米亚的苏美尔人于公元前3400年左右发展了楔形文字，这是已知的最早书写系统。', 
-                    ja: 'メソポタミアのシュメール人は紀元前3400年頃に楔形文字を開発し、これは既知の最古の文字体系です。' 
-                },
+                explanation: 'The Sumerians of Mesopotamia developed cuneiform script around 3400 BCE, the earliest known writing system.',
                 difficulty: 1
             },
             {
                 civilizations: ['Ancient Egypt'],
                 era: 'Ancient Civilizations',
-                question: {
-                    en: 'Which pharaoh built the Great Pyramid of Giza?',
-                    zh: '哪位法老建造了吉萨大金字塔？',
-                    ja: 'ギザの大ピラミッドを建設したファラオは誰？'
-                },
-                choices: {
-                    en: ['Ramses II', 'Khufu', 'Tutankhamun', 'Cleopatra'],
-                    zh: ['拉美西斯二世', '胡夫', '图坦卡蒙', '克利奥帕特拉'],
-                    ja: ['ラムセス2世', 'クフ王', 'ツタンカーメン', 'クレオパトラ']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Khufu (also known as Cheops) built the Great Pyramid of Giza around 2560 BCE.',
-                    zh: '胡夫（也称为基奥普斯）在公元前2560年左右建造了吉萨大金字塔。',
-                    ja: 'クフ王（ケオプスとしても知られる）は紀元前2560年頃にギザの大ピラミッドを建設しました。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Ancient Egypt'],
-                era: 'Ancient Civilizations',
-                question: {
-                    en: 'What was the purpose of the Rosetta Stone?',
-                    zh: '罗塞塔石碑的用途是什么？',
-                    ja: 'ロゼッタ・ストーンの目的は何？'
-                },
-                choices: {
-                    en: ['Religious text', 'Decree of Ptolemy V', 'Tomb decoration', 'Temple record'],
-                    zh: ['宗教文本', '托勒密五世法令', '陵墓装饰', '神庙记录'],
-                    ja: ['宗教文書', 'プトレマイオス5世の勅令', '墓の装飾', '神殿の記録']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'The Rosetta Stone contained a decree issued by Ptolemy V in 196 BCE, written in three scripts.',
-                    zh: '罗塞塔石碑包含了公元前196年托勒密五世颁布的法令，用三种文字书写。',
-                    ja: 'ロゼッタ・ストーンには紀元前196年にプトレマイオス5世が発布した勅令が3つの文字で記されています。'
-                },
-                difficulty: 2
-            },
-            {
-                civilizations: ['Ancient Egypt'],
-                era: 'Ancient Civilizations',
-                question: {
-                    en: 'Which Egyptian queen was known for her relationship with Julius Caesar and Mark Antony?',
-                    zh: '哪位埃及女王以与尤利乌斯·凯撒和马克·安东尼的关系而闻名？',
-                    ja: 'ユリウス・カエサルとマルクス・アントニウスとの関係で知られるエジプトの女王は誰？'
-                },
-                choices: {
-                    en: ['Nefertiti', 'Hatshepsut', 'Cleopatra', 'Nefertari'],
-                    zh: ['纳芙蒂蒂', '哈特谢普苏特', '克利奥帕特拉', '奈菲尔塔利'],
-                    ja: ['ネフェルティティ', 'ハトシェプスト', 'クレオパトラ', 'ネフェルタリ']
-                },
+                question: 'In which century was the tomb of Pharaoh Tutankhamun discovered?',
+                choices: ['18th century', '19th century', '20th century', '21st century'],
                 answer: 2,
-                explanation: {
-                    en: 'Cleopatra VII was the last active ruler of the Ptolemaic Kingdom of Egypt.',
-                    zh: '克利奥帕特拉七世是托勒密王朝埃及的最后一位实际统治者。',
-                    ja: 'クレオパトラ7世はプトレマイオス朝エジプトの最後の実質的な統治者でした。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Ancient Greece'],
-                era: 'Classical Age',
-                question: {
-                    en: 'Which Greek city-state was known for its military society?',
-                    zh: '哪个希腊城邦以其军事社会而闻名？',
-                    ja: '軍事社会として知られるギリシャの都市国家はどれ？'
-                },
-                choices: {
-                    en: ['Athens', 'Sparta', 'Corinth', 'Thebes'],
-                    zh: ['雅典', '斯巴达', '科林斯', '底比斯'],
-                    ja: ['アテネ', 'スパルタ', 'コリント', 'テーベ']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Sparta was known for its military-focused society and the famous Spartan warriors.',
-                    zh: '斯巴达以其以军事为中心的社会和著名的斯巴达战士而闻名。',
-                    ja: 'スパルタは軍事中心の社会と有名なスパルタの戦士で知られていました。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Ancient Greece'],
-                era: 'Classical Age',
-                question: {
-                    en: 'Which Greek philosopher was the teacher of Alexander the Great?',
-                    zh: '哪位希腊哲学家是亚历山大大帝的老师？',
-                    ja: 'アレクサンダー大王の師匠となったギリシャの哲学者は誰？'
-                },
-                choices: {
-                    en: ['Socrates', 'Plato', 'Aristotle', 'Pythagoras'],
-                    zh: ['苏格拉底', '柏拉图', '亚里士多德', '毕达哥拉斯'],
-                    ja: ['ソクラテス', 'プラトン', 'アリストテレス', 'ピタゴラス']
-                },
-                answer: 2,
-                explanation: {
-                    en: 'Aristotle was the tutor of Alexander the Great from 343 to 340 BCE.',
-                    zh: '亚里士多德在公元前343年至340年间担任亚历山大大帝的老师。',
-                    ja: 'アリストテレスは紀元前343年から340年までアレクサンダー大王の家庭教師を務めました。'
-                },
+                explanation: 'Tutankhamun\'s tomb was discovered by Howard Carter in 1922, one of the greatest archaeological finds of the 20th century.',
                 difficulty: 2
             },
             {
                 civilizations: ['Ancient Greece'],
                 era: 'Classical Age',
-                question: {
-                    en: 'Which Greek city hosted the first Olympic Games?',
-                    zh: '哪个希腊城市举办了第一届奥运会？',
-                    ja: '最初のオリンピック競技会が開催されたギリシャの都市はどこ？'
-                },
-                choices: {
-                    en: ['Athens', 'Sparta', 'Olympia', 'Delphi'],
-                    zh: ['雅典', '斯巴达', '奥林匹亚', '德尔斐'],
-                    ja: ['アテネ', 'スパルタ', 'オリンピア', 'デルフォイ']
-                },
+                question: 'Under which leader did Athenian democracy reach its peak?',
+                choices: ['Solon', 'Cleisthenes', 'Pericles', 'Alexander'],
                 answer: 2,
-                explanation: {
-                    en: 'The first Olympic Games were held in Olympia in 776 BCE.',
-                    zh: '第一届奥运会于公元前776年在奥林匹亚举行。',
-                    ja: '最初のオリンピック競技会は紀元前776年にオリンピアで開催されました。'
-                },
-                difficulty: 1
+                explanation: 'The Age of Pericles (461-429 BCE) was the golden age of Athenian democracy and cultural development.',
+                difficulty: 2,
+                unlockRequirement: 5
             },
             {
-                civilizations: ['Ancient Greece'],
-                era: 'Classical Age',
-                question: {
-                    en: 'Which Greek mathematician is known for the Pythagorean theorem?',
-                    zh: '哪位希腊数学家以毕达哥拉斯定理而闻名？',
-                    ja: 'ピタゴラスの定理で知られるギリシャの数学者は誰？'
-                },
-                choices: {
-                    en: ['Archimedes', 'Euclid', 'Pythagoras', 'Thales'],
-                    zh: ['阿基米德', '欧几里得', '毕达哥拉斯', '泰勒斯'],
-                    ja: ['アルキメデス', 'ユークリッド', 'ピタゴラス', 'タレス']
-                },
-                answer: 2,
-                explanation: {
-                    en: 'Pythagoras (c. 570-495 BCE) is credited with the Pythagorean theorem in geometry.',
-                    zh: '毕达哥拉斯（约公元前570-495年）因几何学中的毕达哥拉斯定理而闻名。',
-                    ja: 'ピタゴラス（紀元前570-495年頃）は幾何学におけるピタゴラスの定理で知られています。'
-                },
+                civilizations: ['Ancient Egypt'],
+                era: 'Ancient Civilizations',
+                question: 'Which pharaoh built the Great Pyramid of Giza?',
+                choices: ['Ramses II', 'Khufu', 'Tutankhamun', 'Cleopatra'],
+                answer: 1,
+                explanation: 'Khufu (also known as Cheops) built the Great Pyramid of Giza around 2560 BCE.',
                 difficulty: 1
             },
             {
                 civilizations: ['Ancient China'],
                 era: 'Ancient Civilizations',
-                question: {
-                    en: 'Which Chinese dynasty is known for the construction of the Great Wall?',
-                    zh: '哪个朝代以建造长城而闻名？',
-                    ja: '万里の長城の建設で知られる中国の王朝はどれ？'
-                },
-                choices: {
-                    en: ['Han Dynasty', 'Qin Dynasty', 'Tang Dynasty', 'Ming Dynasty'],
-                    zh: ['汉朝', '秦朝', '唐朝', '明朝'],
-                    ja: ['漢王朝', '秦王朝', '唐王朝', '明王朝']
-                },
+                question: 'Which Chinese dynasty is known for the construction of the Great Wall?',
+                choices: ['Han Dynasty', 'Qin Dynasty', 'Tang Dynasty', 'Ming Dynasty'],
                 answer: 1,
-                explanation: {
-                    en: 'The Qin Dynasty (221-206 BCE) began the construction of the Great Wall to protect against northern invasions.',
-                    zh: '秦朝（公元前221-206年）开始建造长城以抵御北方入侵。',
-                    ja: '秦王朝（紀元前221-206年）は北方からの侵略を防ぐために万里の長城の建設を始めました。'
-                },
+                explanation: 'The Qin Dynasty (221-206 BCE) began the construction of the Great Wall to protect against northern invasions.',
                 difficulty: 1
-            },
-            {
-                civilizations: ['Ancient Rome'],
-                era: 'Classical Age',
-                question: {
-                    en: 'Who was the first Roman Emperor?',
-                    zh: '谁是第一位罗马皇帝？',
-                    ja: '最初のローマ皇帝は誰？'
-                },
-                choices: {
-                    en: ['Julius Caesar', 'Augustus', 'Nero', 'Constantine'],
-                    zh: ['尤利乌斯·凯撒', '奥古斯都', '尼禄', '君士坦丁'],
-                    ja: ['ユリウス・カエサル', 'アウグストゥス', 'ネロ', 'コンスタンティヌス']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Augustus (27 BCE - 14 CE) was the first Roman Emperor, establishing the Roman Empire.',
-                    zh: '奥古斯都（公元前27年-公元14年）是第一位罗马皇帝，建立了罗马帝国。',
-                    ja: 'アウグストゥス（紀元前27年-紀元14年）は最初のローマ皇帝で、ローマ帝国を確立しました。'
-                },
-                difficulty: 2
-            },
-            {
-                civilizations: ['Islamic Civilization'],
-                era: 'Middle Ages',
-                question: {
-                    en: 'Which Islamic Golden Age scientist is known as the "Father of Algebra"?',
-                    zh: '哪位伊斯兰黄金时代的科学家被称为"代数之父"？',
-                    ja: '「代数学の父」として知られるイスラム黄金時代の科学者は誰？'
-                },
-                choices: {
-                    en: ['Ibn Sina', 'Al-Khwarizmi', 'Ibn Rushd', 'Al-Farabi'],
-                    zh: ['伊本·西那', '花拉子米', '伊本·鲁世德', '法拉比'],
-                    ja: ['イブン・スィーナー', 'フワーリズミー', 'イブン・ルシュド', 'ファーラービー']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Al-Khwarizmi (c. 780-850) wrote the first comprehensive book on algebra.',
-                    zh: '花拉子米（约780-850年）撰写了第一本关于代数的综合性著作。',
-                    ja: 'フワーリズミー（780-850年頃）は最初の包括的な代数学の本を書きました。'
-                },
-                difficulty: 2
-            },
-            {
-                civilizations: ['Renaissance'],
-                era: 'Early Modern',
-                question: {
-                    en: 'Which Renaissance artist painted the ceiling of the Sistine Chapel?',
-                    zh: '哪位文艺复兴时期的艺术家绘制了西斯廷教堂的天花板？',
-                    ja: 'システィーナ礼拝堂の天井を描いたルネサンスの芸術家は誰？'
-                },
-                choices: {
-                    en: ['Leonardo da Vinci', 'Michelangelo', 'Raphael', 'Donatello'],
-                    zh: ['列奥纳多·达·芬奇', '米开朗基罗', '拉斐尔', '多纳泰罗'],
-                    ja: ['レオナルド・ダ・ヴィンチ', 'ミケランジェロ', 'ラファエロ', 'ドナテッロ']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Michelangelo painted the Sistine Chapel ceiling between 1508 and 1512.',
-                    zh: '米开朗基罗在1508年至1512年间绘制了西斯廷教堂的天花板。',
-                    ja: 'ミケランジェロは1508年から1512年の間にシスティーナ礼拝堂の天井を描きました。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Industrial Revolution'],
-                era: 'Modern World',
-                question: {
-                    en: 'Which invention is considered to have started the Industrial Revolution?',
-                    zh: '哪项发明被认为开启了工业革命？',
-                    ja: '産業革命の始まりとされる発明はどれ？'
-                },
-                choices: {
-                    en: ['Steam Engine', 'Spinning Jenny', 'Power Loom', 'Cotton Gin'],
-                    zh: ['蒸汽机', '珍妮纺纱机', '动力织布机', '轧棉机'],
-                    ja: ['蒸気機関', 'ジェニー紡績機', '力織機', '綿繰り機']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'The Spinning Jenny, invented by James Hargreaves in 1764, revolutionized textile production.',
-                    zh: '1764年由詹姆斯·哈格里夫斯发明的珍妮纺纱机彻底改变了纺织生产。',
-                    ja: '1764年にジェームズ・ハーグリーブスによって発明されたジェニー紡績機は繊維生産に革命をもたらしました。'
-                },
-                difficulty: 2
-            },
-            {
-                civilizations: ['World Wars'],
-                era: 'Modern World',
-                question: {
-                    en: 'In which year did World War I begin?',
-                    zh: '第一次世界大战在哪一年开始？',
-                    ja: '第一次世界大戦は何年に始まった？'
-                },
-                choices: {
-                    en: ['1912', '1914', '1916', '1918'],
-                    zh: ['1912年', '1914年', '1916年', '1918年'],
-                    ja: ['1912年', '1914年', '1916年', '1918年']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'World War I began in 1914 after the assassination of Archduke Franz Ferdinand.',
-                    zh: '第一次世界大战在1914年弗朗茨·斐迪南大公遇刺后开始。',
-                    ja: '第一次世界大戦は1914年にフランツ・フェルディナント大公の暗殺後に始まりました。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Ancient Egypt'],
-                era: 'Ancient Civilizations',
-                question: {
-                    en: 'Which pharaoh\'s tomb was discovered by Howard Carter in 1922?',
-                    zh: '霍华德·卡特在1922年发现了哪位法老的陵墓？',
-                    ja: 'ハワード・カーターが1922年に発見したファラオの墓は誰のもの？'
-                },
-                choices: {
-                    en: ['Ramses II', 'Tutankhamun', 'Cleopatra', 'Nefertiti'],
-                    zh: ['拉美西斯二世', '图坦卡蒙', '克利奥帕特拉', '纳芙蒂蒂'],
-                    ja: ['ラムセス2世', 'ツタンカーメン', 'クレオパトラ', 'ネフェルティティ']
-                },
-                answer: 1,
-                explanation: {
-                    en: 'Tutankhamun\'s tomb was discovered in 1922, one of the most significant archaeological finds.',
-                    zh: '图坦卡蒙的陵墓在1922年被发现，这是最重要的考古发现之一。',
-                    ja: 'ツタンカーメンの墓は1922年に発見され、最も重要な考古学的発見の一つとなりました。'
-                },
-                difficulty: 1
-            },
-            {
-                civilizations: ['Ancient India'],
-                era: 'Ancient Civilizations',
-                question: {
-                    en: 'Which ancient Indian text is considered the oldest religious text in the world?',
-                    zh: '哪部古印度文献被认为是世界上最古老的宗教文献？',
-                    ja: '世界最古の宗教文書とされる古代インドの文献はどれ？'
-                },
-                choices: {
-                    en: ['Mahabharata', 'Ramayana', 'Rigveda', 'Bhagavad Gita'],
-                    zh: ['摩诃婆罗多', '罗摩衍那', '梨俱吠陀', '薄伽梵歌'],
-                    ja: ['マハーバーラタ', 'ラーマーヤナ', 'リグ・ヴェーダ', 'バガヴァッド・ギーター']
-                },
-                answer: 2,
-                explanation: {
-                    en: 'The Rigveda, composed around 1500 BCE, is the oldest known religious text.',
-                    zh: '梨俱吠陀创作于公元前1500年左右，是已知最古老的宗教文献。',
-                    ja: 'リグ・ヴェーダは紀元前1500年頃に作られ、既知の最古の宗教文書です。'
-                },
-                difficulty: 2
             }
         ];
 
         // Initialize Game
         function initGame() {
             loadSettings();
+            loadGameState();
             updateUI();
             updateTimeline();
             initMentorButtons();
+            bindButtonEvents();
             if (musicEnabled) {
-                document.getElementById('bg-music').play().catch(e => console.log("Autoplay prevented:", e));
+                document.getElementById('bg-music').play().catch(e => console.log("Music autoplay prevented:", e));
             }
             loadAchievements();
             updateAchievementsDisplay();
-            // Initialize score display
-            document.getElementById('score').textContent = `${translations.score[language]}: ${score}`;
-            document.getElementById('leaderboard').textContent = `${translations.highScore[language]}: ${highScore}`;
+            document.getElementById('difficulty-select').addEventListener('change', setDifficulty);
+        }
+
+        // Bind Button Events
+        function bindButtonEvents() {
+            document.getElementById('next-question').addEventListener('click', debouncedNextQuestion);
+            document.getElementById('hint-button').addEventListener('click', showHint);
+            document.getElementById('reset-score').addEventListener('click', resetScore);
+            document.getElementById('music-toggle').addEventListener('click', toggleMusic);
+            document.getElementById('sound-toggle').addEventListener('click', toggleSound);
+            document.getElementById('achievement-badge').addEventListener('click', toggleAchievements);
+            document.getElementById('settings-button').addEventListener('click', showSettings);
+            document.getElementById('close-settings').addEventListener('click', hideSettings);
+            document.getElementById('music-toggle-setting').addEventListener('click', toggleMusic);
+            document.getElementById('sound-toggle-setting').addEventListener('click', toggleSound);
+            document.getElementById('timer-toggle-setting').addEventListener('click', toggleTimer);
+        }
+
+        // Load Game State
+        function loadGameState() {
+            score = parseInt(localStorage.getItem('score')) || 0;
+            highScore = parseInt(localStorage.getItem('highScore')) || 0;
+            updateUI();
+        }
+
+        // Save Game State
+        function saveGameState() {
+            localStorage.setItem('score', score);
+            localStorage.setItem('highScore', highScore);
         }
 
         // Load Settings
@@ -1091,13 +800,11 @@
             const savedSound = localStorage.getItem('soundEnabled_1.0');
             const savedTimer = localStorage.getItem('timerEnabled_1.0');
             const savedDifficulty = localStorage.getItem('difficulty_1.0');
-            const savedLanguage = localStorage.getItem('language_1.0');
             
             if (savedMusic !== null) musicEnabled = savedMusic === 'true';
             if (savedSound !== null) soundEnabled = savedSound === 'true';
             if (savedTimer !== null) timerEnabled = savedTimer === 'true';
             if (savedDifficulty !== null) difficulty = savedDifficulty;
-            if (savedLanguage !== null) language = savedLanguage;
             
             document.getElementById('music-toggle').textContent = musicEnabled ? '🎵' : '🔇';
             document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
@@ -1112,7 +819,6 @@
             localStorage.setItem('soundEnabled_1.0', soundEnabled);
             localStorage.setItem('timerEnabled_1.0', timerEnabled);
             localStorage.setItem('difficulty_1.0', difficulty);
-            localStorage.setItem('language_1.0', language);
         }
 
         // Load Achievements
@@ -1138,8 +844,10 @@
             if (!soundEnabled && soundId !== 'bg-music') return;
             if (!musicEnabled && soundId === 'bg-music') return;
             const sound = document.getElementById(soundId);
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log("Audio play failed:", e));
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.error('Audio play failed:', e));
+            }
         }
 
         // Toggle Music
@@ -1147,13 +855,13 @@
             musicEnabled = !musicEnabled;
             const music = document.getElementById('bg-music');
             if (musicEnabled) {
-                music.play();
+                music.play().catch(console.error);
                 document.getElementById('music-toggle').textContent = '🎵';
-                document.getElementById('music-toggle-setting').textContent = translations.musicLabel[language] + ': ' + translations.disable[language];
+                document.getElementById('music-toggle-setting').textContent = `${translations.musicLabel}: ${translations.disable}`;
             } else {
                 music.pause();
                 document.getElementById('music-toggle').textContent = '🔇';
-                document.getElementById('music-toggle-setting').textContent = translations.musicLabel[language] + ': ' + translations.enable[language];
+                document.getElementById('music-toggle-setting').textContent = `${translations.musicLabel}: ${translations.enable}`;
             }
             saveSettings();
             playSound('button-sound');
@@ -1163,7 +871,7 @@
         function toggleSound() {
             soundEnabled = !soundEnabled;
             document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊' : '🔇';
-            document.getElementById('sound-toggle-setting').textContent = translations.soundLabel[language] + ': ' + (soundEnabled ? translations.disable[language] : translations.enable[language]);
+            document.getElementById('sound-toggle-setting').textContent = `${translations.soundLabel}: ${soundEnabled ? translations.disable : translations.enable}`;
             saveSettings();
             playSound('button-sound');
         }
@@ -1172,7 +880,11 @@
         function toggleTimer() {
             timerEnabled = !timerEnabled;
             document.getElementById('question-timer').style.display = timerEnabled ? 'block' : 'none';
-            document.getElementById('timer-toggle-setting').textContent = translations.timerLabel[language] + ': ' + (timerEnabled ? translations.disable[language] : translations.enable[language]);
+            document.getElementById('timer-toggle-setting').textContent = `${translations.timerLabel}: ${timerEnabled ? translations.disable : translations.enable}`;
+            if (!timerEnabled && timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
             saveSettings();
             playSound('button-sound');
         }
@@ -1184,21 +896,21 @@
             playSound('button-sound');
         }
 
-        // Show Settings Panel
+        // Show Settings
         function showSettings() {
             document.getElementById('settings-panel').style.display = 'block';
             document.getElementById('settings-backdrop').style.display = 'block';
             playSound('button-sound');
         }
 
-        // Hide Settings Panel
+        // Hide Settings
         function hideSettings() {
             document.getElementById('settings-panel').style.display = 'none';
             document.getElementById('settings-backdrop').style.display = 'none';
             playSound('button-sound');
         }
 
-        // Toggle Achievements Panel
+        // Toggle Achievements
         function toggleAchievements() {
             const panel = document.getElementById('achievements');
             panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
@@ -1219,52 +931,59 @@
                 item.appendChild(icon);
                 const text = document.createElement('div');
                 const name = document.createElement('strong');
-                name.textContent = achievement.name[language];
+                name.textContent = achievement.name;
                 text.appendChild(name);
                 const desc = document.createElement('div');
                 desc.style.fontSize = '14px';
                 desc.style.color = '#7f8c8d';
-                desc.textContent = achievement.desc[language];
+                desc.textContent = achievement.desc;
                 text.appendChild(desc);
                 item.appendChild(text);
                 list.appendChild(item);
             }
         }
 
-        // Check and Unlock Achievements
+        // Check Achievements
         function checkAchievements() {
+            let updated = false;
             if (totalQuestionsAnswered === 1 && !achievements.firstAnswer.earned) {
                 achievements.firstAnswer.earned = true;
                 showAchievementUnlocked('firstAnswer');
+                updated = true;
             }
             if (currentStreak >= 5 && !achievements.fiveStreak.earned) {
                 achievements.fiveStreak.earned = true;
                 showAchievementUnlocked('fiveStreak');
+                updated = true;
             }
             const allCivilizations = Array.from(new Set(questions.flatMap(q => q.civilizations)));
             if (unlockedCivilizations.length === allCivilizations.length && 
-                currentEra === eras[eras.length - 1].name[language] && 
+                currentEra === eras[eras.length - 1].name && 
                 !achievements.unlockAll.earned) {
                 achievements.unlockAll.earned = true;
                 showAchievementUnlocked('unlockAll');
+                updated = true;
             }
             if (score >= 1000 && !achievements.perfectScore.earned) {
                 achievements.perfectScore.earned = true;
                 showAchievementUnlocked('perfectScore');
+                updated = true;
             }
             if (totalQuestionsAnswered >= 50 && !achievements.historyBuff.earned) {
                 achievements.historyBuff.earned = true;
                 showAchievementUnlocked('historyBuff');
+                updated = true;
             }
-            saveAchievements();
-            updateAchievementsDisplay();
+            if (updated) {
+                saveAchievements();
+                updateAchievementsDisplay();
+            }
         }
 
-        // Show Achievement Unlocked Notification
+        // Show Achievement Unlocked
         function showAchievementUnlocked(achievementKey) {
-            const achievement = achievements[achievementKey];
             const notification = document.getElementById('unlock-notification');
-            notification.textContent = translations.achievementUnlocked[language].replace('{name}', achievement.name[language]);
+            notification.textContent = translations.achievementUnlocked.replace('{name}', achievements[achievementKey].name);
             notification.style.display = 'block';
             playSound('achievement-sound');
             setTimeout(() => {
@@ -1272,43 +991,32 @@
             }, 2500);
         }
 
-        // Set Language
-        function setLanguage(lang) {
-            language = lang;
-            playSound('page-sound');
-            updateUI();
-            if (currentQuestion) {
-                displayQuestion(currentQuestion);
-            }
-            saveSettings();
-        }
-
         // Update UI
         function updateUI() {
-            document.getElementById('title').textContent = translations.title[language];
-            document.getElementById('next-question').textContent = translations.newQuestion[language];
-            document.getElementById('hint-button').textContent = translations.hint[language];
-            document.getElementById('reset-score').textContent = translations.resetScore[language];
-            document.getElementById('score').textContent = `${translations.score[language]}: ${score}`;
-            document.getElementById('leaderboard').textContent = `${translations.highScore[language]}: ${highScore}`;
-            document.getElementById('streak-counter').textContent = `${translations.streak[language]}: ${currentStreak}`;
-            document.getElementById('progress').textContent = `${translations.unlockedCivs[language]}: ${unlockedCivilizations.join(', ')}`;
-            document.getElementById('era-info').textContent = `${translations.currentEra[language]}: ${eras.find(e => e.name.en === currentEra).name[language]}`;
-            document.getElementById('question-counter').textContent = `${translations.questionsAnswered[language]}: ${totalQuestionsAnswered}`;
-            document.getElementById('settings-title').textContent = translations.settings[language];
-            document.getElementById('music-label').textContent = translations.musicLabel[language];
-            document.getElementById('sound-label').textContent = translations.soundLabel[language];
-            document.getElementById('timer-label').textContent = translations.timerLabel[language];
-            document.getElementById('difficulty-label').textContent = translations.difficultyLabel[language];
-            document.getElementById('achievements-title').textContent = translations.achievements[language];
-            document.getElementById('music-toggle-setting').textContent = translations.musicLabel[language] + ': ' + (musicEnabled ? translations.disable[language] : translations.enable[language]);
-            document.getElementById('sound-toggle-setting').textContent = translations.soundLabel[language] + ': ' + (soundEnabled ? translations.disable[language] : translations.enable[language]);
-            document.getElementById('timer-toggle-setting').textContent = translations.timerLabel[language] + ': ' + (timerEnabled ? translations.disable[language] : translations.enable[language]);
+            document.getElementById('title').textContent = translations.title;
+            document.getElementById('next-question').textContent = translations.newQuestion;
+            document.getElementById('hint-button').textContent = translations.hint;
+            document.getElementById('reset-score').textContent = translations.resetScore;
+            document.getElementById('score').textContent = `${translations.score}: ${score}`;
+            document.getElementById('leaderboard').textContent = `${translations.highScore}: ${highScore}`;
+            document.getElementById('streak-counter').textContent = `${translations.streak}: ${currentStreak}`;
+            document.getElementById('progress').textContent = `${translations.unlockedCivs}: ${unlockedCivilizations.join(', ')}`;
+            document.getElementById('era-info').textContent = `${translations.currentEra}: ${currentEra}`;
+            document.getElementById('question-counter').textContent = `${translations.questionsAnswered}: ${totalQuestionsAnswered}`;
+            document.getElementById('settings-title').textContent = translations.settings;
+            document.getElementById('music-label').textContent = translations.musicLabel;
+            document.getElementById('sound-label').textContent = translations.soundLabel;
+            document.getElementById('timer-label').textContent = translations.timerLabel;
+            document.getElementById('difficulty-label').textContent = translations.difficultyLabel;
+            document.getElementById('achievements-title').textContent = translations.achievements;
+            document.getElementById('music-toggle-setting').textContent = `${translations.musicLabel}: ${musicEnabled ? translations.disable : translations.enable}`;
+            document.getElementById('sound-toggle-setting').textContent = `${translations.soundLabel}: ${soundEnabled ? translations.disable : translations.enable}`;
+            document.getElementById('timer-toggle-setting').textContent = `${translations.timerLabel}: ${timerEnabled ? translations.disable : translations.enable}`;
             const timelineLabels = document.getElementById('timeline-labels');
             timelineLabels.innerHTML = '';
             eras.forEach(era => {
                 const label = document.createElement('span');
-                label.textContent = era.name[language].substring(0, 2);
+                label.textContent = era.name.substring(0, 5);
                 timelineLabels.appendChild(label);
             });
             updateMentorInfo();
@@ -1319,99 +1027,88 @@
             const mentorDiv = document.getElementById('mentor');
             if (currentMentor) {
                 mentorDiv.innerHTML = 
-                    `${translations.mentor[language]}: ${currentMentor.name[language]}<br>` +
-                    `<img id="mentor-img" src="${currentMentor.img}" alt="${currentMentor.name[language]}">` +
-                    `<div style="font-style:italic; margin-top:5px;">${currentMentor.quote[language]}</div>`;
-                document.getElementById('mentor-img').style.display = 'block';
-                document.getElementById('mentor-bonus').textContent = `${translations.mentorBonus[language]}: x${currentMentor.bonus}`;
+                    `${translations.mentor}: ${currentMentor.name}<br>` +
+                    `<img id="mentor-img" src="${currentMentor.img}" alt="${currentMentor.name}" style="display: block;">` +
+                    `<div style="font-style: italic; margin-top: 5px;">${currentMentor.quote}</div>`;
+                document.getElementById('mentor-bonus').textContent = `${translations.mentorBonus}: x${currentMentor.bonus}`;
             } else {
-                mentorDiv.innerHTML = 
-                    `${translations.mentorNotSelected[language]}<br>` +
-                    `<img id="mentor-img" src="" style="display: none;">`;
+                mentorDiv.innerHTML = translations.mentorNotSelected + '<br><img id="mentor-img" src="" style="display: none;">';
                 document.getElementById('mentor-bonus').textContent = '';
             }
         }
 
-        // Initialize Mentor Selection Buttons
+        // Initialize Mentor Buttons
         function initMentorButtons() {
-            const mentorButtons = Object.keys(mentors).map(key => {
-                return `<button onclick="selectMentor('${key}')" aria-label="Select ${mentors[key].name[language]}">${mentors[key].name[language]}</button>`;
-            }).join('');
-            document.getElementById('mentor').innerHTML += `<br>${translations.selectMentor[language]}: ${mentorButtons}`;
+            const mentorDiv = document.getElementById('mentor');
+            if (!currentMentor) {
+                mentorDiv.innerHTML += `<br><button id="select-mentor">${translations.selectMentor}</button>`;
+                document.getElementById('select-mentor').addEventListener('click', showMentorSelection);
+            }
+        }
+
+        // Show Mentor Selection
+        function showMentorSelection() {
+            const mentorDiv = document.getElementById('mentor');
+            mentorDiv.innerHTML = '';
+            for (const key in mentors) {
+                const mentor = mentors[key];
+                const button = document.createElement('button');
+                button.textContent = mentor.name;
+                button.addEventListener('click', () => selectMentor(key));
+                mentorDiv.appendChild(button);
+            }
+            playSound('button-sound');
         }
 
         // Select Mentor
         function selectMentor(mentorKey) {
             currentMentor = mentors[mentorKey];
-            playSound('button-sound');
+            updateMentorInfo();
             updateUI();
-            const mentorDiv = document.getElementById('mentor');
-            mentorDiv.classList.add('pulse');
-            setTimeout(() => {
-                mentorDiv.classList.remove('pulse');
-            }, 1500);
+            playSound('success-sound');
         }
 
-        // Start Timer
-        function startTimer() {
-            if (!timerEnabled) return;
-            clearInterval(timerInterval);
-            const timerBar = document.getElementById('timer-bar');
-            timerBar.style.width = '100%';
-            timerBar.style.transition = 'none';
-            timerBar.offsetHeight;
-            timerBar.style.transition = 'width 15s linear';
-            timerBar.style.width = '0%';
-            timerInterval = setTimeout(() => {
-                if (currentQuestion) {
-                    checkAnswer(-1);
-                }
-            }, 15000);
+        // Update Timeline
+        function updateTimeline() {
+            const marker = document.getElementById('timeline-marker');
+            const era = eras.find(e => e.name === currentEra);
+            marker.style.left = `${era.position}%`;
         }
 
         // Debounce Function
         function debounce(func, wait) {
             let timeout;
-            return function (...args) {
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
                 clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args
-
-), wait);
+                timeout = setTimeout(later, wait);
             };
         }
 
-        // Get New Question
+        // Next Question
         function nextQuestion() {
             if (isProcessing) return;
             isProcessing = true;
             document.getElementById('next-question').disabled = true;
-            playSound('page-sound');
             clearInterval(timerInterval);
-            
-            let availableQuestions = questions.filter(q => 
-                q.civilizations.some(c => unlockedCivilizations.includes(c)) && 
-                eras.find(e => e.name.en === currentEra).civilizations.some(c => q.civilizations.includes(c)) &&
+
+            const availableQuestions = questions.filter(q => 
+                q.civilizations.some(civ => unlockedCivilizations.includes(civ)) &&
                 (!q.unlockRequirement || correctAnswers >= q.unlockRequirement) &&
-                !questionHistory.includes(q.question.en)
+                !questionHistory.includes(q.question) &&
+                (difficulty === 'easy' ? q.difficulty === 1 :
+                 difficulty === 'medium' ? q.difficulty <= 2 : true)
             );
 
             if (availableQuestions.length === 0) {
-                questionHistory = [];
-                availableQuestions = questions.filter(q => 
-                    q.civilizations.some(c => unlockedCivilizations.includes(c)) && 
-                    eras.find(e => e.name.en === currentEra).civilizations.some(c => q.civilizations.includes(c)) &&
-                    (!q.unlockRequirement || correctAnswers >= q.unlockRequirement)
-                );
-            }
-
-            availableQuestions = availableQuestions.filter(q => {
-                if (difficulty === 'easy') return q.difficulty === 1;
-                if (difficulty === 'hard') return q.difficulty === 2;
-                return true;
-            });
-
-            if (availableQuestions.length === 0) {
-                document.getElementById('question').textContent = translations.noQuestions[language];
+                document.getElementById('question').textContent = translations.noQuestions;
+                document.getElementById('choices').innerHTML = '';
+                document.getElementById('result').textContent = '';
+                document.getElementById('explanation').textContent = '';
+                document.getElementById('hint').textContent = '';
                 isProcessing = false;
                 document.getElementById('next-question').disabled = false;
                 return;
@@ -1419,7 +1116,7 @@
 
             let filteredQuestions = availableQuestions;
             if (currentMentor) {
-                const mentorSpecialtyQuestions = availableQuestions.filter(q => 
+                const mentorSpecialtyQuestions = filteredQuestions.filter(q => 
                     q.civilizations.some(c => currentMentor.specialty.includes(c))
                 );
                 if (mentorSpecialtyQuestions.length > 0) {
@@ -1427,98 +1124,217 @@
                 }
             }
 
-            const randomIndex = Math.floor(Math.random() * filteredQuestions.length);
-            currentQuestion = filteredQuestions[randomIndex];
-            
-            questionHistory.push(currentQuestion.question.en);
-            if (questionHistory.length > 10) {
-                questionHistory.shift();
+            currentQuestion = filteredQuestions[Math.floor(Math.random() * filteredQuestions.length)];
+            questionHistory.push(currentQuestion.question);
+            if (questionHistory.length > questions.length) {
+                questionHistory = questionHistory.slice(-Math.floor(questions.length / 2));
             }
 
             displayQuestion(currentQuestion);
-            document.getElementById('result').textContent = '';
-            document.getElementById('explanation').textContent = '';
-            document.getElementById('hint').textContent = '';
-            updateTimeline();
             startTimer();
             isProcessing = false;
             document.getElementById('next-question').disabled = false;
+            playSound('page-sound');
         }
 
         const debouncedNextQuestion = debounce(nextQuestion, 300);
 
         // Display Question
         function displayQuestion(question) {
-            document.getElementById('question').textContent = question.question[language] || question.question.en;
+            document.getElementById('question').innerHTML = 
+                `${question.question} <span class="difficulty-indicator difficulty-${question.difficulty === 1 ? 'easy' : 'medium-higher'}"></span>`;
             const choicesDiv = document.getElementById('choices');
             choicesDiv.innerHTML = '';
             const tagsDiv = document.createElement('div');
-            tagsDiv.style.margin = '10px 0';
+            tagsDiv.style.margin = '10px';
             question.civilizations.forEach(civ => {
                 const tag = document.createElement('span');
                 tag.className = 'civilization-tag';
                 tag.textContent = civ;
                 const difficultyIndicator = document.createElement('span');
-                difficultyIndicator.className = `difficulty-indicator difficulty-${question.difficulty === 1 ? 'easy' : question.difficulty === 2 ? 'hard' : 'medium'}`;
+                difficultyIndicator.className = `difficulty-indicator difficulty-${question.difficulty === 1 ? 'easy' : 'medium-higher'}`;
                 tag.appendChild(difficultyIndicator);
                 tagsDiv.appendChild(tag);
             });
             choicesDiv.appendChild(tagsDiv);
-            (question.choices[language] || question.choices.en).forEach((choice, index) => {
+            question.choices.forEach((choice, index) => {
                 const button = document.createElement('button');
                 button.textContent = choice;
-                button.onclick = () => {
-                    if (!button.disabled) {
-                        clearInterval(timerInterval);
-                        checkAnswer(index);
-                    }
-                };
-                button.setAttribute('aria-label', `Option ${choice}`);
+                button.addEventListener('click', () => checkAnswer(index, button));
+                button.disabled = false;
                 choicesDiv.appendChild(button);
             });
+            updateTimeline();
+        }
+
+        // Start Timer
+        function startTimer() {
+            if (!timerEnabled) return;
+            if (timerInterval) clearInterval(timerInterval);
+            
+            let timeLeft = 15;
+            const timerBar = document.getElementById('timer-bar');
+            timerBar.style.width = '100%';
+            
+            timerInterval = setInterval(() => {
+                timeLeft -= 0.1;
+                timerBar.style.width = `${(timeLeft / 15) * 100}%`;
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerInterval = null;
+                    checkAnswer(-1);
+                }
+            }, 100);
         }
 
         // Check Answer
-        function checkAnswer(selectedIndex) {
+        function checkAnswer(selectedIndex, button) {
+            if (isProcessing) return;
+            isProcessing = true;
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            
             const choices = document.querySelectorAll('#choices button');
+            for (let btn of choices) {
+                btn.disabled = true;
+            }
+            
+            let points = 0;
             totalQuestionsAnswered++;
-            choices.forEach(button => button.disabled = true);
             if (selectedIndex === currentQuestion.answer) {
-                currentStreak++;
-                if (currentStreak > highestStreak) {
-                    highestStreak = currentStreak;
-                }
-                let points = 10 * currentStreak;
-                if (currentMentor) {
-                    const isSpecialty = currentQuestion.civilizations.some(c => 
-                        currentMentor.specialty.includes(c)
-                    );
-                    points = Math.floor(points * (isSpecialty ? currentMentor.bonus * 1.2 : currentMentor.bonus));
-                }
+                points = Math.round(10 * (currentMentor ? currentMentor.bonus : 1) * (1 + currentStreak * 0.1));
                 score += points;
-                localStorage.setItem('score_1.0', score);
-                playSound('correct-sound');
-                if (selectedIndex >= 0) {
-                    choices[selectedIndex].classList.add('correct');
-                }
-                document.getElementById('result').textContent = translations.correct[language]
-                    .replace('{points}', points)
-                    .replace('{streak}', currentStreak);
-                document.getElementById('result').style.color = '#27ae60';
-                if (currentStreak >= 3) {
-                    playSound('streak-sound');
-                    document.getElementById('streak-counter').style.color = '#e74c3c';
-                    document.getElementById('streak-counter').style.fontWeight = 'bold';
-                }
+                currentStreak++;
                 correctAnswers++;
-                checkForUnlocks();
+                if (currentStreak > highestStreak) highestStreak = currentStreak;
+                document.getElementById('result').textContent = translations.correct.replace('{points}', points).replace('{streak}', currentStreak);
+                document.getElementById('result').style.color = '#27ae60';
+                if (button) button.classList.add('correct');
+                playSound('correct-sound');
+                if (currentStreak % 3 === 0) {
+                    playSound('streak-sound');
+                }
             } else {
                 currentStreak = 0;
-                playSound('wrong-sound');
-                if (selectedIndex >= 0) {
-                    choices[selectedIndex].classList.add('wrong');
-                }
-                choices[currentQuestion.answer].classList.add('correct');
-                document.getElementById('result').textContent = translations.wrong[language];
+                document.getElementById('result').textContent = translations.wrong;
                 document.getElementById('result').style.color = '#e74c3c';
-                document.getElementById
+                if (button) button.classList.add('wrong');
+                choices[currentQuestion.answer].classList.add('correct');
+                playSound('wrong-sound');
+            }
+            
+            highScore = Math.max(score, highScore);
+            document.getElementById('explanation').textContent = currentQuestion.explanation;
+            saveGameState();
+            checkUnlocks();
+            checkAchievements();
+            updateUI();
+            
+            setTimeout(() => {
+                for (let btn of choices) {
+                    btn.disabled = false;
+                    btn.classList.remove('correct', 'wrong');
+                }
+                isProcessing = false;
+            }, 1000);
+        }
+
+        // Show Hint
+        function showHint() {
+            if (isProcessing) return;
+            isProcessing = true;
+            if (!currentMentor) {
+                document.getElementById('hint').textContent = translations.noMentorHint;
+                isProcessing = false;
+                return;
+            }
+            if (!currentQuestion) {
+                document.getElementById('hint').textContent = translations.noQuestionHint;
+                isProcessing = false;
+                return;
+            }
+            
+            const hintText = currentMentor.hintStyle + 
+                currentQuestion.choices[currentQuestion.answer];
+            document.getElementById('hint').textContent = hintText;
+            score = Math.max(0, score - 5);
+            saveGameState();
+            updateUI();
+            playSound('hint-sound');
+            setTimeout(() => {
+                isProcessing = false;
+            }, 500);
+        }
+
+        // Check Unlocks
+        function checkUnlocks() {
+            const allCivilizations = Array.from(new Set(questions.flatMap(q => q.civilizations)));
+            const lockedCivilizations = allCivilizations.filter(c => !unlockedCivilizations.includes(c));
+            lockedCivilizations.forEach(civ => {
+                const civQuestions = questions.filter(q => q.civilizations.includes(civ));
+                const requiredCorrect = civQuestions[0]?.unlockRequirement || 5;
+                if (correctAnswers >= requiredCorrect) {
+                    unlockedCivilizations.push(civ);
+                    showUnlockNotification(translations.civUnlocked.replace('{civ}', civ));
+                    playSound('unlock-sound');
+                }
+            });
+
+            const currentEraIndex = eras.findIndex(e => e.name === currentEra);
+            if (currentEraIndex < eras.length - 1) {
+                const nextEra = eras[currentEraIndex + 1];
+                const requiredForNextEra = 5 * (currentEraIndex + 1);
+                if (correctAnswers >= requiredForNextEra) {
+                    currentEra = nextEra.name;
+                    timelinePosition = nextEra.position;
+                    showUnlockNotification(translations.eraUnlocked.replace('{era}', nextEra.name));
+                    playSound('era-change-sound');
+                    updateTimeline();
+                }
+            }
+        }
+
+        // Show Unlock Notification
+        function showUnlockNotification(message) {
+            const notification = document.getElementById('unlock-notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+                document.getElementById('progress').classList.add('correct');
+                setTimeout(() => {
+                    document.getElementById('progress').classList.remove('correct');
+                    updateUI();
+                }, 1000);
+            }, 2500);
+        }
+
+        // Reset Score
+        function resetScore() {
+            if (isProcessing) return;
+            isProcessing = true;
+            score = 0;
+            correctAnswers = 0;
+            currentStreak = 0;
+            questionHistory = [];
+            unlockedCivilizations = ['Mesopotamia', 'Ancient Egypt'];
+            currentEra = eras[0].name;
+            timelinePosition = 0;
+            clearInterval(timerInterval);
+            saveGameState();
+            document.getElementById('result').textContent = translations.scoreReset;
+            document.getElementById('streak-counter').style.color = '';
+            updateUI();
+            setTimeout(() => {
+                isProcessing = false;
+            }, 500);
+            playSound('button-sound');
+        }
+
+        // Initialize
+        window.onload = initGame;
+    </script>
+</body>
+</html>
