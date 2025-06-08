@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore iconic fashion brands with HAF, celebrating style and innovation">
+    <title>HAF - Iconic Fashion Brands</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Libre+Baskerville&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Deva:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --color-1: #FDF5E6; /* oldlace */
+            --color-2: #FAF0E6; /* linen */
+            --color-3: #FFF5EE; /* seashell */
+            --color-4: #FFFAFA; /* snow */
+            --color-5: #FFFAF0; /* floralwhite */
+            --color-6: #FFFFF0; /* ivory */
+            --text-dark: #333333;
+            --fashion-bg: linear-gradient(135deg, #FFF5EE 0%, #FAF0E6 50%, #FDF5E6 100%);
+            --modal-bg: linear-gradient(135deg, #FFE6E6 0%, #FAE6E6 50%, #FDF5F5 100%); /* Watercolor-inspired gradient */
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.1);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+            --border-decor: 2px solid #E0C0C0; /* Subtle decorative border */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            background: var(--fashion-bg);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: var(--color-1);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--color-5);
+        }
+
+        .hero {
+            background: var(--fashion-bg), url('data:image/jpg;base64,/9j/4AAQSkZJRgABAQEAAAAAAAD/2wBDAAoHBwkHBgoJCAkLCwoMDxkQDw4ODx4WFxIZJCAmJSMgIyMjKC0nJCUlIx8nLCIuMjIyPCsyPS8zMjIyMjIyMjL/wAALCAAIAAgBAREA/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/9oACAEBAAA/AH//2Q==') center/cover no-repeat;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 5px solid var(--color-4);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-family: 'Libre Baskerville', serif;
+            animation: fadeInDown 1s;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        .brands-section {
+            padding: 60px 0;
+        }
+
+        .brand-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+            background: var(--color-4);
+            border: 2px solid var(--color-2);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow-normal);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .brand-item:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-5px);
+        }
+
+        .brand-image {
+            flex: 0 0 50%;
+            padding-right: 20px;
+            background-color: var(--color-3);
+            border-radius: 5px;
+        }
+
+        .brand-image img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 5px;
+        }
+
+        .brand-content {
+            flex: 0 0 50%;
+        }
+
+        .brand-content h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .brand-content p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .learn-more-btn {
+            background: var(--color-1);
+            border: 2px solid var(--color-2);
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background 0.3s, border 0.3s;
+        }
+
+        .learn-more-btn:hover {
+            background: var(--color-6);
+            border-color: var(--text-dark);
+        }
+
+        .visit-website-btn {
+            background: var(--color-1);
+            border: 2px solid var(--color-2);
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, border 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .visit-website-btn:hover {
+            background: var(--color-6);
+            border-color: var(--text-dark);
+        }
+
+        .modal-content {
+            background: var(--modal-bg);
+            border-radius: 15px;
+            border: var(--border-decor);
+            box-shadow: var(--shadow-hover);
+            padding: 20px;
+        }
+
+        .modal-header {
+            border-bottom: none;
+            padding: 0 0 20px 0;
+        }
+
+        .modal-title {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+        }
+
+        .modal-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .modal-images img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 10px;
+            border: 2px solid var(--color-2);
+            background-color: var(--color-3);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .modal-images img:hover {
+            transform: scale(1.05);
+        }
+
+        .modal-body p {
+            font-size: 1.2rem;
+            color: #444;
+            line-height: 1.8;
+            text-align: justify;
+            padding: 0 20px;
+        }
+
+        .modal-footer {
+            border-top: none;
+            justify-content: center;
+        }
+
+        footer {
+            background: var(--color-5);
+            color: var(--text-dark);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .brand-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .brand-image {
+                flex: 0 0 100%;
+                padding-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .brand-content {
+                flex: 0 0 100%;
+            }
+
+            .brand-image img {
+                max-height: 150px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .modal-images {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-images img {
+                max-height: 250px;
+            }
+
+            .modal-title {
+                font-size: 2rem;
+            }
+
+            .modal-body p {
+                font-size: 1rem;
+            }
+
+            nav .container {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            nav a {
+                font-size: 1rem;
+                padding: 5px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .brand-image img {
+                max-height: 120px;
+            }
+
+            .modal-images img {
+                max-height: 200px;
+            }
+
+            .modal-title {
+                font-size: 1.8rem;
+            }
+
+            .modal-body p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="fashion.html"><img src="images/fashionlogo.png" alt="Fashion Logo" style="height: 40px; width: auto;"></a>
+                <a href="history.html">History</a>
+                <a href="art.html">Art</a>
+                <a href="fashion.html">Fashion</a>
+                <a href="fashion_show.html">Fashion Shows</a>
+                <a href="fashion_brand.html">Fashion Brands</a>
+                <a href="fashion_game.html">Fashion Game</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeInDown">Iconic Fashion Brands</h1>
+            <p>Discover the legacy of the world's most influential fashion houses</p>
+        </div>
+    </section>
+
+    <!-- Brands Section -->
+    <section class="brands-section">
+        <div class="container">
+            <!-- Brand 1: Chanel -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_1.jpg" alt="Chanel">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal1">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Chanel</h3>
+                    <p>Known for timeless elegance and the iconic little black dress.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal1" tabindex="-1" aria-labelledby="brandModalLabel1" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel1">Chanel</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_21.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_22.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Chanel revolutionized fashion with its minimalist elegance, introducing the little black dress and Chanel No. 5 perfume, embodying sophistication and luxury.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.chanel.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 2: Gucci -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_2.jpg" alt="Gucci">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal2">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Gucci</h3>
+                    <p>Celebrated for bold designs and luxurious Italian craftsmanship.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal2" tabindex="-1" aria-labelledby="brandModalLabel2" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel2">Gucci</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_23.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_24.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Gucci is renowned for its eclectic and vibrant designs, blending traditional Italian craftsmanship with contemporary flair, influencing global fashion trends.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.gucci.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 3: Louis Vuitton -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_3.jpg" alt="Louis Vuitton">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal3">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Louis Vuitton</h3>
+                    <p>Renowned for its monogrammed luggage and high-fashion accessories.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal3" tabindex="-1" aria-labelledby="brandModalLabel3" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel3">Louis Vuitton</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_25.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_26.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Louis Vuitton is synonymous with luxury travel, offering iconic monogrammed luggage and innovative accessories that define high fashion.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.louisvuitton.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 4: Dior -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_4.jpg" alt="Dior">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal4">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Dior</h3>
+                    <p>Famous for feminine silhouettes and revolutionary New Look.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal4" tabindex="-1" aria-labelledby="brandModalLabel4" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel4">Dior</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_27.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_28.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Dior transformed post-war fashion with its New Look, emphasizing feminine silhouettes and luxurious fabrics, setting a standard for elegance.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.dior.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 5: Prada -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_5.jpg" alt="Prada">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal5">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Prada</h3>
+                    <p>Famous for intellectual fashion and minimalist designs.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal5" tabindex="-1" aria-labelledby="brandModalLabel5" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel5">Prada</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_29.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_30.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Prada redefines luxury with its intellectual approach to fashion, combining minimalist designs with innovative materials and concepts.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.prada.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 6: Saint Laurent (Duplicate in original, replaced with Yves Saint Laurent for consistency) -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_6.jpg" alt="Yves Saint Laurent">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal6">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Yves Saint Laurent</h3>
+                    <p>Pioneered women’s power dressing and bold aesthetics.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal6" tabindex="-1" aria-labelledby="brandModalLabel6" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel6">Yves Saint Laurent</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_31.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_32.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Yves Saint Laurent introduced the women’s tuxedo, boldly blending masculine and feminine elements to redefine fashion.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.ysl.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 7: Versace -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_7.jpg" alt="Versace">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal7">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Versace</h3>
+                    <p>Known for bold prints and glamorous designs.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal7" tabindex="-1" aria-labelledby="brandModalLabel7" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel7">Versace</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_33.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_34.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Versace is synonymous with bold prints, vibrant colors, and glamorous designs that embody Italian luxury and sensuality.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.versace.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 8: Balenciaga -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_8.jpg" alt="Balenciaga">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal8">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Balenciaga</h3>
+                    <p>Known for avant-garde designs and innovative silhouettes.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal8" tabindex="-1" aria-labelledby="brandModalLabel8" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel8">Balenciaga</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_35.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_36.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Balenciaga revolutionized fashion with its architectural designs and innovative approach to silhouette, becoming a symbol of modern luxury.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.balenciaga.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 9: Hermès -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_9.jpg" alt="Hermès">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal9">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Hermès</h3>
+                    <p>Known for exquisite craftsmanship and iconic leather goods.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal9" tabindex="-1" aria-labelledby="brandModalLabel9" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel9">Hermès</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_37.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_38.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Hermès epitomizes luxury with its handcrafted leather goods, including the iconic Birkin and Kelly bags, synonymous with exclusivity.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.hermes.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 10: Fendi -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_10.jpg" alt="Fendi">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal10">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Fendi</h3>
+                    <p>Renowned for luxury leather goods and innovative designs.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal10" tabindex="-1" aria-labelledby="brandModalLabel10" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel10">Fendi</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_39.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_40.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Fendi is celebrated for its exceptional craftsmanship in leather goods and innovative designs that blend tradition with contemporary style.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.fendi.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 11: Armani -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_11.jpg" alt="Armani">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal11">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Armani</h3>
+                    <p>Known for sleek tailoring and timeless elegance.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal11" tabindex="-1" aria-labelledby="brandModalLabel11" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel11">Armani</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_41.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_42.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Armani is celebrated for its sleek tailoring and timeless elegance, offering sophisticated designs that define modern luxury.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.armani.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 12: Burberry -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_12.jpg" alt="Burberry">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal12">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Burberry</h3>
+                    <p>Famous for its iconic trench coats and check pattern.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal12" tabindex="-1" aria-labelledby="brandModalLabel12" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel12">Burberry</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_43.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_44.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Burberry heritage lies in its timeless trench coats and distinctive check pattern, blending tradition with contemporary style.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.burberry.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 13: Valentino -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_13.jpg" alt="Valentino">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal13">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Valentino</h3>
+                    <p>Renowned for romantic designs and signature red gowns.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal13" tabindex="-1" aria-labelledby="brandModalLabel13" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel13">Valentino</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_45.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_46.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Valentino is celebrated for its romantic aesthetic and vibrant red dresses, embodying elegance and passion in high fashion.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.valentino.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 14: Givenchy -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_14.jpg" alt="Givenchy">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal14">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Givenchy</h3>
+                    <p>Known for refined elegance and iconic designs.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal14" tabindex="-1" aria-labelledby="brandModalLabel14" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel14">Givenchy</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_47.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_48.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Givenchy blends aristocratic elegance with modern simplicity, creating iconic pieces worn by style icons like Audrey Hepburn.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.givenchy.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 15: Saint Laurent -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_15.jpg" alt="Saint Laurent">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal15">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Saint Laurent</h3>
+                    <p>Famous for edgy sophistication and rock-chic style.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal15" tabindex="-1" aria-labelledby="brandModalLabel15" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel15">Saint Laurent</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_49.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_50.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Saint Laurent combines Parisian elegance with a rebellious edge, defining modern luxury with its rock-inspired aesthetic.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.ysl.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 16: Celine -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_16.jpg" alt="Celine">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal16">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Celine</h3>
+                    <p>Known for minimalist luxury and clean lines.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal16" tabindex="-1" aria-labelledby="brandModalLabel16" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel16">Celine</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_51.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_52.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Celine redefines modern luxury with its minimalist designs and impeccable craftsmanship, focusing on understated elegance.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.celine.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 17: Chloé -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_17.jpg" alt="Chloé">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal17">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Chloé</h3>
+                    <p>Celebrated for bohemian elegance and feminine style.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal17" tabindex="-1" aria-labelledby="brandModalLabel17" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel17">Chloé</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_53.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_54.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Chloé offers a romantic, bohemian aesthetic with flowing silhouettes and soft fabrics, embodying effortless femininity.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.chloe.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 18: Dolce & Gabbana -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_18.jpg" alt="Dolce & Gabbana">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal18">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Dolce & Gabbana</h3>
+                    <p>Famous for opulent designs and Italian heritage.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal18" tabindex="-1" aria-labelledby="brandModalLabel18" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel18">Dolce & Gabbana</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_55.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_56.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Dolce & Gabbana celebrates Italian culture with lavish designs, vibrant prints, and a bold, glamorous aesthetic.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.dolcegabbana.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 19: Miu Miu -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_19.jpg" alt="Miu Miu">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal19">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Miu Miu</h3>
+                    <p>Known for playful designs and youthful elegance.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal19" tabindex="-1" aria-labelledby="brandModalLabel19" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel19">Miu Miu</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_57.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_58.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Miu Miu blends quirky, youthful aesthetics with sophisticated craftsmanship, creating unique and vibrant fashion pieces.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.miumiu.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Brand 20: Bottega Veneta -->
+            <div class="brand-item animate__animated animate__fadeIn">
+                <div class="brand-image">
+                    <img src="images/fashionbrand/brand_20.jpg" alt="Bottega Veneta">
+                    <button class="learn-more-btn" data-bs-toggle="modal" data-bs-target="#brandModal20">Learn More</button>
+                </div>
+                <div class="brand-content">
+                    <h3>Bottega Veneta</h3>
+                    <p>Renowned for artisanal leatherwork and subtle luxury.</p>
+                </div>
+            </div>
+            <div class="modal fade" id="brandModal20" tabindex="-1" aria-labelledby="brandModalLabel20" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="brandModalLabel20">Bottega Veneta</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-images">
+                                <img src="images/fashionbrand/brand_59.jpg" alt="Detail Image 1">
+                                <img src="images/fashionbrand/brand_60.jpg" alt="Detail Image 2">
+                            </div>
+                            <p>Bottega Veneta is celebrated for its intricate leather weaving and minimalist luxury, offering timeless and refined designs.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="https://www.bottegaveneta.com" target="_blank" class="visit-website-btn" rel="noopener noreferrer">Visit Official Website</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        // Animation on scroll
+        const animateElements = document.querySelectorAll('.animate__animated');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__fadeIn');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

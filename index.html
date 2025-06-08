@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HAF weaves history, art, and fashion into a timeless aesthetic journey">
+    <title>HAF - History, Art & Fashion</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;600&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Deva:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --custom-light: #FBF7F0;
+            --papaya-whip: #FFEFD5;
+            --old-lace: #FDF5E6;
+            --linen: #FAF0E6;
+            --seashell: #FFF5EE;
+            --snow: #FFFAFA;
+            --ivory: #FFFFF0;
+            --charcoal: #333333;
+            --old-lace-opaque: rgba(253, 245, 230, 0.8);
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+            --accent-blue: #B8E0FF;
+            --accent-pink: #FFD6E0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--charcoal);
+            direction: ltr;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: var(--custom-light);
+        }
+
+        [lang="ar"] body, [lang="ar"] h1, [lang="ar"] p, [lang="ar"] a {
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+
+        [lang="ja"] body, [lang="ja"] h1, [lang="ja"] p, [lang="ja"] a {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        [lang="hi"] body, [lang="hi"] h1, [lang="hi"] p, [lang="hi"] a {
+            font-family: 'Noto Sans Deva', sans-serif;
+        }
+
+        .navbar {
+            background: var(--papaya-whip);
+            padding: 15px 0;
+            border-bottom: 2px solid var(--old-lace);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+            font-weight: 700;
+        }
+
+        .navbar-brand:hover {
+            color: var(--charcoal);
+        }
+
+        .nav-link {
+            color: var(--charcoal);
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            margin: 0 15px;
+        }
+
+        .nav-link:hover {
+            color: var(--old-lace);
+        }
+
+        .hero {
+            position: relative;
+            background: url('images/hero_background.jpg') center/cover no-repeat;
+            color: var(--charcoal);
+            text-align: center;
+            padding: 120px 20px;
+            border-bottom: 5px solid var(--old-lace);
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .hero p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.6rem;
+            margin-bottom: 30px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        .btn-primary {
+            background: var(--old-lace);
+            border: 2px solid var(--old-lace);
+            color: var(--charcoal);
+            font-family: 'Raleway', sans-serif;
+            padding: 10px 30px;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow-normal);
+            opacity: 0;
+            animation: fadeIn 1s forwards 1s;
+        }
+
+        .btn-primary:hover {
+            background: var(--ivory);
+            color: var(--charcoal);
+            border-color: var(--charcoal);
+            box-shadow: var(--shadow-hover);
+        }
+
+        section {
+            padding: 80px 0;
+            background: var(--seashell);
+            border-bottom: 1px solid var(--old-lace);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--charcoal);
+            position: relative;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--old-lace);
+        }
+
+        .lead {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.3rem;
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--charcoal);
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.3s;
+        }
+
+        .story img {
+            width: 100%;
+            height: auto;
+            border: 3px solid var(--old-lace);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        .gallery {
+            position: relative;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--papaya-whip) 0%, var(--snow) 100%);
+        }
+
+        .gallery::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(0,0,0,0.05)"/></svg>');
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid var(--old-lace);
+            border-radius: 18px;
+            transition: box-shadow 0.4s, transform 0.4s, border-color 0.3s;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.13);
+            background: var(--snow);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.06) rotate(-1deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+            border-color: var(--papaya-whip);
+            z-index: 2;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            border-radius: 14px;
+            transition: transform 0.5s, filter 0.4s;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.12) rotate(1deg);
+            filter: brightness(1.08) saturate(1.15) drop-shadow(0 2px 12px #ffe4b5);
+        }
+
+        .gallery-item .zoom-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: 2.5rem;
+            color: #fff8dc;
+            background: rgba(0,0,0,0.25);
+            border-radius: 50%;
+            padding: 10px 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+
+        .gallery-item:hover .zoom-icon {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(253, 245, 230, 0.96);
+            color: var(--charcoal);
+            padding: 16px 12px 10px 12px;
+            text-align: center;
+            font-family: 'Raleway', sans-serif;
+            border-top: 2px solid var(--papaya-whip);
+            font-size: 1.12rem;
+            font-weight: 500;
+            text-shadow: 1px 1px 2px rgba(255,255,255,0.4);
+            transition: background 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            background: rgba(253, 245, 230, 1);
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.85);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 80vh;
+            border-radius: 18px;
+            box-shadow: 0 8px 40px #000a;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-size: 2.5rem;
+            color: #fff8dc;
+            cursor: pointer;
+            z-index: 10001;
+        }
+
+        @media (max-width: 900px) {
+            .gallery-item img {
+                height: 180px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery-item img {
+                height: 120px;
+            }
+        }
+
+        .gallery-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .gallery-nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--old-lace);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--papaya-whip);
+        }
+
+        .gallery-nav-dot:hover,
+        .gallery-nav-dot.active {
+            background: var(--papaya-whip);
+            transform: scale(1.2);
+        }
+
+        @keyframes galleryFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gallery-item {
+            animation: galleryFadeIn 0.6s ease forwards;
+            animation-delay: calc(var(--item-index) * 0.1s);
+        }
+
+        .inspiration-card, .testimonial-card, .event-card, .theme-card {
+            background: var(--snow);
+            border: 2px solid var(--old-lace);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+
+        .inspiration-card:hover, .testimonial-card:hover, .event-card:hover, .theme-card:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .inspiration-card img, .event-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+
+        .card-back h3, .event-card h3, .theme-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+        }
+
+        .theme-card i {
+            color: var(--charcoal);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: var(--old-lace);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 50px 0;
+            width: 48%;
+            background: var(--snow);
+            padding: 20px;
+            border-radius: 16px;
+            border-left: 5px solid var(--old-lace);
+            box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            transition: box-shadow 0.4s, transform 0.4s, border-color 0.3s;
+        }
+
+        .timeline-item:nth-child(odd) {
+            align-self: flex-start;
+            left: 0;
+            text-align: right;
+            border-left: 5px solid var(--old-lace);
+            border-right: none;
+        }
+
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            left: auto;
+            text-align: left;
+            border-left: none;
+            border-right: 5px solid var(--old-lace);
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.03) rotate(-1deg);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+            border-color: var(--papaya-whip);
+            z-index: 2;
+        }
+
+        .timeline-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 10px;
+            margin-bottom: 14px;
+            border: 2px solid var(--old-lace);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.5s, box-shadow 0.4s;
+            background: #f8f8f8;
+        }
+
+        .timeline-item:hover .timeline-img {
+            transform: scale(1.07) rotate(1deg);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .timeline-content h5 {
+            font-size: 1.25rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .timeline-content p {
+            background: rgba(253,245,230,0.92);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            color: #444;
+            margin-bottom: 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+        }
+
+        @media (max-width: 900px) {
+            .timeline-item {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                border-left: 5px solid var(--old-lace);
+                border-right: none !important;
+            }
+        }
+
+        .community img {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            display: block;
+            border: 3px solid var(--old-lace);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s;
+        }
+
+        .shop-cta {
+            background: linear-gradient(135deg, var(--papaya-whip) 0%, var(--snow) 100%);
+            text-align: center;
+            padding: 100px 20px;
+            border-top: 5px solid var(--old-lace);
+        }
+
+        .footer {
+            background: var(--papaya-whip);
+            color: var(--charcoal);
+            text-align: center;
+            padding: 30px 0;
+            border-top: 2px solid var(--old-lace);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .social-icon {
+            color: var(--charcoal);
+            margin: 0 10px;
+            font-size: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-icon:hover {
+            color: var(--old-lace);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 90%;
+                padding-left: 40px;
+                padding-right: 20px;
+                left: 0 !important;
+                text-align: left !important;
+            }
+
+            .navbar-nav {
+                text-align: center;
+            }
+
+            .nav-link {
+                margin: 10px 0;
+            }
+
+            .gallery-item {
+                aspect-ratio: 4/3;
+            }
+
+            .gallery-overlay {
+                bottom: 0;
+                padding: 15px 10px;
+            }
+
+            .gallery-overlay p {
+                font-size: 1rem;
+            }
+
+            .gallery-nav {
+                display: none;
+            }
+
+            .row.row-cols-md-4 {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">HAF</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.html">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="art.html">Art</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fashion.html">Fashion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeIn">Eternal Fusion</h1>
+            <p class="animate__animated animate__fadeIn" data-animate-delay="0.5s">HAF weaves history, art, and fashion into a timeless aesthetic journey</p>
+            <a href="#story" class="btn btn-primary animate__animated animate__fadeIn" data-animate-delay="1s">Discover HAF</a>
+        </div>
+    </section>
+
+    <!-- Story Section -->
+    <section id="story" class="story">
+        <div class="container">
+            <h2 class="section-title">Our Story</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <img src="images/story_images.jpg" class="img-fluid" alt="HAF Story">
+                </div>
+                <div class="col-md-6">
+                    <p class="lead">HAF was born from a passion for aesthetics. We believe history is the foundation, art is the soul, and fashion is the expression.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Inspiration Gallery</h2>
+            <p class="lead">Capturing aesthetic moments, feel the creative pulse of HAF</p>
+            <div class="row row-cols-md-4 g-4">
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_1.jpg" class="img-fluid" alt="Inspiration 1">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 1</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_2.jpg" class="img-fluid" alt="Inspiration 2">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 2</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_3.jpg" class="img-fluid" alt="Inspiration 3">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 3</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_4.jpg" class="img-fluid" alt="Inspiration 4">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 4</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_5.jpg" class="img-fluid" alt="Inspiration 5">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 5</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_6.jpg" class="img-fluid" alt="Inspiration 6">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 6</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_7.jpg" class="img-fluid" alt="Inspiration 7">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 7</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_8.jpg" class="img-fluid" alt="Inspiration 8">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 8</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_9.jpg" class="img-fluid" alt="Inspiration 9">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 9</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_10.jpg" class="img-fluid" alt="Inspiration 10">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 10</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_11.jpg" class="img-fluid" alt="Inspiration 11">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 11</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_12.jpg" class="img-fluid" alt="Inspiration 12">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 12</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_13.jpg" class="img-fluid" alt="Inspiration 13">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 13</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_14.jpg" class="img-fluid" alt="Inspiration 14">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 14</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_15.jpg" class="img-fluid" alt="Inspiration 15">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 15</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="gallery-item">
+                        <img src="images/gallery_16.jpg" class="img-fluid" alt="Inspiration 16">
+                        <div class="gallery-overlay">
+                            <p>Inspiration 16</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Inspiration Section -->
+    <section id="inspiration" class="py-5">
+        <div class="container">
+            <h2 class="section-title">Inspiration Stories</h2>
+            <p class="lead">From history to fashion, every moment at HAF ignites inspiration</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="inspiration-card">
+                        <img src="images/inspiration_1.jpg" class="img-fluid" alt="Story 1">
+                        <div class="card-back">
+                            <h3>Echoes of History</h3>
+                            <p>Ancient artifacts tell tales of millennia, inspiring us to cherish every legacy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="inspiration-card">
+                        <img src="images/inspiration_2.jpg" class="img-fluid" alt="Story 2">
+                        <div class="card-back">
+                            <h3>Spark of Art</h3>
+                            <p>A stroke of color, a single line—art unlocks infinite possibilities for life.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="inspiration-card">
+                        <img src="images/inspiration_3.jpg" class="img-fluid" alt="Story 3">
+                        <div class="card-back">
+                            <h3>Pulse of Fashion</h3>
+                            <p>Trends are expressions of confidence; HAF makes you a leader of style.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4">
+                <a href="event.html" class="btn btn-primary animate__animated animate__fadeIn" data-animate-delay="1.2s">See Upcoming Events</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Voices of Our Community</h2>
+            <p class="lead">HAF enthusiasts from around the globe share their experiences</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="images/testimonial_1.jpg" class="img-fluid rounded-circle mb-3" alt="User 1">
+                        <p>HAF designs blend history depth with modern vibrancy—simply stunning!</p>
+                        <h5>User 1</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="images/testimonial_2.jpg" class="img-fluid rounded-circle mb-3" alt="User 2">
+                        <p>The perfect fusion of art and fashion; HAF has redefined aesthetics for me!</p>
+                        <h5>User 2</h5>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="testimonial-card">
+                        <img src="images/testimonial_3.jpg" class="img-fluid rounded-circle mb-3" alt="User 3">
+                        <p>Every item feels like a piece of art; HAF is my source of inspiration!</p>
+                        <h5>User 3</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Journey -->
+    <section id="journey" class="journey">
+        <div class="container">
+            <h2 class="section-title">Brand Journey</h2>
+            <p class="lead">HAF growth story, chronicling every step of aesthetic and creative evolution</p>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <img src="images/journey_11.jpg" class="timeline-img" alt="Milestone 1">
+                    <div class="timeline-content">
+                        <h5>2018 - Inception</h5>
+                        <p>HAF was founded, dedicated to blending history, art, and fashion.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <img src="images/journey_22.jpg" class="timeline-img" alt="Milestone 2">
+                    <div class="timeline-content">
+                        <h5>2020 - First Exhibition</h5>
+                        <p>Debuted globally, showcasing cross-disciplinary designs.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <img src="images/journey_33.jpg" class="timeline-img" alt="Milestone 3">
+                    <div class="timeline-content">
+                        <h5>2023 - Expansion</h5>
+                        <p>Entered Asian markets with a new collection.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <img src="images/journey_44.jpg" class="timeline-img" alt="Milestone 4">
+                    <div class="timeline-content">
+                        <h5>2025 - Future</h5>
+                        <p>Continuing to innovate, defining a new chapter in aesthetics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Preview -->
+    <section id="events" class="events">
+        <div class="container">
+            <h2 class="section-title">Upcoming Events</h2>
+            <p class="lead">Join HAF future gatherings to experience boundless aesthetic possibilities</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="event-card">
+                        <img src="images/event_1.jpg" class="img-fluid" alt="Event 1">
+                        <div class="card-body">
+                            <h3>Historical Retrospective</h3>
+                            <p>Explore dialogues between ancient civilizations and modern design.</p>
+                            <a href="event.html?event=1" class="btn btn-primary mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="event-card">
+                        <img src="images/event_2.jpg" class="img-fluid" alt="Event 2">
+                        <div class="card-body">
+                            <h3>Art Workshop</h3>
+                            <p>Create hands-on, unleashing your artistic potential.</p>
+                            <a href="event.html?event=2" class="btn btn-primary mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="event-card">
+                        <img src="images/event_3.jpg" class="img-fluid" alt="Event 3">
+                        <div class="card-body">
+                            <h3>Fashion Launch</h3>
+                            <p>Witness the debut of HAF 2025 collection.</p>
+                            <a href="event.html?event=3" class="btn btn-primary mt-2">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="community">
+        <div class="container text-center">
+            <h2 class="section-title">Join Our Community</h2>
+            <p class="lead">Share your HAF story and connect with global aesthetic enthusiasts</p>
+            <img src="images/community_image.jpg" class="img-fluid mb-4" alt="Community">
+            <a href="#events" class="btn btn-primary">Share Your Story</a>
+        </div>
+    </section>
+
+    <!-- Themes Section -->
+    <section id="themes" class="themes">
+        <div class="container">
+            <h2 class="section-title">Explore Three Themes</h2>
+            <p class="lead">History, art, and fashion—HAF opens three doors to aesthetics</p>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="theme-card">
+                        <i class="fas fa-landmark fa-3x mb-3"></i>
+                        <h3>History</h3>
+                        <p>Trace the glory of civilizations, feeling the depth of time.</p>
+                        <a href="history.html" class="btn btn-primary">Step into History</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="theme-card">
+                        <i class="fas fa-paint-brush fa-3x mb-3"></i>
+                        <h3>Art</h3>
+                        <p>Immerse in color and creativity, exploring boundless inspiration.</p>
+                        <a href="art.html" class="btn btn-primary">Discover Art</a>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="theme-card">
+                        <i class="fas fa-tshirt fa-3x mb-3"></i>
+                        <h3>Fashion</h3>
+                        <p>Lead the trends, showcasing individuality and confident style.</p>
+                        <a href="fashion.html" class="btn btn-primary">Chase Fashion</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        // Animation Trigger
+        document.querySelectorAll('.animate__animated').forEach(el => {
+            const delay = el.getAttribute('data-animate-delay') || '0';
+            el.style.animationDelay = delay;
+        });
+
+        // Lightbox Functionality
+        const galleryImgs = document.querySelectorAll('.gallery-item img');
+        const lightbox = document.createElement('div');
+        lightbox.className = 'lightbox';
+        lightbox.innerHTML = '<span class="lightbox-close">&times;</span><img src="" alt="Gallery Large">';
+        document.body.appendChild(lightbox);
+        const lightboxImg = lightbox.querySelector('img');
+        const lightboxClose = lightbox.querySelector('.lightbox-close');
+        galleryImgs.forEach(img => {
+            img.addEventListener('click', e => {
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+        lightbox.addEventListener('click', e => {
+            if (e.target === lightbox) lightbox.classList.remove('active');
+        });
+    </script>
+</body>
+</html>

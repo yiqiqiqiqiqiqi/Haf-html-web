@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover the vast tapestry of world history with HAF, from ancient civilizations to modern times">
+    <title>HAF - World History</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Libre+Baskerville&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --color-1: #ffd6e8;
+            --color-2: #ffeceb;
+            --color-3: #fffbf5;
+            --color-4: #ebfff0;
+            --color-5: #d1f5ff;
+            --text-dark: #333333;
+            --sepia: #f4ecd8;
+            --papaya-whip: #FFEFD5;
+            --cornsilk: #FFF8DC;
+            --old-lace: #FDF5E6;
+            --linen: #FAF0E6;
+            --seashell: #FFF5EE;
+            --snow: #FFFAFA;
+            --floralwhite: #FFFAF0;
+            --ivory: #FFFFF0;
+            --charcoal: #333333;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--text-dark);
+            direction: ltr;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            background: var(--sepia);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: var(--papaya-whip) !important;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            margin: 0 15px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        nav a:hover {
+            color: var(--color-5);
+        }
+
+        nav select {
+            padding: 8px;
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--color-3);
+            border: 1px solid var(--color-2);
+            border-radius: 4px;
+            color: var(--text-dark);
+        }
+
+        .hero {
+            background: linear-gradient(rgba(244, 236, 216, 0.8), rgba(244, 236, 216, 0.8)), url('https://via.placeholder.com/300x150') center/cover no-repeat;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 5px solid var(--color-4);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-family: 'Libre Baskerville', serif;
+            animation: fadeInDown 1s;
+            color: var(--text-dark);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--color-2);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--color-1);
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        section p.subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: var(--color-4);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 40px 0;
+            width: 50%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+            padding-right: 40px;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+            padding-left: 40px;
+        }
+
+        .timeline-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            border: 2px solid var(--color-2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .timeline-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.5rem;
+            color: var(--color-1);
+            margin-bottom: 10px;
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        .timeline-item .date {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            background: rgba(255, 251, 245, 0.8);
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 20px;
+            height: 20px;
+            background: var(--color-1);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::before {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::before {
+            left: -10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: var(--color-3);
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid var(--color-2);
+            width: 80%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .modal-content h3 {
+            font-size: 1.8rem;
+            color: var(--color-1);
+            margin-bottom: 10px;
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        .modal-content .date {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            background: none;
+            border: none;
+        }
+
+        .modal-close:hover {
+            color: var(--color-5);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .frame {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .painting-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .painting-img {
+            transform: scale(1.1);
+        }
+
+        .text-container {
+            padding: 10px;
+            background: rgba(255, 251, 245, 0.8);
+            border-radius: 0 0 8px 8px;
+        }
+
+        .text-container .title {
+            font-size: 1.2rem;
+            color: var(--color-1);
+            margin-bottom: 5px;
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        .text-container .description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            background: var(--color-1);
+            color: var(--text-dark);
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 40px;
+                text-align: left;
+            }
+
+            .timeline-item:nth-child(odd) {
+                padding-right: 0;
+            }
+
+            .timeline-item::before {
+                left: 10px;
+            }
+
+            .timeline-item:nth-child(even)::before {
+                left: 10px;
+            }
+
+            .gallery-item {
+                width: 100%;
+            }
+
+            .frame {
+                height: 150px;
+            }
+        }
+
+        .haf-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #FDF5E6;
+            padding: 10px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+            font-family: 'EB Garamond', 'Arial', serif;
+            position: sticky;
+            top: 0;
+            z-index: 2000;
+        }
+        .haf-logo-title {
+            display: flex;
+            align-items: center;
+        }
+        .haf-logo {
+            height: 40px;
+            width: auto;
+            margin-right: 10px;
+        }
+        .haf-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #b23a48;
+            letter-spacing: 2px;
+        }
+        .haf-nav-links a {
+            color: #333;
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 1.1rem;
+            font-family: 'Source Sans Pro', 'Arial', sans-serif;
+            transition: color 0.2s;
+            padding-bottom: 2px;
+            border-bottom: 2px solid transparent;
+        }
+        .haf-nav-links a:hover, .haf-nav-links a.active {
+            color: #b23a48;
+            border-bottom: 2px solid #b23a48;
+        }
+        body.dark-mode .haf-navbar {
+            background: #2c3e50;
+        }
+        body.dark-mode .haf-title {
+            color: #FFFAF0;
+        }
+        body.dark-mode .haf-nav-links a {
+            color: #FFFAFA;
+        }
+        body.dark-mode .haf-nav-links a:hover, body.dark-mode .haf-nav-links a.active {
+            color: #FFFAF0;
+            border-bottom: 2px solid #FFFAF0;
+        }
+        .navbar {
+            background-color: var(--papaya-whip);
+        }
+
+        .hero-big-btn {
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: 16px 48px;
+            border-radius: 24px;
+            background: var(--papaya-whip);
+            color: var(--charcoal);
+            border: 2px solid var(--old-lace);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.18s cubic-bezier(.4,0,.2,1);
+            letter-spacing: 1px;
+        }
+        .hero-big-btn:hover, .hero-big-btn:focus {
+            background: var(--ivory);
+            color: var(--charcoal);
+            border-color: var(--charcoal);
+            box-shadow: 0 6px 24px rgba(0,0,0,0.10);
+            transform: translateY(-2px) scale(1.03);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="haf-logo-title">
+                <a href="history.html">
+                    <img src="images/historylogo.png" alt="History Logo" class="haf-logo" style="height:40px;vertical-align:middle;margin-right:10px;">
+                </a>
+                <span class="haf-title">History Art Fashion</span>
+            </div>
+            <div class="haf-nav-links">
+                <a href="history.html">History</a>
+                <a href="#timeline">World History</a>
+                <a href="malaysia_history.html">Malaysia History</a>
+                <a href="history_game.html">History Game</a>
+                <a href="art.html">Art</a>
+                <a href="fashion.html">Fashion</a>
+            </div>
+            <select id="lang-select" onchange="changeLanguage(this.value)">
+                <option value="zh">中文</option>
+                <option value="es">Español</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="ru">Русский</option>
+                <option value="pt">Português</option>
+                <option value="de">Deutsch</option>
+                <option value="ja">日本語</option>
+                <option value="hi">हिन्दी</option>
+                <option value="en" selected>English</option>
+            </select>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeIn">World History Unveiled</h1>
+            <p class="animate__animated animate__fadeIn">Explore the global events that shaped humanity with HAF</p>
+            <button onclick="location.href='#timeline'" class="btn btn-primary mt-4 animate__animated animate__fadeIn hero-big-btn" data-animate-delay="1s">
+                World History
+            </button>
+        </div>
+    </section>
+
+    <section id="timeline">
+        <div class="container">
+            <h2>World History Timeline</h2>
+            <p class="subtitle">Journey through pivotal global historical periods</p>
+            <div class="timeline">
+                <div class="timeline-item" data-modal="#modal-prehistoric">
+                    <img src="images/worldhistory/1.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Prehistoric Humans</h3>
+                    <div class="date">c. 2 million BCE – 3000 BCE</div>
+                    <p>Early humans lived by hunting and gathering, later developing farming, tools, and settlements.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ancient_egypt">
+                    <img src="images/worldhistory/2.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Ancient Egypt</h3>
+                    <div class="date">c. 3100 BCE – 30 BCE</div>
+                    <p>A powerful civilization along the Nile River, known for pyramids, pharaohs, and hieroglyphs.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ancient_greece">
+                    <img src="images/worldhistory/3.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Ancient Greece</h3>
+                    <div class="date">c. 800 BCE – 146 BCE</div>
+                    <p>The birthplace of democracy, philosophy, and the Olympic Games, with lasting influence on Western culture.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-roman_empire">
+                    <img src="images/worldhistory/4.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Roman Empire</h3>
+                    <div class="date">27 BCE – 476 CE (Western Roman Empire)</div>
+                    <p>A vast empire that shaped law, architecture, and governance in Europe and beyond.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-renaissance">
+                    <img src="images/worldhistory/5.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Renaissance</h3>
+                    <div class="date">c. 1300 – 1600</div>
+                    <p>A cultural rebirth in Europe, celebrating art, science, and humanism, featuring figures like Leonardo da Vinci.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-exploration">
+                    <img src="images/worldhistory/6.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>The Age of Exploration</h3>
+                    <div class="date">c. 1400 – 1700</div>
+                    <p>European explorers traveled the world by sea, discovering new lands and expanding trade and empires.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-industrial">
+                    <img src="images/worldhistory/7.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Industrial Revolution</h3>
+                    <div class="date">c. 1760 – 1840</div>
+                    <p>A period of major industrialization with inventions like the steam engine, transforming economies and societies.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ww1">
+                    <img src="images/worldhistory/8.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>World War I</h3>
+                    <div class="date">1914 – 1918</div>
+                    <p>A global war centered in Europe, marked by trench warfare and massive casualties, ending with major political changes.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ww1_end">
+                    <img src="images/worldhistory/9.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>End of World War I</h3>
+                    <div class="date">1918</div>
+                    <p>World War I ended with an armistice on November 11, 1918, after four years of devastating global conflict.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-versailles">
+                    <img src="images/worldhistory/10.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Treaty of Versailles</h3>
+                    <div class="date">1919</div>
+                    <p>A peace treaty that officially ended WWI; it imposed harsh penalties on Germany and redrew European borders.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-league_nations">
+                    <img src="images/worldhistory/11.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>League of Nations</h3>
+                    <div class="date">Founded in 1920</div>
+                    <p>An international organization created to maintain world peace after WWI, but it was ultimately ineffective and replaced by the UN.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-roaring_twenties">
+                    <img src="images/worldhistory/12.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Roaring Twenties</h3>
+                    <div class="date">1920s</div>
+                    <p>A decade of economic prosperity, jazz music, cultural change, and new lifestyles, especially in the U.S. and Europe.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-womens_suffrage">
+                    <img src="images/worldhistory/13.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Women Suffrage</h3>
+                    <div class="date">1920 (U.S.); varies by country</div>
+                    <p>Women gained the right to vote in many countries, including the U.S. (19th Amendment in 1920), marking a major step in gender equality.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-stock_crash">
+                    <img src="images/worldhistory/14.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Stock Market Crash</h3>
+                    <div class="date">1929</div>
+                    <p>The U.S. stock market collapsed in October 1929, triggering a global economic downturn.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-great_depression">
+                    <img src="images/worldhistory/15.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Great Depression</h3>
+                    <div class="date">1929 – late 1930s</div>
+                    <p>A worldwide economic crisis with massive unemployment, poverty, and social hardship.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-fascism">
+                    <img src="images/worldhistory/16.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Rise of Fascism</h3>
+                    <div class="date">1920s – 1930s</div>
+                    <p>Authoritarian leaders like Mussolini in Italy and Hitler in Germany gained power, promoting nationalism, militarism, and dictatorship.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ww2">
+                    <img src="images/worldhistory/17.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>World War II</h3>
+                    <div class="date">1939 – 1945</div>
+                    <p>A global conflict involving most world powers; caused massive destruction and ended with the defeat of Nazi Germany and Imperial Japan.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-cold_war">
+                    <img src="images/worldhistory/18.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Cold War</h3>
+                    <div class="date">c. 1947 – 1991</div>
+                    <p>A period of political and military tension between the United States and the Soviet Union, marked by nuclear arms race and ideological rivalry.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-civil_rights">
+                    <img src="images/worldhistory/19.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Civil Rights Movement</h3>
+                    <div class="date">1950s – 1960s</div>
+                    <p>A movement in the U.S. to end racial segregation and secure equal rights for African Americans, led by figures like Martin Luther King Jr.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-space_exploration">
+                    <img src="images/worldhistory/20.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Space Exploration</h3>
+                    <div class="date">1957 – present</div>
+                    <p>Began with the Soviet launch of Sputnik in 1957; included the U.S. moon landing in 1969 and continues with international space missions.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-computer_revolution">
+                    <img src="images/worldhistory/21.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Computer Revolution</h3>
+                    <div class="date">1970s – present</div>
+                    <p>The rapid advancement of computing technology, from early personal computers to the internet and smartphones.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-cold_war_end">
+                    <img src="images/worldhistory/22.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>End of the Cold War</h3>
+                    <div class="date">1991</div>
+                    <p>Marked by the collapse of the Soviet Union, the fall of the Berlin Wall, and the shift toward a unipolar world led by the U.S.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-y2k">
+                    <img src="images/worldhistory/23.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Year 2000 (Y2K and Globalization)</h3>
+                    <div class="date">2000</div>
+                    <p>The world entered a new millennium; fears of the Y2K bug proved mostly harmless. The internet and globalization rapidly accelerated.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-financial_crisis">
+                    <img src="images/worldhistory/24.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>2008 Financial Crisis</h3>
+                    <div class="date">2008</div>
+                    <p>A major global economic recession triggered by the collapse of the U.S. housing market and banking system, causing widespread job loss and financial instability.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-social_media">
+                    <img src="images/worldhistory/25.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Rise of Social Media</h3>
+                    <div class="date">2010s</div>
+                    <p>Platforms like Facebook, Twitter, Instagram, and TikTok reshaped communication, politics, and culture around the world.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-covid_pandemic">
+                    <img src="images/worldhistory/26.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>COVID-19 Pandemic</h3>
+                    <div class="date">2020</div>
+                    <p>A global health crisis caused by the coronavirus, leading to lockdowns, economic disruptions, and over 6 million deaths worldwide.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-ai_expansion">
+                    <img src="images/worldhistory/27.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Artificial Intelligence Expansion</h3>
+                    <div class="date">2020s – 2025</div>
+                    <p>AI technologies like machine learning and large language models (e.g., ChatGPT) began transforming industries, education, and daily life.</p>
+                </div>
+                <div class="timeline-item" data-modal="#modal-current_era">
+                    <img src="images/worldhistory/28.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'">
+                    <h3>Year 2025 (Current Era)</h3>
+                    <div class="date">2025</div>
+                    <p>Marked by rapid technological advancements, global challenges like climate change, and discussions about the role of AI, ethics, and the future of humanity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="modal-prehistoric" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-prehistoric').style.display='none'">Close</button>
+            <h3>Prehistoric Humans</h3>
+            <div class="date">c. 2 million BCE – 3000 BCE</div>
+            <img src="images/worldhistory/1.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Prehistoric Humans" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Prehistoric period spans from approximately 2 million BCE to 3000 BCE, marking the earliest phase of human existence...</p>
+        </div>
+    </div>
+    <div id="modal-ancient_egypt" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ancient_egypt').style.display='none'">Close</button>
+            <h3>Ancient Egypt</h3>
+            <div class="date">c. 3100 BCE – 30 BCE</div>
+            <img src="images/worldhistory/2.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Ancient Egypt" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>Ancient Egypt, flourishing from around 3100 BCE to 30 BCE, was one of the most advanced civilizations of its time...</p>
+        </div>
+    </div>
+    <div id="modal-ancient_greece" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ancient_greece').style.display='none'">Close</button>
+            <h3>Ancient Greece</h3>
+            <div class="date">c. 800 BCE – 146 BCE</div>
+            <img src="images/worldhistory/3.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Ancient Greece" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>Ancient Greece, active from around 800 BCE to 146 BCE, was a collection of city-states, with Athens and Sparta being the most prominent...</p>
+        </div>
+    </div>
+    <div id="modal-roman_empire" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-roman_empire').style.display='none'">Close</button>
+            <h3>Roman Empire</h3>
+            <div class="date">27 BCE – 476 CE (Western Roman Empire)</div>
+            <img src="images/worldhistory/4.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Roman Empire" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Roman Empire, established in 27 BCE with Augustus as its first emperor, spanned three continents at its height...</p>
+        </div>
+    </div>
+    <div id="modal-renaissance" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-renaissance').style.display='none'">Close</button>
+            <h3>Renaissance</h3>
+            <div class="date">c. 1300 – 1600</div>
+            <img src="images/worldhistory/5.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Renaissance" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Renaissance, spanning roughly from 1300 to 1600, was a period of cultural and intellectual revival in Europe...</p>
+        </div>
+    </div>
+    <div id="modal-exploration" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-exploration').style.display='none'">Close</button>
+            <h3>The Age of Exploration</h3>
+            <div class="date">c. 1400 – 1700</div>
+            <img src="images/worldhistory/6.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="The Age of Exploration" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Age of Exploration, from approximately 1400 to 1700, was a period when European powers sought new trade routes and territories...</p>
+        </div>
+    </div>
+    <div id="modal-industrial" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-industrial').style.display='none'">Close</button>
+            <h3>Industrial Revolution</h3>
+            <div class="date">c. 1760 – 1840</div>
+            <img src="images/worldhistory/7.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Industrial Revolution" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Industrial Revolution, occurring between 1760 and 1840, began in Britain and spread to Europe and North America...</p>
+        </div>
+    </div>
+    <div id="modal-ww1" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ww1').style.display='none'">Close</button>
+            <h3>World War I</h3>
+            <div class="date">1914 – 1918</div>
+            <img src="images/worldhistory/8.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="World War I" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>World War I, fought from 1914 to 1918, was a global conflict primarily centered in Europe...</p>
+        </div>
+    </div>
+    <div id="modal-ww1_end" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ww1_end').style.display='none'">Close</button>
+            <h3>End of World War I</h3>
+            <div class="date">1918</div>
+            <img src="images/worldhistory/9.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="End of World War I" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The end of World War I came on November 11, 1918, with the signing of the Armistice in a railway carriage in Compiègne, France...</p>
+        </div>
+    </div>
+    <div id="modal-versailles" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-versailles').style.display='none'">Close</button>
+            <h3>Treaty of Versailles</h3>
+            <div class="date">1919</div>
+            <img src="images/worldhistory/10.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Treaty of Versailles" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Treaty of Versailles, signed on June 28, 1919, in the Palace of Versailles, France, officially ended World War I...</p>
+        </div>
+    </div>
+    <div id="modal-league_nations" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-league_nations').style.display='none'">Close</button>
+            <h3>League of Nations</h3>
+            <div class="date">Founded in 1920</div>
+            <img src="images/worldhistory/11.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="League of Nations" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The League of Nations was established in 1920 as part of the Treaty of Versailles, with the primary goal of maintaining world peace...</p>
+        </div>
+    </div>
+    <div id="modal-roaring_twenties" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-roaring_twenties').style.display='none'">Close</button>
+            <h3>Roaring Twenties</h3>
+            <div class="date">1920s</div>
+            <img src="images/worldhistory/12.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Roaring Twenties" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Roaring Twenties, spanning the 1920s, was a decade of economic prosperity and cultural dynamism...</p>
+        </div>
+    </div>
+    <div id="modal-womens_suffrage" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-womens_suffrage').style.display='none'">Close</button>
+            <h3>Women Suffrage</h3>
+            <div class="date">1920 (U.S.); varies by country</div>
+            <img src="images/worldhistory/13.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Women Suffrage" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The women suffrage movement, culminating in the 1920s in many countries, was a decades-long struggle to secure voting rights for women...</p>
+        </div>
+    </div>
+    <div id="modal-stock_crash" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-stock_crash').style.display='none'">Close</button>
+            <h3>Stock Market Crash</h3>
+            <div class="date">1929</div>
+            <img src="images/worldhistory/14.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Stock Market Crash" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Stock Market Crash of 1929 began on October 24, 1929 (Black Thursday), with a catastrophic drop in stock prices on the New York Stock Exchange...</p>
+        </div>
+    </div>
+    <div id="modal-great_depression" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-great_depression').style.display='none'">Close</button>
+            <h3>Great Depression</h3>
+            <div class="date">1929 – late 1930s</div>
+            <img src="images/worldhistory/15.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Great Depression" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Great Depression, lasting from 1929 to the late 1930s, was a severe global economic crisis following the Stock Market Crash of 1929...</p>
+        </div>
+    </div>
+    <div id="modal-fascism" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-fascism').style.display='none'">Close</button>
+            <h3>Rise of Fascism</h3>
+            <div class="date">1920s – 1930s</div>
+            <img src="images/worldhistory/16.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Rise of Fascism" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The rise of fascism in the 1920s and 1930s was a response to economic instability, social unrest, and the aftermath of World War I...</p>
+        </div>
+    </div>
+    <div id="modal-ww2" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ww2').style.display='none'">Close</button>
+            <h3>World War II</h3>
+            <div class="date">1939 – 1945</div>
+            <img src="images/worldhistory/17.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="World War II" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>World War II, from 1939 to 1945, was the deadliest conflict in history, involving over 30 countries and resulting in approximately 70–85 million deaths...</p>
+        </div>
+    </div>
+    <div id="modal-cold_war" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-cold_war').style.display='none'">Close</button>
+            <h3>Cold War</h3>
+            <div class="date">c. 1947 – 1991</div>
+            <img src="images/worldhistory/18.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Cold War" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Cold War, spanning from approximately 1947 to 1991, was a prolonged period of geopolitical tension between the United States and the Soviet Union...</p>
+        </div>
+    </div>
+    <div id="modal-civil_rights" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-civil_rights').style.display='none'">Close</button>
+            <h3>Civil Rights Movement</h3>
+            <div class="date">1950s – 1960s</div>
+            <img src="images/worldhistory/19.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Civil Rights Movement" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Civil Rights Movement, primarily active in the 1950s and 1960s, was a struggle to end racial segregation and discrimination against African Americans in the United States...</p>
+        </div>
+    </div>
+    <div id="modal-space_exploration" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-space_exploration').style.display='none'">Close</button>
+            <h3>Space Exploration</h3>
+            <div class="date">1957 – present</div>
+            <img src="images/worldhistory/20.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Space Exploration" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>Space exploration began in earnest with the Soviet Union launch of Sputnik, the first artificial satellite, on October 4, 1957...</p>
+        </div>
+    </div>
+    <div id="modal-computer_revolution" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-computer_revolution').style.display='none'">Close</button>
+            <h3>Computer Revolution</h3>
+            <div class="date">1970s – present</div>
+            <img src="images/worldhistory/21.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Computer Revolution" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The Computer Revolution, beginning in the 1970s, transformed society through the rapid development of computing technology...</p>
+        </div>
+    </div>
+    <div id="modal-cold_war_end" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-cold_war_end').style.display='none'">Close</button>
+            <h3>End of the Cold War</h3>
+            <div class="date">1991</div>
+            <img src="images/worldhistory/22.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="End of the Cold War" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The end of the Cold War in 1991 marked the conclusion of decades of tension between the United States and the Soviet Union...</p>
+        </div>
+    </div>
+    <div id="modal-y2k" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-y2k').style.display='none'">Close</button>
+            <h3>Year 2000 (Y2K and Globalization)</h3>
+            <div class="date">2000</div>
+            <img src="images/worldhistory/23.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Year 2000 (Y2K and Globalization)" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The year 2000 marked the dawn of a new millennium, accompanied by widespread concerns about the Y2K bug...</p>
+        </div>
+    </div>
+    <div id="modal-financial_crisis" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-financial_crisis').style.display='none'">Close</button>
+            <h3>2008 Financial Crisis</h3>
+            <div class="date">2008</div>
+            <img src="images/worldhistory/24.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="2008 Financial Crisis" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The 2008 Financial Crisis, often called the Great Recession, began with the collapse of the U.S. housing bubble...</p>
+        </div>
+    </div>
+    <div id="modal-social_media" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-social_media').style.display='none'">Close</button>
+            <h3>Rise of Social Media</h3>
+            <div class="date">2010s</div>
+            <img src="images/worldhistory/25.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Rise of Social Media" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The rise of social media in the 2010s transformed global communication, culture, and politics, driven by platforms like Facebook...</p>
+        </div>
+    </div>
+    <div id="modal-covid_pandemic" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-covid_pandemic').style.display='none'">Close</button>
+            <h3>COVID-19 Pandemic</h3>
+            <div class="date">2020</div>
+            <img src="images/worldhistory/26.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="COVID-19 Pandemic" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The COVID-19 pandemic began in late 2019 with the outbreak of a novel coronavirus (SARS-CoV-2) in Wuhan, China...</p>
+        </div>
+    </div>
+    <div id="modal-ai_expansion" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-ai_expansion').style.display='none'">Close</button>
+            <h3>Artificial Intelligence Expansion</h3>
+            <div class="date">2020s – 2025</div>
+            <img src="images/worldhistory/27.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Artificial Intelligence Expansion" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The expansion of artificial intelligence (AI) in the 2020s, particularly up to 2025, has reshaped industries, education, and daily life...</p>
+        </div>
+    </div>
+    <div id="modal-current_era" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="document.getElementById('modal-current_era').style.display='none'">Close</button>
+            <h3>Year 2025 (Current Era)</h3>
+            <div class="date">2025</div>
+            <img src="images/worldhistory/28.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" alt="Year 2025 (Current Era)" style="width:100%;border-radius:4px;margin-bottom:15px;">
+            <p>The year 2025 represents a pivotal moment in the current era, characterized by rapid technological advancements and pressing global challenges...</p>
+        </div>
+    </div>
+
+    <section id="gallery">
+        <div class="container">
+            <h2>World History Gallery</h2>
+            <p class="subtitle">Explore iconic moments and artifacts from world history</p>
+            <div class="gallery">
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/1.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="1" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Prehistoric Cave Paintings</p>
+                        <p class="description">Ancient cave art from Lascaux, France, depicting animals and human activities from c. 15,000 BCE.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/2.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="2" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Pyramids of Giza</p>
+                        <p class="description">Monumental tombs built for pharaohs in Ancient Egypt, constructed around 2560 BCE.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/3.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="3" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Greek Parthenon</p>
+                        <p class="description">A temple on the Acropolis in Athens, dedicated to Athena, built in the 5th century BCE.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/4.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="4" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Roman Colosseum</p>
+                        <p class="description">An iconic amphitheater in Rome, completed in 80 CE, used for gladiatorial contests.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/5.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="5" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Renaissance Art: Sistine Chapel</p>
+                        <p class="description">Michelangelo masterpiece on the ceiling of the Sistine Chapel, painted between 1508 and 1512.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/6.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="6" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Age of Exploration: Caravels</p>
+                        <p class="description">Ships used by explorers like Columbus during the 15th century to cross oceans.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/7.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="7" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Industrial Revolution: Steam Engine</p>
+                        <p class="description">A steam engine, pivotal to the Industrial Revolution, introduced by James Watt in the 18th century.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/8.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="8" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">World War I: Trenches</p>
+                        <p class="description">Soldiers in the trenches of the Western Front during World War I, 1914–1918.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/9.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="9" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Armistice Day 1918</p>
+                        <p class="description">Celebrations marking the end of World War I on November 11, 1918.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/10.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="10" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Treaty of Versailles Signing</p>
+                        <p class="description">The signing of the Treaty of Versailles in 1919, formally ending World War I.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/11.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="11" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">League of Nations Assembly</p>
+                        <p class="description">The first assembly of the League of Nations in Geneva, 1920.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/12.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="12" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Roaring Twenties: Jazz Age</p>
+                        <p class="description">A jazz band performing in the 1920s, emblematic of the cultural vibrancy of the decade.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/13.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="13" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Women Suffrage March</p>
+                        <p class="description">Women marching for voting rights in the U.S., leading to the 19th Amendment in 1920.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/14.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="14" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Stock Market Crash 1929</p>
+                        <p class="description">Panic on Wall Street as the stock market crashed in October 1929.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/15.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="15" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Great Depression: Breadlines</p>
+                        <p class="description">People lining up for food during the Great Depression in the 1930s.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/16.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="16" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Rise of Fascism: Nazi Rally</p>
+                        <p class="description">A Nazi rally in Nuremberg, Germany, during the 1930s under Hitler regime.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/17.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="17" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">World War II: D-Day</p>
+                        <p class="description">Allied forces landing on the beaches of Normandy on D-Day, June 6, 1944.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/18.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="18" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Cold War: Berlin Wall</p>
+                        <p class="description">The Berlin Wall, a symbol of Cold War division, constructed in 1961.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/19.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="19" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Civil Rights Movement: March on Washington</p>
+                        <p class="description">The 1963 March on Washington, where Martin Luther King Jr. delivered his "I Have a Dream" speech.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/20.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="20" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Space Exploration: Moon Landing</p>
+                        <p class="description">Neil Armstrong on the moon during the Apollo 11 mission, July 20, 1969.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/21.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="21" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Computer Revolution: Early PC</p>
+                        <p class="description">An early personal computer from the 1970s, marking the start of the digital age.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/22.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="22" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Fall of the Berlin Wall</p>
+                        <p class="description">Citizens dismantling the Berlin Wall in 1989, symbolizing the end of the Cold War.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/23.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="23" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Y2K Preparations</p>
+                        <p class="description">Technicians preparing systems for the Y2K transition in 1999.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/24.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="24" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">2008 Financial Crisis: Bank Failures</p>
+                        <p class="description">The collapse of Lehman Brothers in 2008, a key event in the global financial crisis.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/25.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="25" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Social Media: Smartphone Era</p>
+                        <p class="description">The rise of social media in the 2010s, driven by widespread smartphone use.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/26.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="26" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">COVID-19 Pandemic: Lockdowns</p>
+                        <p class="description">Empty streets during global lockdowns in 2020 due to the COVID-19 pandemic.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/27.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="27" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">AI Expansion: Robotics</p>
+                        <p class="description">Advanced robotics powered by AI, transforming industries in the 2020s.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/worldhistory/28.jpg" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x150'" data-index="28" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">2025: Sustainable Future</p>
+                        <p class="description">Innovations in renewable energy and sustainability efforts in 2025.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Language translations
+        const translations = {
+            'en': {
+                'meta_description': 'Discover the vast tapestry of world history with HAF, from ancient civilizations to modern times',
+                'hero_title': 'World History Unveiled',
+                'hero_subtitle': 'Explore the global events that shaped humanity with HAF',
+                'nav_history': 'History',
+                'nav_world_history': 'World History',
+                'nav_malaysia_history': 'Malaysia History',
+                'nav_history_game': 'History Game',
+                'nav_art': 'Art',
+                'nav_fashion': 'Fashion',
+                'nav_shop': 'Shop',
+                'timeline_title': 'World History Timeline',
+                'timeline_subtitle': 'Journey through pivotal global historical periods',
+                'modal_close': 'Close',
+                'period_prehistoric_title': 'Prehistoric Humans',
+                'period_prehistoric_date': 'c. 2 million BCE – 3000 BCE',
+                'period_prehistoric_text': 'Early humans lived by hunting and gathering, later developing farming, tools, and settlements.',
+                'period_prehistoric_details': 'The Prehistoric period spans from approximately 2 million BCE to 3000 BCE, marking the earliest phase of human existence...',
+                'period_ancient_egypt_title': 'Ancient Egypt',
+                'period_ancient_egypt_date': 'c. 3100 BCE – 30 BCE',
+                'period_ancient_egypt_text': 'A powerful civilization along the Nile River, known for pyramids, pharaohs, and hieroglyphs.',
+                'period_ancient_egypt_details': 'Ancient Egypt, flourishing from around 3100 BCE to 30 BCE, was one of the most advanced civilizations of its time...',
+                'period_ancient_greece_title': 'Ancient Greece',
+                'period_ancient_greece_date': 'c. 800 BCE – 146 BCE',
+                'period_ancient_greece_text': 'The birthplace of democracy, philosophy, and the Olympic Games, with lasting influence on Western culture.',
+                'period_ancient_greece_details': 'Ancient Greece, active from around 800 BCE to 146 BCE, was a collection of city-states, with Athens and Sparta being the most prominent...',
+                'period_roman_empire_title': 'Roman Empire',
+                'period_roman_empire_date': '27 BCE – 476 CE (Western Roman Empire)',
+                'period_roman_empire_text': 'A vast empire that shaped law, architecture, and governance in Europe and beyond.',
+                'period_roman_empire_details': 'The Roman Empire, established in 27 BCE with Augustus as its first emperor, spanned three continents at its height...',
+                'period_renaissance_title': 'Renaissance',
+                'period_renaissance_date': 'c. 1300 – 1600',
+                'period_renaissance_text': 'A cultural rebirth in Europe, celebrating art, science, and humanism, featuring figures like Leonardo da Vinci.',
+                'period_renaissance_details': 'The Renaissance, spanning roughly from 1300 to 1600, was a period of cultural and intellectual revival in Europe...',
+                'period_exploration_title': 'The Age of Exploration',
+                'period_exploration_date': 'c. 1400 – 1700',
+                'period_exploration_text': 'European explorers traveled the world by sea, discovering new lands and expanding trade and empires.',
+                'period_exploration_details': 'The Age of Exploration, from approximately 1400 to 1700, was a period when European powers sought new trade routes and territories...',
+                'period_industrial_title': 'Industrial Revolution',
+                'period_industrial_date': 'c. 1760 – 1840',
+                'period_industrial_text': 'A period of major industrialization with inventions like the steam engine, transforming economies and societies.',
+                'period_industrial_details': 'The Industrial Revolution, occurring between 1760 and 1840, began in Britain and spread to Europe and North America...',
+                'period_ww1_title': 'World War I',
+                'period_ww1_date': '1914 – 1918',
+                'period_ww1_text': 'A global war centered in Europe, marked by trench warfare and massive casualties, ending with major political changes.',
+                'period_ww1_details': 'World War I, fought from 1914 to 1918, was a global conflict primarily centered in Europe...',
+                'period_ww1_end_title': 'End of World War I',
+                'period_ww1_end_date': '1918',
+                'period_ww1_end_text': 'World War I ended with an armistice on November 11, 1918, after four years of devastating global conflict.',
+                'period_ww1_end_details': 'The end of World War I came on November 11, 1918, with the signing of the Armistice in a railway carriage in Compiègne, France...',
+                'period_versailles_title': 'Treaty of Versailles',
+                'period_versailles_date': '1919',
+                'period_versailles_text': 'A peace treaty that officially ended WWI; it imposed harsh penalties on Germany and redrew European borders.',
+                'period_versailles_details': 'The Treaty of Versailles, signed on June 28, 1919, in the Palace of Versailles, France, officially ended World War I...',
+                'period_league_nations_title': 'League of Nations',
+                'period_league_nations_date': 'Founded in 1920',
+                'period_league_nations_text': 'An international organization created to maintain world peace after WWI, but it was ultimately ineffective and replaced by the UN.',
+                'period_league_nations_details': 'The League of Nations was established in 1920 as part of the Treaty of Versailles, with the primary goal of maintaining world peace...',
+                'period_roaring_twenties_title': 'Roaring Twenties',
+                'period_roaring_twenties_date': '1920s',
+                'period_roaring_twenties_text': 'A decade of economic prosperity, jazz music, cultural change, and new lifestyles, especially in the U.S. and Europe.',
+                'period_roaring_twenties_details': 'The Roaring Twenties, spanning the 1920s, was a decade of economic prosperity and cultural dynamism...',
+                'period_womens_suffrage_title': 'Women Suffrage',
+                'period_womens_suffrage_date': '

@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Uncover the rich history of Malaysia with HAF, from ancient kingdoms to modern nationhood">
+    <meta property="og:title" content="HAF - Malaysia History">
+    <meta property="og:description" content="Uncover the rich history of Malaysia with HAF, from ancient kingdoms to modern nationhood">
+    <meta property="og:image" content="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg==">
+    <title>HAF - Malaysia History</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --custom-light: #FBF7F0;
+            --papaya-whip: #FFEFD5;
+            --old-lace: #FDF5E6;
+            --linen: #FAF0E6;
+            --seashell: #FFF5EE;
+            --snow: #FFFAFA;
+            --ivory: #FFFFF0;
+            --charcoal: #333333;
+            --old-lace-opaque: rgba(253, 245, 230, 0.8);
+            --accent-blue: #B8E0FF;
+            --accent-pink: #FFD6E0;
+            --gradient: linear-gradient(135deg, var(--papaya-whip) 0%, var(--snow) 100%);
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--charcoal);
+            background: var(--custom-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        html[lang="zh"] body {
+            font-family: 'Noto Sans SC', 'Poppins', sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        nav.navbar {
+            background: var(--papaya-whip);
+            border-bottom: 2px solid var(--old-lace);
+            box-shadow: var(--shadow-normal);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+        }
+
+        .navbar-nav .nav-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            color: var(--charcoal);
+            margin: 0 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+            color: var(--old-lace);
+        }
+
+        .dropdown-menu {
+            background: var(--papaya-whip);
+            border: 1px solid var(--old-lace);
+        }
+
+        .dropdown-item {
+            font-family: 'Raleway', sans-serif;
+            color: var(--charcoal);
+            padding: 8px 20px;
+            transition: background 0.3s;
+        }
+
+        .dropdown-item:hover {
+            background: var(--old-lace);
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--gradient), url('images/hero_background.jpg') center/cover no-repeat fixed;
+            border-bottom: 5px solid var(--old-lace);
+            padding: 120px 20px;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--charcoal);
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .hero p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 300;
+            color: var(--charcoal);
+            max-width: 600px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease-in-out 0.5s;
+            animation-fill-mode: both;
+        }
+
+        section {
+            padding: 80px 0;
+            background: var(--linen);
+        }
+
+        section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--charcoal);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        section p.lead {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: #666;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 4px;
+            background: var(--old-lace);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin: 50px 0;
+            width: 48%;
+            padding: 25px;
+            background: var(--snow);
+            border: 5px solid var(--old-lace);
+            border-radius: 16px;
+            box-shadow: var(--shadow-normal);
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+        }
+
+        html[dir="rtl"] .timeline-item {
+            text-align: right;
+        }
+
+        .timeline-item:hover {
+            transform: scale(1.03) rotate(-1deg);
+            border-color: var(--papaya-whip);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .timeline-left {
+            left: 0;
+            text-align: right;
+            border-right: none;
+        }
+
+        .timeline-right {
+            left: 52%;
+            border-left: none;
+        }
+
+        html[dir="rtl"] .timeline-left {
+            text-align: left;
+            border-left: none;
+            border-right: 5px solid var(--old-lace);
+        }
+
+        html[dir="rtl"] .timeline-right {
+            border-right: none;
+            border-left: 5px solid var(--old-lace);
+        }
+
+        .timeline-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border: 2px solid var(--old-lace);
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .timeline-item h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.05rem;
+            color: #444;
+            background: var(--old-lace-opaque);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .timeline-item .details {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: var(--seashell);
+            border-radius: 5px;
+        }
+
+        .timeline-item.active .details {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        footer {
+            background: var(--papaya-whip);
+            border-top: 2px solid var(--old-lace);
+            padding: 30px 0;
+            text-align: center;
+        }
+
+        footer p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            color: var(--charcoal);
+            margin-bottom: 10px;
+        }
+
+        footer .social-icons a {
+            color: var(--charcoal);
+            font-size: 1.2rem;
+            margin: 0 10px;
+            transition: color 0.3s;
+        }
+
+        footer .social-icons a:hover {
+            color: var(--old-lace);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 8px var(--shadow);
+            margin-top: 24px;
+        }
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background: var(--secondary);
+            color: var(--primary);
+            box-shadow: 0 4px 16px var(--shadow);
+        }
+        .mt-4 {
+            margin-top: 1.5rem;
+        }
+
+        @media (max-width: 900px) {
+            .timeline-item {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            .timeline::before {
+                left: 25px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding: 20px 40px;
+            }
+
+            .timeline-item:nth-child(odd), .timeline-item:nth-child(even) {
+                border: 5px solid var(--old-lace);
+            }
+
+            .navbar-nav .nav-link {
+                margin: 10px 0;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .timeline-item {
+                border-left: 5px solid var(--old-lace);
+                border-right: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg" role="navigation" aria-label="Main navigation">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">HAF</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="history.html">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="world_history.html">World History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="malaysia_history.html">Malaysia History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="history_game.html">History Game</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="art.html">Art</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="fashion.html">Fashion</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-globe"></i> EN
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
+                            <li><a class="dropdown-item" href="#">English</a></li>
+                            <li><a class="dropdown-item" href="#">Bahasa Melayu</a></li>
+                            <li><a class="dropdown-item" href="#">中文 (简体)</a></li>
+                            <li><a class="dropdown-item" href="#">Español</a></li>
+                            <li><a class="dropdown-item" href="#">العربية</a></li>
+                            <li><a class="dropdown-item" href="#">Français</a></li>
+                            <li><a class="dropdown-item" href="#">Русский</a></li>
+                            <li><a class="dropdown-item" href="#">Português</a></li>
+                            <li><a class="dropdown-item" href="#">Deutsch</a></li>
+                            <li><a class="dropdown-item" href="#">日本語</a></li>
+                            <li><a class="dropdown-item" href="#">हिन्दी</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeIn">Malaysia Historical Saga</h1>
+            <p class="animate__animated animate__fadeIn">Discover Malaysia journey through time with HAF</p>
+            <a href="#timeline" class="btn btn-primary mt-4 animate__animated animate__fadeIn" data-animate-delay="1s">World History</a>
+        </div>
+    </section>
+
+    <section id="timeline" role="region" aria-label="Historical timeline">
+        <div class="container">
+            <h2>Malaysia History Timeline</h2>
+            <p class="lead">Explore key periods in Malaysia historical journey</p>
+            <div class="timeline">
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/1.png" alt="Ancient Malacca Sultanate (1400-1511) illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Ancient Malacca Sultanate (1400-1511)</h5>
+                    <p>The golden age of Malacca.</p>
+                    <div class="details">
+                        <p>The Malacca Sultanate was founded by Parameswara and became a major trading port. Its strategic location along the Strait of Malacca made it a crucial point for East-West maritime trade.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/2.png" alt="Portuguese Colonial Era (1511-1641) illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Portuguese Colonial Era (1511-1641)</h5>
+                    <p>Portuguese conquest and rule.</p>
+                    <div class="details">
+                        <p>The Portuguese captured Malacca in 1511, marking the beginning of European colonization in Malaysia. They built the A Famosa fortress and established Catholic missions.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/3.png" alt="Dutch Period (1641-1824) illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Dutch Period (1641-1824)</h5>
+                    <p>Dutch East India Company control.</p>
+                    <div class="details">
+                        <p>The Dutch defeated the Portuguese and controlled Malacca. They focused on maintaining trade monopolies and established administrative systems that influenced local governance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/4.png" alt="British Colonial Era (1824-1957) illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>British Colonial Era (1824-1957)</h5>
+                    <p>British expansion and influence.</p>
+                    <div class="details">
+                        <p>The British established the Straits Settlements and gradually extended their influence through treaties with local rulers. They introduced modern administration, education, and infrastructure.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/5.png" alt="1402: Malacca Sultanate Established illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1402: Malacca Sultanate Established</h5>
+                    <p>Malacca Sultanate was founded.</p>
+                    <div class="details">
+                        <p>Founded by Parameswara, the Malacca Sultanate quickly rose as a major trading port, attracting merchants from China, India, and the Middle East. Its strategic position and adoption of Islam made it a cultural and economic powerhouse.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/6.png" alt="Mid-15th Century: Peak of Malacca Sultanate illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Mid-15th Century: Peak of Malacca Sultanate</h5>
+                    <p>Malacca reached its cultural and economic peak.</p>
+                    <div class="details">
+                        <p>Under Sultan Mansur Shah, Malacca became a center of Islamic learning and trade, with a diverse population of traders from across Asia. The sultanate legal code, the Undang-Undang Melaka, influenced governance in the region.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/7.png" alt="1511: Portuguese Conquest of Malacca illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1511: Portuguese Conquest of Malacca</h5>
+                    <p>Portuguese conquered Malacca.</p>
+                    <div class="details">
+                        <p>Led by Afonso de Albuquerque, the Portuguese captured Malacca to control the spice trade, marking the start of European colonization in Malaysia. Their rule introduced Christianity and European architecture, such as the A Famosa fort.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/8.png" alt="1641: Dutch Takeover of Malacca illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1641: Dutch Takeover of Malacca</h5>
+                    <p>Dutch took control from the Portuguese.</p>
+                    <div class="details">
+                        <p>The Dutch, allied with Johor, overthrew the Portuguese to dominate trade in the region, focusing on commerce rather than cultural influence. Their legacy includes structures like the Stadthuys, reflecting Dutch colonial architecture.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/9.png" alt="Late 18th Century: British Occupation of Penang illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Late 18th Century: British Occupation of Penang</h5>
+                    <p>British occupied Penang.</p>
+                    <div class="details">
+                        <p>In 1786, Francis Light established Penang as a British trading post, marking the beginning of British influence in Malaysia. Penang free port status attracted diverse communities, shaping its multicultural identity.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/10.png" alt="1824: Anglo-Dutch Treaty illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1824: Anglo-Dutch Treaty</h5>
+                    <p>Anglo-Dutch Treaty was signed.</p>
+                    <div class="details">
+                        <p>The treaty resolved colonial disputes, ceding Malacca to the British and Bencoolen to the Dutch, solidifying British control over the Malay Peninsula. This agreement paved the way for the formation of the Straits Settlements.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/11.png" alt="1941: Japanese Invasion illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1941: Japanese Invasion</h5>
+                    <p>Japan invaded Malaysia.</p>
+                    <div class="details">
+                        <p>Japanese forces landed in Kelantan on December 8, 1941, quickly overpowering British defenses as part of their Southeast Asian campaign. The invasion disrupted colonial rule and introduced harsh wartime policies.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/12.png" alt="1942-1945: Japanese Occupation and Resistance illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1942-1945: Japanese Occupation and Resistance</h5>
+                    <p>Japan occupied Malaysia with local resistance.</p>
+                    <div class="details">
+                        <p>The Japanese occupation brought economic hardship and forced labor, but also spurred resistance movements like the Malayan People Anti-Japanese Army (MPAJA). This period fostered a sense of nationalism among locals.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/13.png" alt="1945: British Return after Japanese Surrender illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1945: British Return after Japanese Surrender</h5>
+                    <p>British returned after Japan surrender.</p>
+                    <div class="details">
+                        <p>Following Japan surrender in September 1945, the British re-established control through the British Military Administration. However, their return faced challenges due to growing anti-colonial sentiment.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/14.png" alt="1948: Malayan Communist Insurgency illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>1948: Malayan Communist Insurgency</h5>
+                    <p>Communist insurgency began.</p>
+                    <div class="details">
+                        <p>The Malayan Communist Party launched an armed struggle against British rule, leading to the Malayan Emergency (1948-1960). The conflict forced the British to implement social reforms to win local support.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/15.png" alt="16 Sep 1963: Formation of Malaysia illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>16 Sep 1963: Formation of Malaysia</h5>
+                    <p>Malaysia was officially formed.</p>
+                    <div class="details">
+                        <p>The Federation of Malaysia was established, uniting Malaya, Sabah, Sarawak, and initially Singapore, under Tunku Abdul Rahman's leadership. This union aimed to create a stronger, unified Southeast Asian nation.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/166.png" alt="9 Aug 1965: Separation of Singapore illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>9 Aug 1965: Separation of Singapore</h5>
+                    <p>Singapore separated from Malaysia.</p>
+                    <div class="details">
+                        <p>Due to political and economic differences, Singapore was expelled from Malaysia, becoming an independent nation under Lee Kuan Yew. The separation allowed both nations to pursue distinct paths of development.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/177.png" alt="31 Aug 1957: Independence of Malaya illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>31 Aug 1957: Independence of Malaya</h5>
+                    <p>Malaya gained independence.</p>
+                    <div class="details">
+                        <p>Malaya achieved independence from Britain, with Tunku Abdul Rahman as its first Prime Minister, marking a historic moment at Merdeka Stadium. The event symbolized the end of colonial rule and the start of self-governance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/18.png" alt="Mid-19th Century: Rubber Plantations illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Mid-19th Century: Rubber Plantations</h5>
+                    <p>Rubber plantations expanded.</p>
+                    <div class="details">
+                        <p>The introduction of rubber plantations by the British transformed Malaysia's economy, making it a leading global supplier. This industry attracted immigrant labor, particularly from India and China, shaping Malaysia's demographic diversity.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" dir="ltr">
+                    <img src="images/malaysiahistory/19.png" alt="Early 20th Century: Nationalist Movement illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>Early 20th Century: Nationalist Movement</h5>
+                    <p>Nationalist movements grew.</p>
+                    <div class="details">
+                        <p>Influenced by global anti-colonial ideas, groups like Kesatuan Melayu Muda (KMM) emerged, advocating for Malay rights and independence. These movements laid the groundwork for the push toward self-governance.</p>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" dir="ltr">
+                    <img src="images/malaysiahistory/20.png" alt="2025: Modern Malaysia illustration" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8DwHwAEhQGAaR9lOQAAAABJRU5ErkJggg=='">
+                    <h5>2025: Modern Malaysia</h5>
+                    <p>Malaysia thrives as a modern nation.</p>
+                    <div class="details">
+                        <p>By 2025, Malaysia has become a global economic player, balancing modernization with its rich cultural heritage. Initiatives like Vision 2020 have driven progress in technology, education, and infrastructure.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer role="contentinfo">
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        // Toggle timeline item details
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

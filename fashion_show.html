@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experience the glamour of fashion shows with HAF, showcasing the latest runway looks">
+    <title>HAF - Runway Looks</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Libre+Baskerville&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --color-1: #F8F1E9; /* Soft Cream */
+            --color-2: #F5ECE3; /* Light Linen */
+            --color-3: #FAF3E0; /* Pale Peach */
+            --color-4: #FDFAF6; /* Almost White */
+            --color-5: #F9F2ED; /* Warm Ivory */
+            --color-6: #FFF8F0; /* Light Blush */
+            --accent-pastel: linear-gradient(45deg, #E6D3D1, #D9E4DD); /* Pastel Pink to Mint */
+            --text-dark: #4A4A4A; /* Soft Gray */
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.05);
+            --shadow-hover: 0 6px 24px rgba(0,0,0,0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'EB Garamond', serif;
+            color: var(--text-dark);
+            direction: ltr;
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, var(--color-3) 0%, var(--color-5) 100%);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: linear-gradient(90deg, var(--color-1), var(--color-3));
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-normal);
+            transition: background 0.5s;
+        }
+
+        nav:hover {
+            background: linear-gradient(90deg, var(--color-3), var(--color-5));
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.1rem;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--accent-pastel);
+            background: linear-gradient(var(--accent-pastel));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav select {
+            padding: 8px;
+            font-family: 'Source Sans Pro', sans-serif;
+            background: var(--color-4);
+            border: 1px solid var(--color-2);
+            border-radius: 8px;
+            color: var(--text-dark);
+            margin-left: 20px;
+        }
+
+        .hero {
+            position: relative;
+            text-align: center;
+            padding: 150px 20px;
+            border-bottom: 5px solid var(--color-4);
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(250, 243, 224, 0.8), rgba(249, 242, 237, 0.8));
+        }
+
+        .hero video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.2;
+            filter: blur(2px);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            font-family: 'Libre Baskerville', serif;
+            animation: fadeInDown 1s;
+            color: var(--text-dark);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero p {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        section {
+            padding: 100px 0;
+            border-bottom: 2px solid var(--color-2);
+            background: linear-gradient(180deg, rgba(253, 250, 246, 0.9), rgba(248, 241, 233, 0.9));
+            transition: transform 0.5s ease;
+        }
+
+        section:hover {
+            transform: translateY(-10px);
+        }
+
+        section h2 {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            font-family: 'Libre Baskerville', serif;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        section p.subtitle {
+            text-align: center;
+            font-size: 1.6rem;
+            margin-bottom: 50px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .runway-container {
+            position: relative;
+            padding: 0 50px;
+        }
+
+        .runway-slider {
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--color-2) var(--color-4);
+            padding-bottom: 20px;
+            position: relative;
+        }
+
+        .runway-slider::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .runway-slider::-webkit-scrollbar-track {
+            background: var(--color-4);
+        }
+
+        .runway-slider::-webkit-scrollbar-thumb {
+            background: var(--color-2);
+            border-radius: 5px;
+        }
+
+        .runway-items {
+            display: flex;
+            flex-direction: row;
+            gap: 50px;
+            padding: 0 10px;
+            min-width: fit-content;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .runway-item {
+            flex: 0 0 750px;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(45deg, rgba(250, 243, 224, 0.3), rgba(249, 242, 237, 0.3));
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-normal);
+            transition: box-shadow 0.4s, transform 0.4s;
+            opacity: 0;
+            cursor: pointer;
+            border: 1px solid rgba(230, 211, 209, 0.2);
+        }
+
+        .runway-item.visible {
+            opacity: 1;
+            animation: bounceIn 0.6s;
+        }
+
+        .runway-item:hover {
+            box-shadow: var(--shadow-hover);
+            transform: translateY(-10px) scale(1.03);
+            border-color: rgba(217, 228, 221, 0.4);
+        }
+
+        .runway-content {
+            flex: 0 0 50%;
+            padding: 35px;
+            text-align: left;
+            background: rgba(253, 250, 246, 0.5);
+        }
+
+        .runway-content h3 {
+            font-size: 2rem;
+            font-family: 'Libre Baskerville', serif;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+            transition: color 0.3s;
+        }
+
+        .runway-content p {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .runway-content p.desc {
+            font-style: italic;
+            color: var(--text-dark);
+        }
+
+        .runway-content:hover h3, .runway-content:hover p {
+            color: #E6D3D1; /* Pastel Pink */
+        }
+
+        .runway-image {
+            flex: 0 0 50%;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .runway-image img {
+            width: 100%;
+            max-height: 450px;
+            object-fit: contain;
+            display: block;
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .runway-image:hover img {
+            transform: scale(1.15);
+            filter: brightness(1.1);
+        }
+
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(45deg, rgba(230, 211, 209, 0.7), rgba(217, 228, 221, 0.7));
+            color: var(--text-dark);
+            border: none;
+            padding: 20px;
+            font-size: 2.5rem;
+            cursor: pointer;
+            z-index: 100;
+            border-radius: 50%;
+            transition: transform 0.3s, background 0.3s;
+        }
+
+        .nav-arrow:hover {
+            transform: translateY(-50%) scale(1.1);
+            background: linear-gradient(45deg, rgba(230, 211, 209, 0.9), rgba(217, 228, 221, 0.9));
+        }
+
+        .nav-arrow.prev {
+            left: 10px;
+        }
+
+        .nav-arrow.next {
+            right: 10px;
+        }
+
+        .autoplay-button {
+            display: block;
+            margin: 25px auto;
+            padding: 12px 25px;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #E6D3D1, #D9E4DD);
+            border: none;
+            border-radius: 10px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            z-index: 100;
+        }
+
+        .autoplay-button:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--color-4), var(--color-6));
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 700px;
+            text-align: center;
+            color: var(--text-dark);
+            animation: zoomIn 0.6s;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .modal-content h3 {
+            font-size: 2.2rem;
+            margin-bottom: 15px;
+            color: #E6D3D1; /* Pastel Pink */
+        }
+
+        .modal-content p {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        .modal-close {
+            padding: 10px 20px;
+            font-family: 'Source Sans Pro', sans-serif;
+            background: linear-gradient(45deg, #E6D3D1, #D9E4DD);
+            border: none;
+            border-radius: 8px;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.1);
+        }
+
+        footer {
+            background: linear-gradient(90deg, var(--color-1), var(--color-3));
+            padding: 50px 0;
+            text-align: center;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-top: 30px;
+            border-top: 3px solid var(--color-2);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="fashion.html"><img src="images/fashionlogo.png" alt="Fashion Logo" style="height: 40px; width: auto;"></a>
+                <a href="history.html">History</a>
+                <a href="art.html">Art</a>
+                <a href="fashion.html">Fashion</a>
+                <a href="fashion_show.html">Fashion Shows</a>
+                <a href="fashion_brand.html">Fashion Brands</a>
+                <a href="fashion_game.html">Fashion Game</a>
+            </div>
+            <form>
+                <select name="lang">
+                    <option value="en" selected>English</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ar">العربية</option>
+                    <option value="es">Español</option>
+                    <option value="fr">Français</option>
+                    <option value="ru">Русский</option>
+                    <option value="pt">Português</option>
+                    <option value="de">Deutsch</option>
+                    <option value="hi">हिन्दी</option>
+                </select>
+            </form>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Fashion Show Highlights</h1>
+            <p>Discover the elegance of the runway with HAF</p>
+        </div>
+        <video autoplay muted loop>
+            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        </video>
+    </header>
+
+    <section class="runway">
+        <div class="container">
+            <h2>Runway Looks</h2>
+            <p class="subtitle">A curated collection of the season's most iconic designs</p>
+            <div class="runway-container">
+                <button class="nav-arrow prev">❮</button>
+                <div class="runway-slider" id="runwaySlider">
+                    <div class="runway-items">
+                        <div class="runway-item" data-index="1">
+                            <div class="runway-content">
+                                <h3>Evening Gown</h3>
+                                <p>Designer: Alexander McQueen</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">A stunning black evening gown with intricate lace details, embodying timeless elegance.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/1.jpg" alt="Evening Gown">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="2">
+                            <div class="runway-content">
+                                <h3>Street Chic</h3>
+                                <p>Designer: Virgil Abloh</p>
+                                <p>Year: 2021</p>
+                                <p class="desc">A bold streetwear-inspired look with vibrant colors and oversized silhouettes.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/2.jpg" alt="Street Chic">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="3">
+                            <div class="runway-content">
+                                <h3>Bohemian Rhapsody</h3>
+                                <p>Designer: Etro</p>
+                                <p>Year: 2022</p>
+                                <p class="desc">Flowing fabrics and earthy tones create a bohemian vibe with a modern twist.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/3.jpg" alt="Bohemian Rhapsody">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="4">
+                            <div class="runway-content">
+                                <h3>Minimalist Elegance</h3>
+                                <p>Designer: Jil Sander</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">Clean lines and neutral tones define this minimalist yet sophisticated look.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/4.jpg" alt="Minimalist Elegance">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="5">
+                            <div class="runway-content">
+                                <h3>Avant-Garde Couture</h3>
+                                <p>Designer: Iris van Herpen</p>
+                                <p>Year: 2024</p>
+                                <p class="desc">An avant-garde piece with 3D-printed elements and futuristic design.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/5.jpg" alt="Avant-Garde Couture">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="6">
+                            <div class="runway-content">
+                                <h3>Vintage Glam</h3>
+                                <p>Designer: Gucci</p>
+                                <p>Year: 2022</p>
+                                <p class="desc">A nod to the 70s with glamorous sequins and bold patterns.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/6.jpg" alt="Vintage Glam">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="7">
+                            <div class="runway-content">
+                                <h3>Bold Statement</h3>
+                                <p>Designer: Balenciaga</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">A dramatic look featuring oversized shapes and vibrant red hues.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/7.jpg" alt="Bold Statement">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="8">
+                            <div class="runway-content">
+                                <h3>Classic Tailoring</h3>
+                                <p>Designer: Ralph Lauren</p>
+                                <p>Year: 2021</p>
+                                <p class="desc">Timeless tailoring with a perfectly fitted suit in classic navy.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/8.jpg" alt="Classic Tailoring">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="9">
+                            <div class="runway-content">
+                                <h3>Floral Fantasy</h3>
+                                <p>Designer: Dolce & Gabbana</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">A romantic dress adorned with vibrant floral prints and delicate fabrics.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/9.jpg" alt="Floral Fantasy">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="10">
+                            <div class="runway-content">
+                                <h3>Modern Monochrome</h3>
+                                <p>Designer: Calvin Klein</p>
+                                <p>Year: 2022</p>
+                                <p class="desc">A sleek monochrome outfit with sharp lines and a minimalist aesthetic.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/10.jpg" alt="Modern Monochrome">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="11">
+                            <div class="runway-content">
+                                <h3>Romantic Layers</h3>
+                                <p>Designer: Chanel</p>
+                                <p>Year: 2024</p>
+                                <p class="desc">Soft layers of tulle and lace create a romantic, ethereal look.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/11.jpg" alt="Romantic Layers">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="12">
+                            <div class="runway-content">
+                                <h3>Urban Edge</h3>
+                                <p>Designer: Off-White</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">A mix of streetwear and high fashion with a gritty urban edge.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/12.jpg" alt="Urban Edge">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="13">
+                            <div class="runway-content">
+                                <h3>Glamorous Metallics</h3>
+                                <p>Designer: Versace</p>
+                                <p>Year: 2024</p>
+                                <p class="desc">Shiny metallic fabrics and bold cuts for a glamorous runway moment.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/13.jpg" alt="Glamorous Metallics">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="14">
+                            <div class="runway-content">
+                                <h3>Timeless Silhouettes</h3>
+                                <p>Designer: Dior</p>
+                                <p>Year: 2022</p>
+                                <p class="desc">Classic silhouettes with a modern twist, featuring soft pastel tones.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/14.jpg" alt="Timeless Silhouettes">
+                            </div>
+                        </div>
+                        <div class="runway-item" data-index="15">
+                            <div class="runway-content">
+                                <h3>Eclectic Patterns</h3>
+                                <p>Designer: Missoni</p>
+                                <p>Year: 2023</p>
+                                <p class="desc">A vibrant mix of patterns and textures for a bold, eclectic style.</p>
+                            </div>
+                            <div class="runway-image">
+                                <img src="images/fashionshow/15.jpg" alt="Eclectic Patterns">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="nav-arrow next">❯</button>
+                <button class="autoplay-button" id="autoplayButton">Start Autoplay</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-designer"></p>
+            <p id="modal-year"></p>
+            <p id="modal-desc"></p>
+            <button class="modal-close">Close</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Embed translations in JavaScript
+        const translations = {
+            'look_1_text': 'Evening Gown',
+            'look_1_designer': 'Designer: Alexander McQueen',
+            'look_1_year': 'Year: 2023',
+            'look_1_desc': 'A stunning black evening gown with intricate lace details, embodying timeless elegance.',
+            'look_2_text': 'Street Chic',
+            'look_2_designer': 'Designer: Virgil Abloh',
+            'look_2_year': 'Year: 2021',
+            'look_2_desc': 'A bold streetwear-inspired look with vibrant colors and oversized silhouettes.',
+            'look_3_text': 'Bohemian Rhapsody',
+            'look_3_designer': 'Designer: Etro',
+            'look_3_year': 'Year: 2022',
+            'look_3_desc': 'Flowing fabrics and earthy tones create a bohemian vibe with a modern twist.',
+            'look_4_text': 'Minimalist Elegance',
+            'look_4_designer': 'Designer: Jil Sander',
+            'look_4_year': 'Year: 2023',
+            'look_4_desc': 'Clean lines and neutral tones define this minimalist yet sophisticated look.',
+            'look_5_text': 'Avant-Garde Couture',
+            'look_5_designer': 'Designer: Iris van Herpen',
+            'look_5_year': 'Year: 2024',
+            'look_5_desc': 'An avant-garde piece with 3D-printed elements and futuristic design.',
+            'look_6_text': 'Vintage Glam',
+            'look_6_designer': 'Designer: Gucci',
+            'look_6_year': 'Year: 2022',
+            'look_6_desc': 'A nod to the 70s with glamorous sequins and bold patterns.',
+            'look_7_text': 'Bold Statement',
+            'look_7_designer': 'Designer: Balenciaga',
+            'look_7_year': 'Year: 2023',
+            'look_7_desc': 'A dramatic look featuring oversized shapes and vibrant red hues.',
+            'look_8_text': 'Classic Tailoring',
+            'look_8_designer': 'Designer: Ralph Lauren',
+            'look_8_year': 'Year: 2021',
+            'look_8_desc': 'Timeless tailoring with a perfectly fitted suit in classic navy.',
+            'look_9_text': 'Floral Fantasy',
+            'look_9_designer': 'Designer: Dolce & Gabbana',
+            'look_9_year': 'Year: 2023',
+            'look_9_desc': 'A romantic dress adorned with vibrant floral prints and delicate fabrics.',
+            'look_10_text': 'Modern Monochrome',
+            'look_10_designer': 'Designer: Calvin Klein',
+            'look_10_year': 'Year: 2022',
+            'look_10_desc': 'A sleek monochrome outfit with sharp lines and a minimalist aesthetic.',
+            'look_11_text': 'Romantic Layers',
+            'look_11_designer': 'Designer: Chanel',
+            'look_11_year': 'Year: 2024',
+            'look_11_desc': 'Soft layers of tulle and lace create a romantic, ethereal look.',
+            'look_12_text': 'Urban Edge',
+            'look_12_designer': 'Designer: Off-White',
+            'look_12_year': 'Year: 2023',
+            'look_12_desc': 'A mix of streetwear and high fashion with a gritty urban edge.',
+            'look_13_text': 'Glamorous Metallics',
+            'look_13_designer': 'Designer: Versace',
+            'look_13_year': 'Year: 2024',
+            'look_13_desc': 'Shiny metallic fabrics and bold cuts for a glamorous runway moment.',
+            'look_14_text': 'Timeless Silhouettes',
+            'look_14_designer': 'Designer: Dior',
+            'look_14_year': 'Year: 2022',
+            'look_14_desc': 'Classic silhouettes with a modern twist, featuring soft pastel tones.',
+            'look_15_text': 'Eclectic Patterns',
+            'look_15_designer': 'Designer: Missoni',
+            'look_15_year': 'Year: 2023',
+            'look_15_desc': 'A vibrant mix of patterns and textures for a bold, eclectic style.',
+            'autoplay_button': 'Start Autoplay',
+            'stop_autoplay_button': 'Stop Autoplay'
+        };
+        let autoScrollInterval = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const slider = document.getElementById('runwaySlider');
+            const prevButton = document.querySelector('.nav-arrow.prev');
+            const nextButton = document.querySelector('.nav-arrow.next');
+            const autoplayButton = document.getElementById('autoplayButton');
+            const modal = document.getElementById('modal');
+            const modalClose = document.querySelector('.modal-close');
+            const runwayItems = document.querySelectorAll('.runway-item');
+
+            // Scroll slider function
+            function scrollSlider(direction) {
+                const scrollAmount = 850;
+                slider.scrollLeft += direction * scrollAmount;
+            }
+
+            // Start autoplay
+            function startAutoplay() {
+                if (!autoScrollInterval) {
+                    autoScrollInterval = setInterval(() => scrollSlider(1), 3000);
+                    autoplayButton.textContent = translations['stop_autoplay_button'];
+                }
+            }
+
+            // Stop autoplay
+            function stopAutoplay() {
+                if (autoScrollInterval) {
+                    clearInterval(autoScrollInterval);
+                    autoScrollInterval = null;
+                    autoplayButton.textContent = translations['autoplay_button'];
+                }
+            }
+
+            // Open modal
+            function openModal(index) {
+                const title = document.getElementById('modal-title');
+                const designer = document.getElementById('modal-designer');
+                const year = document.getElementById('modal-year');
+                const desc = document.getElementById('modal-desc');
+
+                title.textContent = translations['look_' + index + '_text'];
+                designer.textContent = translations['look_' + index + '_designer'];
+                year.textContent = translations['look_' + index + '_year'];
+                desc.textContent = translations['look_' + index + '_desc'];
+
+                modal.style.display = 'flex';
+            }
+
+            // Close modal
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+
+            // Event listeners for buttons
+            prevButton.addEventListener('click', () => scrollSlider(-1));
+            nextButton.addEventListener('click', () => scrollSlider(1));
+            autoplayButton.addEventListener('click', () => {
+                if (autoScrollInterval) {
+                    stopAutoplay();
+                } else {
+                    startAutoplay();
+                }
+            });
+            modalClose.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Event listeners for runway items
+            runwayItems.forEach(item => {
+                item.addEventListener('click', () => {
+                    const index = item.getAttribute('data-index');
+                    openModal(index);
+                });
+            });
+
+            // Intersection observer for animation
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            runwayItems.forEach(item => observer.observe(item));
+        });
+    </script>
+</body>
+</html>

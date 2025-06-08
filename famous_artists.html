@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore the lives and masterpieces of famous artists with HAF, celebrating their timeless contributions to art.">
+    <title>HAF - Famous Artists Timeline</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Deva:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #d4a373;
+            --text-dark: #1a1a1a;
+            --text-light: #f5f5f5;
+            --bg-light: #fafafa;
+            --bg-dark: #1e1e1e;
+            --modal-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation Styles */
+        .navbar {
+            background: var(--primary-color);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .navbar-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar-logo span {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .navbar-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover,
+        .navbar-links a.active {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            color: var(--text-light);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Artists Section */
+        .artists-section {
+            padding: 80px 0;
+            overflow-y: visible;
+            height: auto;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        .artists-section h2 {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            padding: 20px 0;
+        }
+
+        .artists-section .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 40px;
+            padding: 10px 0;
+        }
+
+        .artist-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 80px 20px;
+            margin-bottom: 0;
+            transition: all 0.5s ease;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
+            position: relative;
+        }
+
+        .artist-image {
+            flex: 0 0 auto;
+            width: 100%;
+            max-width: 500px;
+            padding: 0 20px;
+            margin-bottom: 40px;
+            transition: transform 0.3s ease;
+        }
+
+        .artist-image:hover {
+            transform: scale(1.02);
+        }
+
+        .artist-image img {
+            width: 100%;
+            height: auto;
+            max-height: 600px;
+            object-fit: cover;
+            border-radius: 15px;
+            border: 3px solid var(--accent-color);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .artist-content {
+            flex: 1;
+            max-width: 800px;
+            padding: 0 30px;
+            cursor: pointer;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .artist-content:hover {
+            transform: translateY(-5px);
+        }
+
+        .artist-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .artist-content p {
+            font-size: 1.3rem;
+            color: #444;
+            background: var(--bg-light);
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            line-height: 1.8;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .artist-content .details {
+            display: none;
+        }
+
+        /* Navigation Arrows */
+        .nav-arrows {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 100;
+        }
+
+        .nav-arrow {
+            background: var(--primary-color);
+            color: var(--text-light);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .nav-arrow:hover {
+            background: var(--accent-color);
+            transform: scale(1.1);
+        }
+
+        .nav-arrow:active {
+            transform: scale(0.95);
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            position: fixed;
+            left: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .progress-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            opacity: 0.3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dot.active {
+            opacity: 1;
+            transform: scale(1.2);
+            background: var(--accent-color);
+        }
+
+        .progress-dot:hover {
+            transform: scale(1.2);
+            background: var(--accent-color);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-bg);
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--bg-light);
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 10px;
+            position: relative;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .modal-content img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 30px 0;
+            font-size: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar .container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navbar-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .artist-item {
+                min-height: 100vh;
+                padding: 60px 15px;
+            }
+
+            .artist-image {
+                max-width: 100%;
+            }
+
+            .artist-content {
+                padding: 0 15px;
+            }
+
+            .artist-content h3 {
+                font-size: 2.2rem;
+            }
+
+            .artist-content p {
+                font-size: 1.1rem;
+                padding: 20px;
+            }
+
+            .nav-arrows {
+                right: 20px;
+            }
+
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+
+            .progress-indicator {
+                left: 20px;
+            }
+
+            .progress-dot {
+                width: 10px;
+                height: 10px;
+            }
+
+            .modal-content {
+                margin: 20px;
+                padding: 20px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-logo">
+                <a href="art.html">
+                    <img src="images/artlogo.png" alt="HAF Logo">
+                </a>
+                <span>History Art Fashion</span>
+            </div>
+            <div class="navbar-links">
+                <a href="world_history.html">History</a>
+                <a href="art.html">Art</a>
+                <a href="world_paintings.html">World Paintings</a>
+                <a href="famous_artists.html" class="active">Famous Artists Timeline</a>
+                <a href="art_game.html">Art Game</a>
+                <a href="fashion.html">Fashion</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Masters of Art</h1>
+            <p>Discover the legacies of iconic artists who shaped the world of creativity.</p>
+        </div>
+    </section>
+
+    <section class="artists-section">
+        <div class="container">
+            <h2>Famous Artists Timeline</h2>
+            <p class="subtitle">A journey through the lives of artists who defined art history.</p>
+            <!-- Artist 1 -->
+            <div class="artist-item" data-artist-id="1">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/1.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Leonardo da Vinci">
+                </div>
+                <div class="artist-content">
+                    <h3>Leonardo da Vinci</h3>
+                    <p>Renaissance genius known for the Mona Lisa and The Last Supper.</p>
+                    <p class="details">Leonardo da Vinci (1452–1519) was a polymath whose work spanned art, science, and engineering. His iconic Mona Lisa is renowned for its enigmatic expression.</p>
+                </div>
+            </div>
+            <!-- Artist 2 -->
+            <div class="artist-item" data-artist-id="2">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/2.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Vincent van Gogh">
+                </div>
+                <div class="artist-content">
+                    <h3>Vincent van Gogh</h3>
+                    <p>Post-Impressionist painter famous for The Starry Night and Sunflowers.</p>
+                    <p class="details">Vincent van Gogh (1853–1890) created vibrant, emotional works despite personal struggles, influencing modern art with pieces like The Starry Night.</p>
+                </div>
+            </div>
+            <!-- Artist 3 -->
+            <div class="artist-item" data-artist-id="3">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/3.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Pablo Picasso">
+                </div>
+                <div class="artist-content">
+                    <h3>Pablo Picasso</h3>
+                    <p>Cubist pioneer who created Guernica and Les Demoiselles d'Avignon.</p>
+                    <p class="details">Pablo Picasso (1881–1973) revolutionized art with Cubism, producing groundbreaking works like Guernica that addressed social and political themes.</p>
+                </div>
+            </div>
+            <!-- Artist 4 -->
+            <div class="artist-item" data-artist-id="4">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/4.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Claude Monet">
+                </div>
+                <div class="artist-content">
+                    <h3>Claude Monet</h3>
+                    <p>Impressionist master renowned for Water Lilies and his garden paintings.</p>
+                    <p class="details">Claude Monet (1840–1926) captured light and atmosphere in his Impressionist works, with Water Lilies showcasing his mastery of color.</p>
+                </div>
+            </div>
+            <!-- Artist 5 -->
+            <div class="artist-item" data-artist-id="5">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/5.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Michelangelo">
+                </div>
+                <div class="artist-content">
+                    <h3>Michelangelo</h3>
+                    <p>Renaissance sculptor and painter known for the Sistine Chapel and David.</p>
+                    <p class="details">Michelangelo (1475–1564) created monumental works like the Sistine Chapel ceiling, blending art with profound human emotion.</p>
+                </div>
+            </div>
+            <!-- Artist 6 -->
+            <div class="artist-item" data-artist-id="6">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/6.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Rembrandt">
+                </div>
+                <div class="artist-content">
+                    <h3>Rembrandt</h3>
+                    <p>Dutch master known for The Night Watch and self-portraits.</p>
+                    <p class="details">Rembrandt (1606–1669) used light and shadow to create dramatic, introspective works, including The Night Watch.</p>
+                </div>
+            </div>
+            <!-- Artist 7 -->
+            <div class="artist-item" data-artist-id="7">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/7.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Frida Kahlo">
+                </div>
+                <div class="artist-content">
+                    <h3>Frida Kahlo</h3>
+                    <p>Mexican artist famous for her vivid self-portraits.</p>
+                    <p class="details">Frida Kahlo (1907–1954) expressed her pain and identity through vibrant, symbolic self-portraits, becoming a feminist icon.</p>
+                </div>
+            </div>
+            <!-- Artist 8 -->
+            <div class="artist-item" data-artist-id="8">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/8.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Gustav Klimt">
+                </div>
+                <div class="artist-content">
+                    <h3>Gustav Klimt</h3>
+                    <p>Symbolist painter known for The Kiss and golden artworks.</p>
+                    <p class="details">Gustav Klimt (1862–1918) blended symbolism and ornamentation in works like The Kiss, characterized by gold leaf and sensuality.</p>
+                </div>
+            </div>
+            <!-- Artist 9 -->
+            <div class="artist-item" data-artist-id="9">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/9.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Mary Cassatt">
+                </div>
+                <div class="artist-content">
+                    <h3>Mary Cassatt</h3>
+                    <p>Impressionist known for her paintings of motherhood.</p>
+                    <p class="details">Mary Cassatt (1844–1926) portrayed intimate family moments with soft colors, contributing significantly to Impressionism.</p>
+                </div>
+            </div>
+            <!-- Artist 10 -->
+            <div class="artist-item" data-artist-id="10">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/10.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Edvard Munch">
+                </div>
+                <div class="artist-content">
+                    <h3>Edvard Munch</h3>
+                    <p>Expressionist famous for The Scream.</p>
+                    <p class="details">Edvard Munch (1863–1944) captured psychological intensity in The Scream, a cornerstone of Expressionism.</p>
+                </div>
+            </div>
+            <!-- Artist 11 -->
+            <div class="artist-item" data-artist-id="11">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/11.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Henri Matisse">
+                </div>
+                <div class="artist-content">
+                    <h3>Henri Matisse</h3>
+                    <p>Fauvist leader known for vibrant colors and bold forms.</p>
+                    <p class="details">Henri Matisse (1869–1954) pioneered Fauvism, using bold colors to create dynamic compositions like The Dance.</p>
+                </div>
+            </div>
+            <!-- Artist 12 -->
+            <div class="artist-item" data-artist-id="12">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/12.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Georgia O'Keeffe">
+                </div>
+                <div class="artist-content">
+                    <h3>Georgia O'Keeffe</h3>
+                    <p>Modernist known for her large-scale flower paintings.</p>
+                    <p class="details">Georgia O'Keeffe (1887–1986) celebrated nature with magnified floral works and desert landscapes, defining American Modernism.</p>
+                </div>
+            </div>
+            <!-- Artist 13 -->
+            <div class="artist-item" data-artist-id="13">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/13.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Jackson Pollock">
+                </div>
+                <div class="artist-content">
+                    <h3>Jackson Pollock</h3>
+                    <p>Abstract Expressionist famous for drip paintings.</p>
+                    <p class="details">Jackson Pollock (1912–1956) revolutionized art with his energetic drip techniques, embodying Abstract Expressionism.</p>
+                </div>
+            </div>
+            <!-- Artist 14 -->
+            <div class="artist-item" data-artist-id="14">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/14.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Andy Warhol">
+                </div>
+                <div class="artist-content">
+                    <h3>Andy Warhol</h3>
+                    <p>Pop Art icon known for Campbell's Soup Cans.</p>
+                    <p class="details">Andy Warhol (1928–1987) redefined art with Pop Art, using consumer imagery in works like Campbell's Soup Cans.</p>
+                </div>
+            </div>
+            <!-- Artist 15 -->
+            <div class="artist-item" data-artist-id="15">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/15.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Salvador Dalí">
+                </div>
+                <div class="artist-content">
+                    <h3>Salvador Dalí</h3>
+                    <p>Surrealist known for The Persistence of Memory.</p>
+                    <p class="details">Salvador Dalí (1904–1989) explored the subconscious with dreamlike scenes, including melting clocks in The Persistence of Memory.</p>
+                </div>
+            </div>
+            <!-- Artist 16 -->
+            <div class="artist-item" data-artist-id="16">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/16.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Pierre-Auguste Renoir">
+                </div>
+                <div class="artist-content">
+                    <h3>Pierre-Auguste Renoir</h3>
+                    <p>Impressionist known for vibrant social scenes.</p>
+                    <p class="details">Pierre-Auguste Renoir (1841–1919) depicted joyful gatherings with rich colors in works like Luncheon of the Boating Party.</p>
+                </div>
+            </div>
+            <!-- Artist 17 -->
+            <div class="artist-item" data-artist-id="17">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/17.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Wassily Kandinsky">
+                </div>
+                <div class="artist-content">
+                    <h3>Wassily Kandinsky</h3>
+                    <p>Abstract art pioneer with colorful compositions.</p>
+                    <p class="details">Wassily Kandinsky (1866–1944) created some of the first abstract works, using color to express emotion and spirituality.</p>
+                </div>
+            </div>
+            <!-- Artist 18 -->
+            <div class="artist-item" data-artist-id="18">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/18.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Artemisia Gentileschi">
+                </div>
+                <div class="artist-content">
+                    <h3>Artemisia Gentileschi</h3>
+                    <p>Baroque painter known for dramatic works.</p>
+                    <p class="details">Artemisia Gentileschi (1593–1656) brought intensity and feminist perspectives to Baroque art with works like Judith Slaying Holofernes.</p>
+                </div>
+            </div>
+            <!-- Artist 19 -->
+            <div class="artist-item" data-artist-id="19">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/19.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Paul Cézanne">
+                </div>
+                <div class="artist-content">
+                    <h3>Paul Cézanne</h3>
+                    <p>Post-Impressionist who influenced modern art.</p>
+                    <p class="details">Paul Cézanne (1839–1906) bridged Impressionism and Cubism with structured compositions like The Card Players.</p>
+                </div>
+            </div>
+            <!-- Artist 20 -->
+            <div class="artist-item" data-artist-id="20">
+                <div class="artist-image">
+                    <img loading="lazy" src="images/famous_artists/20.jpg" onerror="this.onerror=null;this.src='images/placeholder.jpg'" alt="Johannes Vermeer">
+                </div>
+                <div class="artist-content">
+                    <h3>Johannes Vermeer</h3>
+                    <p>Dutch master known for Girl with a Pearl Earring.</p>
+                    <p class="details">Johannes Vermeer (1632–1675) created luminous, intimate scenes with meticulous detail, as seen in Girl with a Pearl Earring.</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-arrows">
+            <button class="nav-arrow" id="prevArtist" aria-label="Previous Artist">↑</button>
+            <button class="nav-arrow" id="nextArtist" aria-label="Next Artist">↓</button>
+        </div>
+        <div class="progress-indicator">
+            <div class="progress-dot" data-index="0" aria-label="Go to artist 1"></div>
+            <div class="progress-dot" data-index="1" aria-label="Go to artist 2"></div>
+            <div class="progress-dot" data-index="2" aria-label="Go to artist 3"></div>
+            <div class="progress-dot" data-index="3" aria-label="Go to artist 4"></div>
+            <div class="progress-dot" data-index="4" aria-label="Go to artist 5"></div>
+            <div class="progress-dot" data-index="5" aria-label="Go to artist 6"></div>
+            <div class="progress-dot" data-index="6" aria-label="Go to artist 7"></div>
+            <div class="progress-dot" data-index="7" aria-label="Go to artist 8"></div>
+            <div class="progress-dot" data-index="8" aria-label="Go to artist 9"></div>
+            <div class="progress-dot" data-index="9" aria-label="Go to artist 10"></div>
+            <div class="progress-dot" data-index="10" aria-label="Go to artist 11"></div>
+            <div class="progress-dot" data-index="11" aria-label="Go to artist 12"></div>
+            <div class="progress-dot" data-index="12" aria-label="Go to artist 13"></div>
+            <div class="progress-dot" data-index="13" aria-label="Go to artist 14"></div>
+            <div class="progress-dot" data-index="14" aria-label="Go to artist 15"></div>
+            <div class="progress-dot" data-index="15" aria-label="Go to artist 16"></div>
+            <div class="progress-dot" data-index="16" aria-label="Go to artist 17"></div>
+            <div class="progress-dot" data-index="17" aria-label="Go to artist 18"></div>
+            <div class="progress-dot" data-index="18" aria-label="Go to artist 19"></div>
+            <div class="progress-dot" data-index="19" aria-label="Go to artist 20"></div>
+        </div>
+    </section>
+
+    <div class="modal" id="artistModal">
+        <div class="modal-content">
+            <button class="modal-close" aria-label="Close Modal">Close</button>
+            <img id="modalImage" src="" alt="">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDetails"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const modal = document.getElementById('artistModal');
+        const modalImage = document.getElementById('modalImage');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDetails = document.getElementById('modalDetails');
+        const modalClose = document.querySelector('.modal-close');
+        const artistItems = document.querySelectorAll('.artist-content');
+        const prevButton = document.getElementById('prevArtist');
+        const nextButton = document.getElementById('nextArtist');
+        const artistsSection = document.querySelector('.artists-section');
+        const progressDots = document.querySelectorAll('.progress-dot');
+        let currentIndex = 0;
+        let isScrolling = false;
+        let scrollTimeout = null;
+        let lastScrollY = window.scrollY;
+        let userScroll = false;
+
+        // Artist data (hardcoded for English)
+        const artistData = {
+            1: {
+                title: "Leonardo da Vinci",
+                details: "Leonardo da Vinci (1452–1519) was a polymath whose work spanned art, science, and engineering. His iconic Mona Lisa is renowned for its enigmatic expression."
+            },
+            2: {
+                title: "Vincent van Gogh",
+                details: "Vincent van Gogh (1853–1890) created vibrant, emotional works despite personal struggles, influencing modern art with pieces like The Starry Night."
+            },
+            3: {
+                title: "Pablo Picasso",
+                details: "Pablo Picasso (1881–1973) revolutionized art with Cubism, producing groundbreaking works like Guernica that addressed social and political themes."
+            },
+            4: {
+                title: "Claude Monet",
+                details: "Claude Monet (1840–1926) captured light and atmosphere in his Impressionist works, with Water Lilies showcasing his mastery of color."
+            },
+            5: {
+                title: "Michelangelo",
+                details: "Michelangelo (1475–1564) created monumental works like the Sistine Chapel ceiling, blending art with profound human emotion."
+            },
+            6: {
+                title: "Rembrandt",
+                details: "Rembrandt (1606–1669) used light and shadow to create dramatic, introspective works, including The Night Watch."
+            },
+            7: {
+                title: "Frida Kahlo",
+                details: "Frida Kahlo (1907–1954) expressed her pain and identity through vibrant, symbolic self-portraits, becoming a feminist icon."
+            },
+            8: {
+                title: "Gustav Klimt",
+                details: "Gustav Klimt (1862–1918) blended symbolism and ornamentation in works like The Kiss, characterized by gold leaf and sensuality."
+            },
+            9: {
+                title: "Mary Cassatt",
+                details: "Mary Cassatt (1844–1926) portrayed intimate family moments with soft colors, contributing significantly to Impressionism."
+            },
+            10: {
+                title: "Edvard Munch",
+                details: "Edvard Munch (1863–1944) captured psychological intensity in The Scream, a cornerstone of Expressionism."
+            },
+            11: {
+                title: "Henri Matisse",
+                details: "Henri Matisse (1869–1954) pioneered Fauvism, using bold colors to create dynamic compositions like The Dance."
+            },
+            12: {
+                title: "Georgia O'Keeffe",
+                details: "Georgia O'Keeffe (1887–1986) celebrated nature with magnified floral works and desert landscapes, defining American Modernism."
+            },
+            13: {
+                title: "Jackson Pollock",
+                details: "Jackson Pollock (1912–1956) revolutionized art with his energetic drip techniques, embodying Abstract Expressionism."
+            },
+            14: {
+                title: "Andy Warhol",
+                details: "Andy Warhol (1928–1987) redefined art with Pop Art, using consumer imagery in works like Campbell's Soup Cans."
+            },
+            15: {
+                title: "Salvador Dalí",
+                details: "Salvador Dalí (1904–1989) explored the subconscious with dreamlike scenes, including melting clocks in The Persistence of Memory."
+            },
+            16: {
+                title: "Pierre-Auguste Renoir",
+                details: "Pierre-Auguste Renoir (1841–1919) depicted joyful gatherings with rich colors in works like Luncheon of the Boating Party."
+            },
+            17: {
+                title: "Wassily Kandinsky",
+                details: "Wassily Kandinsky (1866–1944) created some of the first abstract works, using color to express emotion and spirituality."
+            },
+            18: {
+                title: "Artemisia Gentileschi",
+                details: "Artemisia Gentileschi (1593–1656) brought intensity and feminist perspectives to Baroque art with works like Judith Slaying Holofernes."
+            },
+            19: {
+                title: "Paul Cézanne",
+                details: "Paul Cézanne (1839–1906) bridged Impressionism and Cubism with structured compositions like The Card Players."
+            },
+            20: {
+                title: "Johannes Vermeer",
+                details: "Johannes Vermeer (1632–1675) created luminous, intimate scenes with meticulous detail, as seen in Girl with a Pearl Earring."
+            }
+        };
+
+        // Update progress dots
+        function updateProgressDots(index) {
+            progressDots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        // Get element's offsetTop relative to document
+        function getAbsoluteOffsetTop(element) {
+            let offset = 0;
+            while (element) {
+                offset += element.offsetTop;
+                element = element.offsetParent;
+            }
+            return offset;
+        }
+
+        // Smooth scroll to artist
+        function scrollToArtist(index) {
+            if (isScrolling) return;
+            isScrolling = true;
+
+            const artists = document.querySelectorAll('.artist-item');
+            if (artists[index]) {
+                const targetArtist = artists[index];
+                const navbar = document.querySelector('.navbar');
+                const navbarHeight = navbar ? navbar.offsetHeight : 0;
+                const viewportHeight = window.innerHeight;
+                const availableHeight = viewportHeight - navbarHeight;
+                const imageDiv = targetArtist.querySelector('.artist-image');
+                const img = imageDiv ? imageDiv.querySelector('img') : null;
+                const title = targetArtist.querySelector('.artist-content h3');
+                let imgOffsetTop = img ? getAbsoluteOffsetTop(img) : 0;
+                let imgHeight = img ? img.offsetHeight : 0;
+                let titleHeight = title ? title.offsetHeight : 0;
+                let totalHeight = imgHeight + titleHeight + 20;
+                let targetPosition;
+                if (totalHeight <= availableHeight) {
+                    targetPosition = imgOffsetTop + (totalHeight / 2) - (navbarHeight + availableHeight / 2);
+                } else {
+                    let minTop = imgOffsetTop - navbarHeight;
+                    let maxScroll = (imgOffsetTop + imgHeight + titleHeight + 20) - (navbarHeight + availableHeight);
+                    targetPosition = Math.min(minTop, maxScroll);
+                }
+                const currentPosition = window.pageYOffset;
+                const distance = targetPosition - currentPosition;
+                const duration = 800;
+                let start = null;
+
+                function animation(currentTime) {
+                    if (start === null) start = currentTime;
+                    const timeElapsed = currentTime - start;
+                    const progress = Math.min(timeElapsed / duration, 1);
+
+                    const easeInOutCubic = progress => {
+                        return progress < 0.5
+                            ? 4 * progress * progress * progress
+                            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+                    };
+
+                    window.scrollTo(0, currentPosition + distance * easeInOutCubic(progress));
+
+                    if (timeElapsed < duration) {
+                        requestAnimationFrame(animation);
+                    } else {
+                        window.scrollTo(0, targetPosition);
+                        isScrolling = false;
+                        currentIndex = index;
+                        updateProgressDots(index);
+                    }
+                }
+
+                requestAnimationFrame(animation);
+            }
+        }
+
+        // Navigation buttons
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                scrollToArtist(currentIndex - 1);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            const artists = document.querySelectorAll('.artist-item');
+            if (currentIndex < artists.length - 1) {
+                scrollToArtist(currentIndex + 1);
+            }
+        });
+
+        // Progress dots navigation
+        progressDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                scrollToArtist(index);
+            });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (isScrolling) return;
+
+            if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                if (currentIndex > 0) {
+                    scrollToArtist(currentIndex - 1);
+                }
+            } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                const artists = document.querySelectorAll('.artist-item');
+                if (currentIndex < artists.length - 1) {
+                    scrollToArtist(currentIndex + 1);
+                }
+            } else if (e.key >= '1' && e.key <= '9') {
+                const num = parseInt(e.key) - 1;
+                if (num >= 0 && num < 9) {
+                    scrollToArtist(num);
+                }
+            } else if (e.key === '0') {
+                scrollToArtist(9);
+            }
+        });
+
+        // Scroll detection with Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const artistItem = entry.target;
+                    const index = Array.from(document.querySelectorAll('.artist-item')).indexOf(artistItem);
+                    if (index !== -1 && !isScrolling) {
+                        currentIndex = index;
+                        updateProgressDots(index);
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.artist-item').forEach(item => {
+            observer.observe(item);
+        });
+
+        // Touch swipe support
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        artistsSection.addEventListener('touchstart', (e) => {
+            touchStartY = e.touches[0].clientY;
+        });
+
+        artistsSection.addEventListener('touchend', (e) => {
+            touchEndY = e.changedTouches[0].clientY;
+            const diff = touchStartY - touchEndY;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0 && currentIndex < document.querySelectorAll('.artist-item').length - 1) {
+                    scrollToArtist(currentIndex + 1);
+                } else if (diff < 0 && currentIndex > 0) {
+                    scrollToArtist(currentIndex - 1);
+                }
+            }
+        });
+
+        // Initialize first dot as active
+        updateProgressDots(0);
+
+        // Modal handling
+        artistItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const artistItem = item.closest('.artist-item');
+                const artistId = artistItem.getAttribute('data-artist-id');
+                const artist = artistData[artistId];
+
+                modalImage.src = `images/famous_artists/${artistId}.jpg`;
+                modalImage.alt = artist.title;
+                modalTitle.textContent = artist.title;
+                modalDetails.textContent = artist.details;
+                modal.style.display = 'block';
+            });
+        });
+
+        modalClose.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.style.display === 'block') {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Snap to nearest artist after scroll
+        function snapToNearestArtist() {
+            const artists = document.querySelectorAll('.artist-item');
+            const navbar = document.querySelector('.navbar');
+            const navbarHeight = navbar ? navbar.offsetHeight : 0;
+            const viewportHeight = window.innerHeight;
+            const availableHeight = viewportHeight - navbarHeight;
+            const scrollY = window.scrollY;
+            let minDiff = Infinity;
+            let nearestIndex = 0;
+            artists.forEach((item, idx) => {
+                const imageDiv = item.querySelector('.artist-image');
+                const img = imageDiv ? imageDiv.querySelector('img') : null;
+                const title = item.querySelector('.artist-content h3');
+                let imgOffsetTop = img ? getAbsoluteOffsetTop(img) : 0;
+                let imgHeight = img ? img.offsetHeight : 0;
+                let titleHeight = title ? title.offsetHeight : 0;
+                let totalHeight = imgHeight + titleHeight + 20;
+                let itemTarget;
+                if (totalHeight <= availableHeight) {
+                    itemTarget = imgOffsetTop + (totalHeight / 2) - (navbarHeight + availableHeight / 2);
+                } else {
+                    let minTop = imgOffsetTop - navbarHeight;
+                    let maxScroll = (imgOffsetTop + imgHeight + titleHeight + 20) - (navbarHeight + availableHeight);
+                    itemTarget = Math.min(minTop, maxScroll);
+                }
+                const diff = Math.abs(scrollY - itemTarget);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    nearestIndex = idx;
+                }
+            });
+            if (nearestIndex !== currentIndex) {
+                currentIndex = nearestIndex;
+                updateProgressDots(currentIndex);
+            }
+            scrollToArtist(nearestIndex);
+        }
+
+        // Listen for scroll events and snap after user stops scrolling
+        window.addEventListener('scroll', () => {
+            if (isScrolling) return;
+            userScroll = true;
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                if (userScroll) {
+                    snapToNearestArtist();
+                    userScroll = false;
+                }
+            }, 120);
+        });
+
+        // Prevent native scroll-snap
+        document.querySelector('.artists-section').style.scrollSnapType = 'none';
+        document.querySelectorAll('.artist-item').forEach(item => {
+            item.style.scrollSnapAlign = 'none';
+            item.style.scrollSnapStop = 'none';
+        });
+    </script>
+</body>
+</html>

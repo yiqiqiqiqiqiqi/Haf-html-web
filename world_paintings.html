@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover iconic world paintings with HAF, showcasing timeless masterpieces">
+    <title>HAF - Iconic Paintings</title>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;700&family=Source+Sans+Pro:wght@400;700&family=Libre+Baskerville&family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --custom-light: #FBF7F0;
+            --papaya-whip: #FFEFD5;
+            --old-lace: #FDF5E6;
+            --linen: #FAF0E6;
+            --seashell: #FFF5EE;
+            --snow: #FFFAFA;
+            --ivory: #FFFFF0;
+            --charcoal: #333333;
+            --old-lace-opaque: rgba(253, 245, 230, 0.8);
+            --accent-blue: #B8E0FF;
+            --accent-pink: #FFD6E0;
+            --gradient: linear-gradient(135deg, var(--papaya-whip) 0%, var(--snow) 100%);
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--charcoal);
+            direction: ltr;
+            line-height: 1.6;
+            min-height: 100vh;
+            background: var(--custom-light);
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            background: var(--papaya-whip);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-normal);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: var(--charcoal);
+            text-decoration: none;
+            margin: 0 12px;
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        nav a:hover {
+            color: var(--ivory);
+        }
+
+        nav select {
+            padding: 10px;
+            font-family: 'Raleway', sans-serif;
+            background: var(--old-lace);
+            border: 1px solid var(--linen);
+            border-radius: 4px;
+            color: var(--charcoal);
+            font-size: 1.1rem;
+        }
+
+        .hero {
+            background: var(--gradient);
+            color: var(--charcoal);
+            text-align: center;
+            padding: 100px 20px;
+            border-bottom: 5px solid var(--ivory);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-family: 'Libre Baskerville', serif;
+            animation: fadeInDown 1s;
+            color: var(--charcoal);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+        }
+
+        section {
+            padding: 60px 0;
+            border-bottom: 1px solid var(--ivory);
+        }
+
+        section h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--papaya-whip);
+            font-family: 'Libre Baskerville', serif;
+        }
+
+        section p.subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 8px;
+            background: linear-gradient(45deg, rgba(255, 214, 232, 0.3), rgba(209, 245, 255, 0.3));
+            padding: 10px;
+        }
+
+        .frame {
+            position: relative;
+            padding: 15px;
+            background: linear-gradient(45deg, #d4af37, #f0c05a);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3), inset 0 0 5px rgba(255,255,255,0.5);
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .frame:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            filter: brightness(1.1);
+            transition: transform 0.3s;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .gallery-item img:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item .text-container {
+            padding: 10px;
+            background: rgba(255, 251, 245, 0.8);
+            text-align: center;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+
+        .gallery-item p.title {
+            color: var(--charcoal);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-item p.description {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .single-painting {
+            display: none;
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .single-painting .frame {
+            padding: 20px;
+            background: linear-gradient(45deg, #d4af37, #f0c05a, #d4af37);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        .single-painting img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        .single-painting .text-container {
+            background: rgba(255, 251, 245, 0.9);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .navigation-buttons {
+            margin: 20px 0;
+        }
+
+        .navigation-buttons button {
+            padding: 10px 20px;
+            margin: 0 10px;
+            background: var(--papaya-whip);
+            border: none;
+            border-radius: 4px;
+            color: var(--charcoal);
+            font-family: 'Source Sans Pro', sans-serif;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .navigation-buttons button:hover {
+            background: var(--ivory);
+        }
+
+        .view-toggle {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .view-toggle button {
+            padding: 10px 20px;
+            background: var(--ivory);
+            border: none;
+            border-radius: 4px;
+            color: var(--charcoal);
+            font-family: 'Source Sans Pro', sans-serif;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .view-toggle button:hover {
+            background: var(--accent-pink);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            overflow: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #fffbf5, #f0f0f0);
+            max-width: 900px;
+            width: 90%;
+            border-radius: 12px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #d4af37;
+            animation: fadeIn 0.4s ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-content:hover {
+            transform: scale(1.02);
+        }
+
+        .modal-content img {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 3px solid #d4af37;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .modal-content h3 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2rem;
+            color: var(--charcoal);
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 12px;
+        }
+
+        .modal-content .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--charcoal);
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-content .close:hover {
+            color: var(--ivory);
+        }
+
+        footer {
+            background: var(--ivory);
+            color: var(--charcoal);
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-item img {
+                height: 150px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .single-painting img {
+                max-height: 300px;
+            }
+
+            .modal-content img {
+                max-height: 450px;
+            }
+
+            .modal-content {
+                padding: 20px;
+            }
+
+            .modal-content h3 {
+                font-size: 1.5rem;
+            }
+
+            .modal-content p {
+                font-size: 1rem;
+            }
+        }
+
+        .nav-logo {
+            height: 40px;
+            margin-right: 20px;
+            vertical-align: middle;
+        }
+
+        .logo-link {
+            display: inline-block;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div>
+                <a href="history.html" class="logo-link">
+                    <img src="images/historylogo" alt="HAF Logo" class="nav-logo">
+                </a>
+                <a href="history.html">History</a>
+                <a href="art.html">Art</a>
+                <a href="world_paintings.html">World Paintings</a>
+                <a href="famous_artists.html">Famous Artists</a>
+                <a href="art_game.html">Art Game</a>
+                <a href="fashion.html">Fashion</a>
+            </div>
+            <select id="langSelect">
+                <option value="en" selected>English</option>
+                <option value="zh">中文</option>
+                <option value="es">Español</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+                <option value="ru">Русский</option>
+                <option value="pt">Português</option>
+                <option value="de">Deutsch</option>
+                <option value="ja">日本語</option>
+                <option value="hi">हिन्दी</option>
+                <option value="ms">Bahasa Malaysia</option>
+            </select>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeInDown">World Paintings Gallery</h1>
+            <p>Explore the beauty of renowned artworks with HAF</p>
+        </div>
+    </header>
+
+    <section id="gallery">
+        <div class="container">
+            <h2>Iconic Paintings</h2>
+            <p class="subtitle">A curated collection of world-famous paintings</p>
+            <div class="view-toggle">
+                <button id="viewSingleBtn">View Single Painting</button>
+                <button id="viewGridBtn">View Gallery Grid</button>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/1.jpg" alt="Mona Lisa - Leonardo da Vinci" data-index="1" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Mona Lisa - Leonardo da Vinci</p>
+                        <p class="description">Italian Renaissance masterpiece, renowned for its mysterious smile and gaze-tracking effect, one of the most famous portraits.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/2.jpg" alt="The Last Supper - Leonardo da Vinci" data-index="2" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Last Supper - Leonardo da Vinci</p>
+                        <p class="description">Depicts Jesus and the twelve apostles at their final meal, with intricate composition and intense emotional tension.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/3.jpg" alt="Starry Night - Vincent van Gogh" data-index="3" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Starry Night - Vincent van Gogh</p>
+                        <p class="description">Captures swirling night skies with dynamic energy and emotion, a hallmark of Post-Impressionism.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/4.jpg" alt="Sunflowers - Vincent van Gogh" data-index="4" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Sunflowers - Vincent van Gogh</p>
+                        <p class="description">A series showcasing vibrant, passionate life force and personal emotion through vivid yellow blooms.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/5.jpeg" alt="The Scream - Edvard Munch" data-index="5" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Scream - Edvard Munch</p>
+                        <p class="description">Symbolist masterpiece, depicting existential anxiety through a distorted figure and terrified expression.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/6.jpg" alt="Liberty Leading the People - Eugène Delacroix" data-index="6" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Liberty Leading the People - Eugène Delacroix</p>
+                        <p class="description">Commemorates the 1830 French July Revolution, with Liberty holding the flag, exuding powerful impact.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/7.jpg" alt="Napoleon Crossing the Alps - Jacques-Louis David" data-index="7" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Napoleon Crossing the Alps - Jacques-Louis David</p>
+                        <p class="description">Neoclassical work emphasizing Napoleon's heroic and commanding presence.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/8.webp" alt="A Sunday Afternoon on the Island of La Grande Jatte - Georges Seurat" data-index="8" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">A Sunday Afternoon on the Island of La Grande Jatte - Georges Seurat</p>
+                        <p class="description">Pointillist classic, using tiny dots to portray modern urban leisure.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/9.jpg" alt="The Creation of Adam - Michelangelo" data-index="9" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Creation of Adam - Michelangelo</p>
+                        <p class="description">Sistine Chapel ceiling fresco, showing God and Adam's fingers nearly touching, symbolizing the spark of life.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/10.jpg" alt="The Birth of Venus - Sandro Botticelli" data-index="10" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Birth of Venus - Sandro Botticelli</p>
+                        <p class="description">Early Renaissance work depicting the mythological birth of Venus emerging from the sea.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/11.jpg" alt="Guernica - Pablo Picasso" data-index="11" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Guernica - Pablo Picasso</p>
+                        <p class="description">Anti-war protest against the bombing of Guernica, using stark monochrome and chaotic forms.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/12.jpeg" alt="The Angelus - Jean-François Millet" data-index="12" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Angelus - Jean-François Millet</p>
+                        <p class="description">Portrays peasant farmers praying in the fields, imbued with religious and dignified labor themes.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/13.webp" alt="The Gleaners - Jean-François Millet" data-index="13" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Gleaners - Jean-François Millet</p>
+                        <p class="description">Shows poor women gathering leftover grain, symbolizing labor and social class.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/14.jpeg" alt="The Fifer - Édouard Manet" data-index="14" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Fifer - Édouard Manet</p>
+                        <p class="description">Impressionist work with flat backgrounds and bold colors, depicting a young military musician.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/15.jpeg" alt="The Dance Class - Edgar Degas" data-index="15" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Dance Class - Edgar Degas</p>
+                        <p class="description">Captures ballet rehearsal moments, highlighting movement and urban female life.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/16.jpg" alt="The Night Watch - Rembrandt" data-index="16" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Night Watch - Rembrandt</p>
+                        <p class="description">Dutch Golden Age masterpiece, using dramatic light to depict a civic guard patrol.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/17.jpeg" alt="Girl with a Pearl Earring - Johannes Vermeer" data-index="17" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Girl with a Pearl Earring - Johannes Vermeer</p>
+                        <p class="description">Known as the "Mona Lisa of the North," celebrated for its light and enigmatic expression.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/18.jpeg" alt="American Gothic - Grant Wood" data-index="18" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">American Gothic - Grant Wood</p>
+                        <p class="description">Satirical yet realistic portrayal of rural American life, a cultural icon.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/19.jpeg" alt="Café Terrace at Night - Vincent van Gogh" data-index="19" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">Café Terrace at Night - Vincent van Gogh</p>
+                        <p class="description">Vividly colored depiction of a nighttime café in Arles, France, with emotional resonance.</p>
+                    </div>
+                </div>
+                <div class="gallery-item animate__animated animate__fadeIn">
+                    <div class="frame">
+                        <img src="images/monalisa/20.jpeg" alt="The Red Room - Henri Matisse" data-index="20" class="painting-img">
+                    </div>
+                    <div class="text-container">
+                        <p class="title">The Red Room - Henri Matisse</p>
+                        <p class="description">Fauvist work with decorative composition and rhythmic color patterns.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="single-painting" id="singlePainting">
+                <div class="frame">
+                    <img id="singleImg" src="" alt="">
+                </div>
+                <div class="text-container">
+                    <p class="title" id="singleTitle"></p>
+                    <p class="description" id="singleDesc"></p>
+                </div>
+                <div class="navigation-buttons">
+                    <button id="prevBtn">Previous</button>
+                    <button id="nextBtn">Next</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <img id="modalImg" src="" alt="">
+            <h3 id="modalTitle"></h3>
+            <p id="modalDesc"></p>
+            <p id="modalArtist"></p>
+            <p id="modalYear"></p>
+            <p id="modalMedium"></p>
+            <p id="modalLocation"></p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 History, Art & Fashion. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            'en': {
+                'meta_description': 'Discover iconic world paintings with HAF, showcasing timeless masterpieces',
+                'hero_title': 'World Paintings Gallery',
+                'hero_subtitle': 'Explore the beauty of renowned artworks with HAF',
+                'nav_history': 'History',
+                'nav_art': 'Art',
+                'nav_world_paintings': 'World Paintings',
+                'nav_famous_artists': 'Famous Artists',
+                'nav_art_game': 'Art Game',
+                'nav_fashion': 'Fashion',
+                'nav_shop': 'Shop',
+                'gallery_title': 'Iconic Paintings',
+                'gallery_subtitle': 'A curated collection of world-famous paintings',
+                'modal_close': 'Close',
+                'modal_artist': 'Artist',
+                'modal_year': 'Year',
+                'modal_medium': 'Medium',
+                'modal_location': 'Location',
+                'view_single': 'View Single Painting',
+                'view_grid': 'View Gallery Grid',
+                'prev_painting': 'Previous',
+                'next_painting': 'Next',
+                'painting_1_text': 'Mona Lisa - Leonardo da Vinci',
+                'painting_1_desc': 'Italian Renaissance masterpiece, renowned for its mysterious smile and gaze-tracking effect, one of the most famous portraits.',
+                'painting_1_artist': 'Leonardo da Vinci',
+                'painting_1_year': '1503–1506',
+                'painting_1_medium': 'Oil on poplar panel',
+                'painting_1_location': 'Louvre Museum, Paris',
+                'painting_2_text': 'The Last Supper - Leonardo da Vinci',
+                'painting_2_desc': 'Depicts Jesus and the twelve apostles at their final meal, with intricate composition and intense emotional tension.',
+                'painting_2_artist': 'Leonardo da Vinci',
+                'painting_2_year': '1495–1498',
+                'painting_2_medium': 'Tempera on gesso',
+                'painting_2_location': 'Santa Maria delle Grazie, Milan',
+                'painting_3_text': 'Starry Night - Vincent van Gogh',
+                'painting_3_desc': 'Captures swirling night skies with dynamic energy and emotion, a hallmark of Post-Impressionism.',
+                'painting_3_artist': 'Vincent van Gogh',
+                'painting_3_year': '1889',
+                'painting_3_medium': 'Oil on canvas',
+                'painting_3_location': 'Museum of Modern Art, New York',
+                'painting_4_text': 'Sunflowers - Vincent van Gogh',
+                'painting_4_desc': 'A series showcasing vibrant, passionate life force and personal emotion through vivid yellow blooms.',
+                'painting_4_artist': 'Vincent van Gogh',
+                'painting_4_year': '1888',
+                'painting_4_medium': 'Oil on canvas',
+                'painting_4_location': 'National Gallery, London',
+                'painting_5_text': 'The Scream - Edvard Munch',
+                'painting_5_desc': 'Symbolist masterpiece, depicting existential anxiety through a distorted figure and terrified expression.',
+                'painting_5_artist': 'Edvard Munch',
+                'painting_5_year': '1893',
+                'painting_5_medium': 'Tempera and pastel on cardboard',
+                'painting_5_location': 'National Gallery, Oslo',
+                'painting_6_text': 'Liberty Leading the People - Eugène Delacroix',
+                'painting_6_desc': 'Commemorates the 1830 French July Revolution, with Liberty holding the flag, exuding powerful impact.',
+                'painting_6_artist': 'Eugène Delacroix',
+                'painting_6_year': '1830',
+                'painting_6_medium': 'Oil on canvas',
+                'painting_6_location': 'Louvre Museum, Paris',
+                'painting_7_text': 'Napoleon Crossing the Alps - Jacques-Louis David',
+                'painting_7_desc': 'Neoclassical work emphasizing Napoleon\'s heroic and commanding presence.',
+                'painting_7_artist': 'Jacques-Louis David',
+                'painting_7_year': '1801',
+                'painting_7_medium': 'Oil on canvas',
+                'painting_7_location': 'Château de Malmaison, France',
+                'painting_8_text': 'A Sunday Afternoon on the Island of La Grande Jatte - Georges Seurat',
+                'painting_8_desc': 'Pointillist classic, using tiny dots to portray modern urban leisure.',
+                'painting_8_artist': 'Georges Seurat',
+                'painting_8_year': '1884–1886',
+                'painting_8_medium': 'Oil on canvas',
+                'painting_8_location': 'Art Institute of Chicago',
+                'painting_9_text': 'The Creation of Adam - Michelangelo',
+                'painting_9_desc': 'Sistine Chapel ceiling fresco, showing God and Adam\'s fingers nearly touching, symbolizing the spark of life.',
+                'painting_9_artist': 'Michelangelo',
+                'painting_9_year': '1512',
+                'painting_9_medium': 'Fresco',
+                'painting_9_location': 'Sistine Chapel, Vatican City',
+                'painting_10_text': 'The Birth of Venus - Sandro Botticelli',
+                'painting_10_desc': 'Early Renaissance work depicting the mythological birth of Venus emerging from the sea.',
+                'painting_10_artist': 'Sandro Botticelli',
+                'painting_10_year': '1484–1486',
+                'painting_10_medium': 'Tempera on canvas',
+                'painting_10_location': 'Uffizi Gallery, Florence',
+                'painting_11_text': 'Guernica - Pablo Picasso',
+                'painting_11_desc': 'Anti-war protest against the bombing of Guernica, using stark monochrome and chaotic forms.',
+                'painting_11_artist': 'Pablo Picasso',
+                'painting_11_year': '1937',
+                'painting_11_medium': 'Oil on canvas',
+                'painting_11_location': 'Museo Reina Sofía, Madrid',
+                'painting_12_text': 'The Angelus - Jean-François Millet',
+                'painting_12_desc': 'Portrays peasant farmers praying in the fields, imbued with religious and dignified labor themes.',
+                'painting_12_artist': 'Jean-François Millet',
+                'painting_12_year': '1857–1859',
+                'painting_12_medium': 'Oil on canvas',
+                'painting_12_location': 'Paris, Musée d\'Orsay',
+                'painting_13_text': 'The Gleaners - Jean-François Millet',
+                'painting_13_desc': 'Shows poor women gathering leftover grain, symbolizing labor and social class.',
+                'painting_13_artist': 'Jean-François Millet',
+                'painting_13_year': '1857',
+                'painting_13_medium': 'Oil on canvas',
+                'painting_13_location': 'Paris, Musée d\'Orsay',
+                'painting_14_text': 'The Fifer - Édouard Manet',
+                'painting_14_desc': 'Impressionist work with flat backgrounds and bold colors, depicting a young military musician.',
+                'painting_14_artist': 'Édouard Manet',
+                'painting_14_year': '1866',
+                'painting_14_medium': 'Oil on canvas',
+                'painting_14_location': 'Paris, Musée d\'Orsay',
+                'painting_15_text': 'The Dance Class - Edgar Degas',
+                'painting_15_desc': 'Captures ballet rehearsal moments, highlighting movement and urban female life.',
+                'painting_15_artist': 'Edgar Degas',
+                'painting_15_year': '1874',
+                'painting_15_medium': 'Oil on canvas',
+                'painting_15_location': 'New York, Metropolitan Museum of Art',
+                'painting_16_text': 'The Night Watch - Rembrandt',
+                'painting_16_desc': 'Dutch Golden Age masterpiece, using dramatic light to depict a civic guard patrol.',
+                'painting_16_artist': 'Rembrandt van Rijn',
+                'painting_16_year': '1642',
+                'painting_16_medium': 'Oil on canvas',
+                'painting_16_location': 'Amsterdam, Rijksmuseum',
+                'painting_17_text': 'Girl with a Pearl Earring - Johannes Vermeer',
+                'painting_17_desc': 'Known as the "Mona Lisa of the North," celebrated for its light and enigmatic expression.',
+                'painting_17_artist': 'Johannes Vermeer',
+                'painting_17_year': '1665',
+                'painting_17_medium': 'Oil on canvas',
+                'painting_17_location': 'The Hague, Mauritshuis',
+                'painting_18_text': 'American Gothic - Grant Wood',
+                'painting_18_desc': 'Satirical yet realistic portrayal of rural American life, a cultural icon.',
+                'painting_18_artist': 'Grant Wood',
+                'painting_18_year': '1930',
+                'painting_18_medium': 'Oil on beaverboard',
+                'painting_18_location': 'Chicago, Art Institute of Chicago',
+                'painting_19_text': 'Café Terrace at Night - Vincent van Gogh',
+                'painting_19_desc': 'Vividly colored depiction of a nighttime café in Arles, France, with emotional resonance.',
+                'painting_19_artist': 'Vincent van Gogh',
+                'painting_19_year': '1888',
+                'painting_19_medium': 'Oil on canvas',
+                'painting_19_location': 'Otterlo, Kröller-Müller Museum',
+                'painting_20_text': 'The Red Room - Henri Matisse',
+                'painting_20_desc': 'Fauvist work with decorative composition and rhythmic color patterns.',
+                'painting_20_artist': 'Henri Matisse',
+                'painting_20_year': '1908',
+                'painting_20_medium': 'Oil on canvas',
+                'painting_20_location': 'St. Petersburg, Hermitage Museum',
+                'footer_copyright': '© 2025 History, Art & Fashion. All rights reserved.'
+            },
+            'zh': {
+                'meta_description': '通过 HAF 发现标志性的世界名画，展示永恒的杰作',
+                'hero_title': '世界名画画廊',
+                'hero_subtitle': '与 HAF 一起探索著名艺术品的美丽',
+                'nav_history': '历史',
+                'nav_art': '艺术',
+                'nav_world_paintings': '世界名画',
+                'nav_famous_artists': '著名艺术家',
+                'nav_art_game': '艺术游戏',
+                'nav_fashion': '时尚',
+                'nav_shop': '商店',
+                'gallery_title': '标志性画作',
+                'gallery_subtitle': '精选的世界著名画作集合',
+                'modal_close': '关闭',
+                'modal_artist': '艺术家',
+                'modal_year': '年代',
+                'modal_medium': '媒介',
+                'modal_location': '地点',
+                'view_single': '查看单幅画作',
+                'view_grid': '查看画廊网格',
+                'prev_painting': '上一张',
+                'next_painting': '下一张',
+                'painting_1_text': '蒙娜丽莎 - 达·芬奇',
+                'painting_1_desc': '意大利文艺复兴时期的杰作，以神秘的微笑和眼神追踪感著称，是最著名的肖像画之一。',
+                'painting_1_artist': '列奥纳多·达·芬奇',
+                'painting_1_year': '1503–1506',
+                'painting_1_medium': '油画于杨木板',
+                'painting_1_location': '巴黎卢浮宫',
+                'painting_2_text': '最后的晚餐 - 达·芬奇',
+                'painting_2_desc': '描绘耶稣与十二门徒共进最后晚餐，构图精巧，情感张力强烈。',
+                'painting_2_artist': '列奥纳多·达·芬奇',
+                'painting_2_year': '1495–1498',
+                'painting_2_medium': '石膏底料上的蛋彩画',
+                'painting_2_location': '米兰圣玛丽亚感恩教堂',
+                'painting_3_text': '星夜 - 梵高',
+                'painting_3_desc': '表现夜空旋涡状星云的动感和情绪，是后印象派的代表作之一。',
+                'painting_3_artist': '文森特·梵高',
+                'painting_3_year': '1889',
+                'painting_3_medium': '布面油画',
+                'painting_3_location': '纽约现代艺术博物馆',
+                'painting_4_text': '向日葵 - 梵高',
+                'painting_4_desc': '多次创作此主题，展现鲜艳、热烈的生命力与个人情感。',
+                'painting_4_artist': '文森特·梵高',
+                'painting_4_year': '1888',
+                'painting_4_medium': '布面油画',
+                'painting_4_location': '伦敦国家美术馆',
+                'painting_5_text': '呐喊 - 爱德华·蒙克',
+                'painting_5_desc': '象征主义代表作，以扭曲的人物和惊恐面容表现存在主义的焦虑。',
+                'painting_5_artist': '爱德华·蒙克',
+                'painting_5_year': '1893',
+                'painting_5_medium': '纸板上的蛋彩和粉彩',
+                'painting_5_location': '奥斯陆国家美术馆',
+                'painting_6_text': '自由引导人民 - 德拉克洛瓦',
+                'painting_6_desc': '描绘1830年法国七月革命，女性象征"自由"手持国旗，极具震撼力。',
+                'painting_6_artist': '欧仁·德拉克洛瓦',
+                'painting_6_year': '1830',
+                'painting_6_medium': '布面油画',
+                'painting_6_location': '巴黎卢浮宫',
+                'painting_7_text': '拿破仑越阿尔卑斯山 - 大卫',
+                'painting_7_desc': '新古典主义风格，突出拿破仑的英雄气概和领袖形象。',
+                'painting_7_artist': '雅克-路易·大卫',
+                'painting_7_year': '1801',
+                'painting_7_medium': '布面油画',
+                'painting_7_location': '法国马尔梅松城堡',
+                'painting_8_text': '大碗岛的星期天下午 - 修拉',
+                'painting_8_desc': '点彩派经典之作，以细小色点描绘现代都市生活。',
+                'painting_8_artist': '乔治·修拉',
+                'painting_8_year': '1884–1886',
+                'painting_8_medium': '布面油画',
+                'painting_8_location': '芝加哥艺术学院',
+                'painting_9_text': '创造亚当 - 米开朗基罗',
+                'painting_9_desc': '西斯廷礼拜堂天顶画，描绘上帝与亚当\'s fingers nearly touching, symbolizing the spark of life.',
+                'painting_9_artist': '米开朗基罗',
+                'painting_9_year': '1512',
+                'painting_9_medium': '壁画',
+                'painting_9_location': '梵蒂冈西斯廷礼拜堂',
+                'painting_10_text': '维纳斯的诞生 - 波提切利',
+                'painting_10_desc': '早期文艺复兴作品，表现女神维纳斯诞生于海浪的浪漫神话场景。',
+                'painting_10_artist': '桑德罗·波提切利',
+                'painting_10_year': '1484–1486',
+                'painting_10_medium': 'Tempera on canvas',
+                'painting_10_location': 'Uffizi Gallery, Florence',
+                'painting_11_text': '格尔尼卡 - 毕加索',
+                'painting_11_desc': '为抗议西班牙内战中格尔尼卡镇被轰炸而作，黑白色调，富有反战意义。',
+                'painting_11_artist': '巴勃罗·毕加索',
+                'painting_11_year': '1937',
+                'painting_11_medium': '布面油画',
+                'painting_11_location': '马德里索菲亚王后博物馆',
+                'painting_12_text': '晚钟 - 米勒',
+                'painting_12_desc': '展现农民夫妇在田间祈祷，具有宗教意象与劳动者的尊严。',
+                'painting_12_artist': '让-弗朗索瓦·米勒',
+                'painting_12_year': '1857–1859',
+                'painting_12_medium': '布面油画',
+                'painting_12_location': '巴黎奥赛博物馆',
+                'painting_13_text': '拾穗者 - 米勒',
+                'painting_13_desc': '描绘贫困农妇在田间拾麦穗，象征勤劳与社会阶层。',
+                'painting_13_artist': '让-弗朗索瓦·米勒',
+                'painting_13_year': '1857',
+                'painting_13_medium': '布面油画',
+                'painting_13_location': '巴黎奥赛博物馆',
+                'painting_14_text': '吹笛少年 - 马奈',
+                'painting_14_desc': '用扁平化背景和鲜明色彩刻画军乐手少年，是印象派的重要作品。',
+                'painting_14_artist': '爱德华·马奈',
+                'painting_14_year': '1866',
+                'painting_14_medium': '布面油画',
+                'painting_14_location': '巴黎奥赛博物馆',
+                'painting_15_text': '舞蹈课 - 德加',
+                'painting_15_desc': '表现芭蕾舞练习场景，捕捉动态与细节，展示现代都市女性生活。',
+                'painting_15_artist': '埃德加·德加',
+                'painting_15_year': '1874',
+                'painting_15_medium': '布面油画',
+                'painting_15_location': '纽约大都会艺术博物馆',
+                'painting_16_text': '夜巡 - 伦勃朗',
+                'painting_16_desc': '荷兰黄金时代杰作，采用戏剧性光影描绘市民卫队巡逻。',
+                'painting_16_artist': '伦勃朗·范·莱因',
+                'painting_16_year': '1642',
+                'painting_16_medium': '布面油画',
+                'painting_16_location': '阿姆斯特丹国家博物馆',
+                'painting_17_text': '珍珠耳环的少女 - 维米尔',
+                'painting_17_desc': '被称为"北方的蒙娜丽莎"，以光影与神秘表情著称。',
+                'painting_17_artist': '约翰内斯·维米尔',
+                'painting_17_year': '1665',
+                'painting_17_medium': '布面油画',
+                'painting_17_location': '海牙莫瑞泰斯皇家美术馆',
+                'painting_18_text': '美国哥特式 - 格兰特·伍德',
+                'painting_18_desc': '讽刺又真实地描绘美国乡村夫妻，成为美国文化象征。',
+                'painting_18_artist': '格兰特·伍德',
+                'painting_18_year': '1930',
+                'painting_18_medium': '油画于纤维板',
+                'painting_18_location': '芝加哥艺术学院',
+                'painting_19_text': '夜晚的咖啡馆 - 梵高',
+                'painting_19_desc': '色彩浓烈，表现法国阿尔勒夜晚的咖啡馆氛围，具有强烈情感色彩。',
+                'painting_19_artist': '文森特·梵高',
+                'painting_19_year': '1888',
+                'painting_19_medium': '布面油画',
+                'painting_19_location': '奥特洛克勒勒-穆勒博物馆',
+                'painting_20_text': '红色房间 - 马蒂斯',
+                'painting_20_desc': '野兽派风格，构图与色彩极富装饰性和节奏感。',
+                'painting_20_artist': '亨利·马蒂斯',
+                'painting_20_year': '1908',
+                'painting_20_medium': '布面油画',
+                'painting_20_location': '圣彼得堡艾尔米塔什博物馆',
+                'footer_copyright': '© 2025 历史、艺术与时尚. 保留所有权利。'
+            },
+            'es': {
+                'meta_description': 'Descubre pinturas icónicas del mundo con HAF, mostrando obras maestras atemporales',
+                'hero_title': 'Galería de Pinturas del Mundo',
+                'hero_subtitle': 'Explora la belleza de obras de arte renombradas con HAF',
+                'nav_history': 'Historia',
+                'nav_art': 'Arte',
+                'nav_world_paintings': 'Pinturas del Mundo',
+                'nav_famous_artists': 'Artistas Famosos',
+                'nav_art_game': 'Juego de Arte',
+                'nav_fashion': 'Moda',
+                'nav_shop': 'Tienda',
+                'gallery_title': 'Pinturas Icónicas',
+                'gallery_subtitle': 'Una colección seleccionada de pinturas mundialmente famosas',
+                'modal_close': 'Cerrar',
+                'modal_artist': 'Artista',
+                'modal_year': 'Año',
+                'modal_medium': 'Técnica',
+                'modal_location': 'Ubicación',
+                'view_single': 'Ver Pintura Individual',
+                'view_grid': 'Ver Galería',
+                'prev_painting': 'Anterior',
+                'next_painting': 'Siguiente',
+                'painting_1_text': 'La Mona Lisa - Leonardo da Vinci',
+                'painting_1_desc': 'Obra maestra del Renacimiento italiano, famosa por su enigmática sonrisa y efecto de seguimiento de la mirada, uno de los retratos más famosos.',
+                'painting_1_artist': 'Leonardo da Vinci',
+                'painting_1_year': '1503–1506',
+                'painting_1_medium': 'Óleo sobre panel de álamo',
+                'painting_1_location': 'Museo del Louvre, París',
+                'painting_2_text': 'La Última Cena - Leonardo da Vinci',
+                'painting_2_desc': 'Representa a Jesús y los doce apóstoles en su última comida, con una composición intrincada y tensión emocional intensa.',
+                'painting_2_artist': 'Leonardo da Vinci',
+                'painting_2_year': '1495–1498',
+                'painting_2_medium': 'Temple sobre yeso',
+                'painting_2_location': 'Santa Maria delle Grazie, Milán',
+                'painting_3_text': 'La Noche Estrellada - Vincent van Gogh',
+                'painting_3_desc': 'Captura cielos nocturnos arremolinados con energía dinámica y emoción, característica del Postimpresionismo.',
+                'painting_3_artist': 'Vincent van Gogh',
+                'painting_3_year': '1889',
+                'painting_3_medium': 'Óleo sobre lienzo',
+                'painting_3_location': 'Museo de Arte Moderno, Nueva York',
+                'painting_4_text': 'Los Girasoles - Vincent van Gogh',
+                'painting_4_desc': 'Una serie que muestra la vibrante fuerza vital y emoción personal a través de flores amarillas vívidas.',
+                'painting_4_artist': 'Vincent van Gogh',
+                'painting_4_year': '1888',
+                'painting_4_medium': 'Óleo sobre lienzo',
+                'painting_4_location': 'Galería Nacional, Londres',
+                'painting_5_text': 'El Grito - Edvard Munch',
+                'painting_5_desc': 'Obra maestra simbolista, que representa la ansiedad existencial a través de una figura distorsionada y expresión aterrada.',
+                'painting_5_artist': 'Edvard Munch',
+                'painting_5_year': '1893',
+                'painting_5_medium': 'Temple y pastel sobre cartón',
+                'painting_5_location': 'Galería Nacional, Oslo',
+                'painting_6_text': 'La Libertad Guiando al Pueblo - Eugène Delacroix',
+                'painting_6_desc': 'Conmemora la Revolución de Julio de 1830 en Francia, con la Libertad sosteniendo la bandera, desprendiendo un poderoso impacto.',
+                'painting_6_artist': 'Eugène Delacroix',
+                'painting_6_year': '1830',
+                'painting_6_medium': 'Óleo sobre lienzo',
+                'painting_6_location': 'Museo del Louvre, París',
+                'painting_7_text': 'Napoleón Cruzando los Alpes - Jacques-Louis David',
+                'painting_7_desc': 'Obra neoclásica que enfatiza la presencia heroica y dominante de Napoleón.',
+                'painting_7_artist': 'Jacques-Louis David',
+                'painting_7_year': '1801',
+                'painting_7_medium': 'Óleo sobre lienzo',
+                'painting_7_location': 'Palacio de Malmaison, Francia',
+                'painting_8_text': 'Tarde de Domingo en la Isla de la Grande Jatte - Georges Seurat',
+                'painting_8_desc': 'Clásico puntillista, utilizando pequeños puntos para retratar el ocio urbano moderno.',
+                'painting_8_artist': 'Georges Seurat',
+                'painting_8_year': '1884–1886',
+                'painting_8_medium': 'Óleo sobre lienzo',
+                'painting_8_location': 'Instituto de Arte de Chicago',
+                'painting_9_text': 'La Creación de Adán - Miguel Ángel',
+                'painting_9_desc': 'Fresco del techo de la Capilla Sixtina, mostrando los dedos de Dios y Adán casi tocándose, simbolizando la chispa de la vida.',
+                'painting_9_artist': 'Miguel Ángel',
+                'painting_9_year': '1512',
+                'painting_9_medium': 'Fresco',
+                'painting_9_location': 'Capilla Sixtina, Ciudad del Vaticano',
+                'painting_10_text': 'El Nacimiento de Venus - Sandro Botticelli',
+                'painting_10_desc': 'Obra del Renacimiento temprano que representa el nacimiento mitológico de Venus emergiendo del mar.',
+                'painting_10_artist': 'Sandro Botticelli',
+                'painting_10_year': '1484–1886',
+                'painting_10_medium': 'Temple sobre lienzo',
+                'painting_10_location': 'Galería Uffizi, Florencia',
+                'painting_11_text': 'Guernica - Pablo Picasso',
+                'painting_11_desc': 'Protesta contra la guerra por el bombardeo de Guernica, utilizando formas monocromáticas y caóticas.',
+                'painting_11_artist': 'Pablo Picasso',
+                'painting_11_year': '1937',
+                'painting_11_medium': 'Óleo sobre lienzo',
+                'painting_11_location': 'Museo Reina Sofía, Madrid',
+                'painting_12_text': 'El Ángelus - Jean-François Millet',
+                'painting_12_desc': 'Retrata a campesinos rezando en los campos, impregnado de temas religiosos y trabajo digno.',
+                'painting_12_artist': 'Jean-François Millet',
+                'painting_12_year': '1857–1859',
+                'painting_12_medium': 'Óleo sobre lienzo',
+                'painting_12_location': 'Museo de Orsay, París',
+                'painting_13_text': 'Las Espigadoras - Jean-François Millet',
+                'painting_13_desc': 'Muestra a mujeres pobres recogiendo grano sobrante, simbolizando el trabajo y la clase social.',
+                'painting_13_artist': 'Jean-François Millet',
+                'painting_13_year': '1857',
+                'painting_13_medium': 'Óleo sobre lienzo',
+                'painting_13_location': 'Museo de Orsay, París',
+                'painting_14_text': 'El Pífano - Édouard Manet',
+                'painting_14_desc': 'Obra impresionista con fondos planos y colores audaces, representando a un joven músico militar.',
+                'painting_14_artist': 'Édouard Manet',
+                'painting_14_year': '1866',
+                'painting_14_medium': 'Óleo sobre lienzo',
+                'painting_14_location': 'Museo de Orsay, París',
+                'painting_15_text': 'La Clase de Baile - Edgar Degas',
+                'painting_15_desc': 'Captura momentos de ensayo de ballet, destacando el movimiento y la vida femenina urbana.',
+                'painting_15_artist': 'Edgar Degas',
+                'painting_15_year': '1874',
+                'painting_15_medium': 'Óleo sobre lienzo',
+                'painting_15_location': 'Museo Metropolitano de Arte, Nueva York',
+                'painting_16_text': 'La Ronda Nocturna - Rembrandt',
+                'painting_16_desc': 'Obra maestra de la Edad de Oro holandesa, utilizando luz dramática para representar una patrulla de guardia cívica.',
+                'painting_16_artist': 'Rembrandt van Rijn',
+                'painting_16_year': '1642',
+                'painting_16_medium': 'Óleo sobre lienzo',
+                'painting_16_location': 'Rijksmuseum, Ámsterdam',
+                'painting_17_text': 'La Joven de la Perla - Johannes Vermeer',
+                'painting_17_desc': 'Conocida como la "Mona Lisa del Norte", celebrada por su luz y expresión enigmática.',
+                'painting_17_artist': 'Johannes Vermeer',
+                'painting_17_year': '1665',
+                'painting_17_medium': 'Óleo sobre lienzo',
+                'painting_17_location': 'Mauritshuis, La Haya',
+                'painting_18_text': 'Gótico Americano - Grant Wood',
+                'painting_18_desc': 'Retrato satírico pero realista de la vida rural estadounidense, un ícono cultural.',
+                'painting_18_artist': 'Grant Wood',
+                'painting_18_year': '1930',
+                'painting_18_medium': 'Óleo sobre panel de madera',
+                'painting_18_location': 'Instituto de Arte de Chicago',
+                'painting_19_text': 'Terraza del Café por la Noche - Vincent van Gogh',
+                'painting_19_desc': 'Representación vívidamente coloreada de un café nocturno en Arles, Francia, con resonancia emocional.',
+                'painting_19_artist': 'Vincent van Gogh',
+                'painting_19_year': '1888',
+                'painting_19_medium': 'Óleo sobre lienzo',
+                'painting_19_location': 'Museo Kröller-Müller, Otterlo',
+                'painting_20_text': 'La Habitación Roja - Henri Matisse',
+                'painting_20_desc': 'Obra fauvista con composición decorativa y patrones de color rítmicos.',
+                'painting_20_artist': 'Henri Matisse',
+                'painting_20_year': '1908',
+                'painting_20_medium': 'Óleo sobre lienzo',
+                'painting_20_location': 'Museo del Hermitage, San Petersburgo',
+                'footer_copyright': '© 2025 Historia, Arte y Moda. Todos los derechos reservados.'
+            },
+            'ar': {
+                'meta_description': 'اكتشف لوحات العالم الأيقونية مع HAF، تعرض روائع خالدة',
+                'hero_title': 'معرض لوحات العالم',
+                'hero_subtitle': 'استكشف جمال الأعمال الفنية الشهيرة مع HAF',
+                'nav_history': 'تاريخ',
+                'nav_art': 'فن',
+                'nav_world_paintings': 'لوحات العالم',
+                'nav_famous_artists': 'فنانون مشهورون',
+                'nav_art_game': 'لعبة الفن',
+                'nav_fashion': 'موضة',
+                'nav_shop': 'متجر',
+                'gallery_title': 'لوحات أيقونية',
+                'gallery_subtitle': 'مجموعة مختارة من اللوحات العالمية الشهيرة',
+                'modal_close': 'إغلاق',
+                'modal_artist': 'الفنان',
+                'modal_year': 'السنة',
+                'modal_medium': 'الخامة',
+                'modal_location': 'الموقع',
+                'view_single': 'عرض لوحة واحدة',
+                'view_grid': 'عرض المعرض',
+                'prev_painting': 'السابق',
+                'next_painting': 'التالي',
+                'painting_1_text': 'الموناليزا - ليوناردو دافنشي',
+                'painting_1_desc': 'تحفة عصر النهضة الإيطالية، مشهورة بابتسامتها الغامضة وتأثير تتبع النظرات، واحدة من أشهر البورتريهات.',
+                'painting_1_artist': 'ليوناردو دافنشي',
+                'painting_1_year': '1503–1506',
+                'painting_1_medium': 'زيت على لوح الحور',
+                'painting_1_location': 'متحف اللوفر، باريس',
+                'painting_2_text': 'العشاء الأخير - ليوناردو دافنشي',
+                'painting_2_desc': 'يصور يسوع والرسل الاثني عشر في وجبتهم الأخيرة، مع تكوين معقد وتوتر عاطفي شديد.',
+                'painting_2_artist': 'ليوناردو دافنشي',
+                'painting_2_year': '1495–1498',
+                'painting_2_medium': 'تمبرا على جص',
+                'painting_2_location': 'سانتا ماريا ديلي غراتسي، ميلانو',
+                'painting_3_text': 'ليلة مرصعة بالنجوم - فينسنت فان جوخ',
+                'painting_3_desc': 'يلتقط سماء الليل الدوارة بطاقة وحيوية، رمز ما بعد الانطباعية.',
+                'painting_3_artist': 'فينسنت فان جوخ',
+                'painting_3_year': '1889',
+                'painting_3_medium': 'زيت على قماش',
+                'painting_3_location': 'متحف الفن الحديث، نيويورك',
+                'painting_4_text': 'عباد الشمس - فينسنت فان جوخ',
+                'painting_4_desc': 'سلسلة تعرض قوة الحياة النابضة والعاطفة من خلال الزهور الصفراء الزاهية.',
+                'painting_4_artist': 'فينسنت فان جوخ',
+                'painting_4_year': '1888',
+                'painting_4_medium': 'زيت على قماش',
+                'painting_4_location': 'المعرض الوطني، لندن',
+                'painting_5_text': 'الصرخة - إدفارت مونك',
+                'painting_5_desc': 'تحفة رمزية، تصور القلق الوجودي من خلال شخصية مشوهة وتعبير مذعور.',
+                'painting_5_artist': 'إدفارت مونك',
+                'painting_5_year': '1893',
+                'painting_5_medium': 'تمبرا وباستيل على كرتون',
+                'painting_5_location': 'المعرض الوطني، أوسلو',
+                'painting_6_text': 'الحرية تقود الشعب - أوجين ديلاكروا',
+                'painting_6_desc': 'يخلد ثورة يوليو الفرنسية 1830، مع الحرية تحمل العلم وتبعث تأثيرًا قويًا.',
+                'painting_6_artist': 'أوجين ديلاكروا',
+                'painting_6_year': '1830',
+                'painting_6_medium': 'زيت على قماش',
+                'painting_6_location': 'متحف اللوفر، باريس',
+                'painting_7_text': 'نابليون يعبر جبال الألب - جاك لوي دافيد',
+                'painting_7_desc': 'عمل كلاسيكي جديد يبرز حضور نابليون البطولي والآمر.',
+                'painting_7_artist': 'جاك لوي دافيد',
+                'painting_7_year': '1801',
+                'painting_7_medium': 'زيت على قماش',
+                'painting_7_location': 'شاتو دي مالميزون، فرنسا',
+                'painting_8_text': 'بعد ظهر يوم أحد في جزيرة لا غراند جات - جورج سورا',
+                'painting_8_desc': 'كلاسيكية التنقيط، تستخدم نقاطًا صغيرة لتصوير الترفيه الحضري الحديث.',
+                'painting_8_artist': 'جورج سورا',
+                'painting_8_year': '1884–1886',
+                'painting_8_medium': 'زيت على قماش',
+                'painting_8_location': 'معهد الفنون في شيكاغو',
+                'painting_9_text': 'خلق آدم - مايكل أنجلو',
+                'painting_9_desc': 'لوحة جدارية على سقف كنيسة سيستين، تظهر أصابع الله وآدم تكاد تلمس، ترمز إلى شرارة الحياة.',
+                'painting_9_artist': 'مايكل أنجلو',
+                'painting_9_year': '1512',
+                'painting_9_medium': 'جدارية',
+                'painting_9_location': 'كنيسة سيستين، الفاتيكان',
+                'painting_10_text': 'ولادة فينوس - ساندرو بوتيتشيلي',
+                'painting_10_desc': 'عمل من عصر النهضة المبكر يصور الولادة الأسطورية لفينوس من البحر.',
+                'painting_10_artist': 'ساندرو بوتيتشيلي',
+                'painting_10_year': '1484–1486',
+                'painting_10_medium': 'تمبرا على قماش',
+                'painting_10_location': 'معرض أوفيزي، فلورنسا',
+                'painting_11_text': 'غيرنيكا - بابلو بيكاسو',
+                'painting_11_desc': 'احتجاج ضد قصف غيرنيكا، باستخدام أحادية اللون الصارمة والأشكال الفوضوية.',
+                'painting_11_artist': 'بابلو بيكاسو',
+                'painting_11_year': '1937',
+                'painting_11_medium': 'زيت على قماش',
+                'painting_11_location': 'متحف رينا صوفيا، مدريد',
+                'painting_12_text': 'الأنجلوس - جان فرانسوا ميليه',
+                'painting_12_desc': 'يصور الفلاحين يصلون في الحقول، مليء بمواضيع دينية وكرامة العمل.',
+                'painting_12_artist': 'جان فرانسوا ميليه',
+                'painting_12_year': '1857–1859',
+                'painting_12_medium': 'زيت على قماش',
+                'painting_12_location': 'باريس، متحف أورسيه',
+                'painting_13_text': 'الملتقطات - جان فرانسوا ميليه',
+                'painting_13_desc': 'يظهر نساء فقيرات يجمعن الحبوب المتبقية، يرمز إلى العمل والطبقة الاجتماعية.',
+                'painting_13_artist': 'جان فرانسوا ميليه',
+                'painting_13_year': '1857',
+                'painting_13_medium': 'زيت على قماش',
+                'painting_13_location': 'باريس، متحف أورسيه',
+                'painting_14_text': 'عازف الناي - إدوار مانيه',
+                'painting_14_desc': 'عمل انطباعي بخلفيات مسطحة وألوان جريئة، يصور موسيقيًا عسكريًا شابًا.',
+                'painting_14_artist': 'إدوار مانيه',
+                'painting_14_year': '1866',
+                'painting_14_medium': 'زيت على قماش',
+                'painting_14_location': 'باريس، متحف أورسيه',
+                'painting_15_text': 'صف الرقص - إدغار ديغا',
+                'painting_15_desc': 'يلتقط لحظات تدريب الباليه، يبرز الحركة وحياة المرأة الحضرية.',
+                'painting_15_artist': 'إدغار ديغا',
+                'painting_15_year': '1874',
+                'painting_15_medium': 'زيت على قماش',
+                'painting_15_location': 'نيويورك، متحف المتروبوليتان للفنون',
+                'painting_16_text': 'الحرس الليلي - رامبرانت',
+                'painting_16_desc': 'تحفة العصر الذهبي الهولندي، يستخدم الضوء الدرامي لتصوير دورية الحرس المدني.',
+                'painting_16_artist': 'رامبرانت فان راين',
+                'painting_16_year': '1642',
+                'painting_16_medium': 'زيت على قماش',
+                'painting_16_location': 'أمستردام، متحف ريجكس',
+                'painting_17_text': 'الفتاة ذات القرط اللؤلؤي - يوهانس فيرمير',
+                'painting_17_desc': 'معروفة باسم "موناليزا الشمال"، مشهورة بضوئها وتعبيرها الغامض.',
+                'painting_17_artist': 'يوهانس فيرمير',
+                'painting_17_year': '1665',
+                'painting_17_medium': 'زيت على قماش',
+                'painting_17_location': 'لاهاي، متحف موريتشيوس',
+                'painting_18_text': 'القوطية الأمريكية - غرانت وود',
+                'painting_18_desc': 'تصوير ساخر لكنه واقعي للحياة الريفية الأمريكية، أيقونة ثقافية.',
+                'painting_18_artist': 'غرانت وود',
+                'painting_18_year': '1930',
+                'painting_18_medium': 'زيت على لوح بيفر',
+                'painting_18_location': 'شيكاغو، معهد الفنون',
+                'painting_19_text': 'تراس المقهى ليلاً - فينسنت فان جوخ',
+                'painting_19_desc': 'تصوير ملون لمقهى ليلي في آرل، فرنسا، مع صدى عاطفي.',
+                'painting_19_artist': 'فينسنت فان جوخ',
+                'painting_19_year': '1888',
+                'painting_19_medium': 'زيت على قماش',
+                'painting_19_location': 'أوترلو، متحف كرولر-مولر',
+                'painting_20_text': 'الغرفة الحمراء - هنري ماتيس',
+                'painting_20_desc': 'عمل فوفي مع تركيبة زخرفية وأنماط لونية إيقاعية.',
+                'painting_20_artist': 'هنري ماتيس',
+                'painting_20_year': '1908',
+                'painting_20_medium': 'زيت على قماش',
+                'painting_20_location': 'سانت بطرسبرغ، متحف هيرميتاج',
+                'footer_copyright': '© 2025 تاريخ، فن وموضة. جميع الحقوق محفوظة.'
+            },
+            'fr': {
+                'meta_description': 'Découvrez des peintures mondiales emblématiques avec HAF, présentant des chefs-d\'œuvre intemporels',
+                'hero_title': 'Galerie de Peintures Mondiales',
+                'hero_subtitle': 'Explorez la beauté des œuvres d\'art renommées avec HAF',
+                'nav_history': 'Histoire',
+                'nav_art': 'Art',
+                'nav_world_paintings': 'Peintures Mondiales',
+                'nav_famous_artists': 'Artistes Célèbres',
+                'nav_art_game': 'Jeu d\'Art',
+                'nav_fashion': 'Mode',
+                'nav_shop': 'Boutique',
+                'gallery_title': 'Peintures Emblématiques',
+                'gallery_subtitle': 'Une collection soigneusement sélectionnée de peintures mondialement célèbres',
+                'modal_close': 'Fermer',
+                'modal_artist': 'Artiste',
+                'modal_year': 'Année',
+                'modal_medium': 'Technique',
+                'modal_location': 'Lieu',
+                'view_single': 'Voir la Peinture Individuelle',
+                'view_grid': 'Voir la Grille de la Galerie',
+                'prev_painting': 'Précédent',
+                'next_painting': 'Suivant',
+                'painting_1_text': 'La Joconde - Léonard de Vinci',
+                'painting_1_desc': 'Chef-d\'œuvre de la Renaissance italienne, célèbre pour son sourire mystérieux et son effet de suivi du regard, l\'un des portraits les plus célèbres.',
+                'painting_1_artist': 'Léonard de Vinci',
+                'painting_1_year': '1503–1506',
+                'painting_1_medium': 'Huile sur panneau de peuplier',
+                'painting_1_location': 'Musée du Louvre, Paris',
+                'p
