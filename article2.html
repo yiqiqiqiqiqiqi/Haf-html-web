@@ -1,13 +1,275 @@
 <!DOCTYPE html>
-<html lang="zh" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="通过 HAF 体验时装秀的魅力，展示最新的跑道造型">
-    <meta property="og:title" content="HAF - 马来西亚独立">
-    <meta property="og:description" content="通过 HAF 体验时装秀的魅力，展示最新的跑道造型">
+    <title>HAF Events</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Playfair+Display:wght@400;700&family=Raleway:wght@300;400;500&family=Noto+Sans+Arabic:wght@400;700&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Deva:wght@400;700" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --custom-light: #FBF7F0;
+            --papaya-whip: #FFEFD5;
+            --old-lace: #FDF5E6;
+            --linen: #FAF0E6;
+            --seashell: #FFF5EE;
+            --snow: #FFFAFA;
+            --ivory: #FFFFF0;
+            --charcoal: #333333;
+            --old-lace-opaque: rgba(253, 245, 230, 0.8);
+            --shadow-normal: 0 4px 16px rgba(0,0,0,0.10);
+            --shadow-hover: 0 8px 32px rgba(0,0,0,0.15);
+            --gradient: linear-gradient(135deg, var(--papaya-whip) 0%, var(--snow) 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--custom-light);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        [lang="zh"] {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--papaya-whip);
+            border-bottom: 2px solid var(--old-lace);
+            box-shadow: var(--shadow-normal);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--charcoal);
+        }
+
+        .nav-link {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.1rem;
+            color: var(--charcoal);
+            margin: 0 15px;
+        }
+
+        .nav-link:hover {
+            color: var(--old-lace);
+        }
+
+        .lang-selector {
+            background-color: var(--ivory);
+            border: 2px solid var(--old-lace);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .events-section {
+            padding: 80px 0;
+            background: var(--gradient);
+        }
+
+        .events-section h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .events-section .lead {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .event-card {
+            background-color: var(--snow);
+            border: 2px solid var(--old-lace);
+            border-radius: 10px;
+            box-shadow: var(--shadow-normal);
+            padding: 20px;
+            margin-bottom: 30px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .event-card img {
+            height: 180px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .event-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            margin-bottom: 10px;
+        }
+
+        .event-card p {
+            font-family: 'Raleway', sans-serif;
+            font-size: 1rem;
+            color: #666;
+        }
+
+        footer {
+            background-color: var(--papaya-whip);
+            border-top: 2px solid var(--old-lace);
+            padding: 30px 0;
+            text-align: center;
+            color: var(--charcoal);
+            font-family: 'Raleway', sans-serif;
+        }
+
+        footer .social-icons a {
+            color: var(--charcoal);
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+
+        footer .social-icons a:hover {
+            color: var(--old-lace);
+        }
+
+        @media (max-width: 768px) {
+            .events-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .events-section .lead {
+                font-size: 1.3rem;
+            }
+
+            .event-card img {
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .event-card img {
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">HAF</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="event.html">Upcoming Events</a>
+                    </li>
+                </ul>
+                <form id="langForm" method="post" action="" class="ms-3">
+                    <select class="lang-selector" name="lang">
+                        <option value="en" selected>EN</option>
+                        <option value="zh">ZH</option>
+                        <option value="es">ES</option>
+                        <option value="ar">AR</option>
+                        <option value="fr">FR</option>
+                        <option value="ru">RU</option>
+                        <option value="pt">PT</option>
+                        <option value="de">DE</option>
+                        <option value="ja">JA</option>
+                        <option value="hi">HI</option>
+                    </select>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <section class="events-section">
+        <div class="container">
+            <h1 class="animate__animated animate__fadeIn" data-animate-delay="0s">Upcoming Events</h1>
+            <p class="lead animate__animated animate__fadeIn" data-animate-delay="0.5s">Join HAF's future gatherings to experience endless aesthetic possibilities</p>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="event-card animate__animated animate__fadeIn">
+                        <img src="images/event_1.png" alt="History Review">
+                        <h3>History Review</h3>
+                        <p>Explore the dialogue between ancient civilizations and modern design.</p>
+                        <a href="event.html?event=1" class="btn btn-primary mt-2">View Details</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="event-card animate__animated animate__fadeIn">
+                        <img src="images/event_2.png" alt="Art Workshop">
+                        <h3>Art Workshop</h3>
+                        <p>Create hands-on and unleash your artistic potential.</p>
+                        <a href="event.html?event=2" class="btn btn-primary mt-2">View Details</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="event-card animate__animated animate__fadeIn">
+                        <img src="images/event_3.png" alt="Fashion Show">
+                        <h3>Fashion Show</h3>
+                        <p>Witness the debut of the HAF 2025 collection.</p>
+                        <a href="event.html?event=3" class="btn btn-primary mt-2">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 HAF. All rights reserved.</p>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        const animateElements = document.querySelectorAll('.animate__animated');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const delay = entry.target.getAttribute('data-animate-delay') || '0s';
+                    entry.target.style.animationDelay = delay;
+                    entry.target.classList.add('animate__fadeIn');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        animateElements.forEach(el => observer.observe(el));
+    </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Experience the allure of fashion shows with HAF, showcasing the latest runway looks">
+    <meta property="og:title" content="HAF - Malaysia Independence">
+    <meta property="og:description" content="Experience the allure of fashion shows with HAF, showcasing the latest runway looks">
     <meta property="og:image" content="images/article-2.jpg">
-    <title>HAF - 马来西亚独立</title>
+    <title>HAF - Malaysia Independence</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@400&family=Raleway:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
@@ -239,25 +501,25 @@
                 <img src="images/haf_logo.png" alt="HAF Logo" style="height:40px;vertical-align:middle;">
             </a>
             <div>
-                <a href="history.html">历史</a>
-                <a href="world_history.html">世界历史</a>
-                <a href="malaysia_history.html">马来西亚历史</a>
-                <a href="history_game.html">历史游戏</a>
-                <a href="art.html">艺术</a>
-                <a href="fashion.html">时尚</a>
+                <a href="history.html">History</a>
+                <a href="world_history.html">World History</a>
+                <a href="malaysia_history.html">Malaysia History</a>
+                <a href="history_game.html">History Game</a>
+                <a href="art.html">Art</a>
+                <a href="fashion.html">Fashion</a>
             </div>
             <form method="POST" class="language-form">
                 <select name="lang">
-                    <option value="en">English</option>
-                    <option value="zh" selected>中文</option>
-                    <option value="ja">日本語</option>
-                    <option value="ar">العربية</option>
-                    <option value="es">Español</option>
-                    <option value="fr">Français</option>
-                    <option value="ru">Русский</option>
-                    <option value="pt">Português</option>
-                    <option value="de">Deutsch</option>
-                    <option value="hi">हिन्दी</option>
+                    <option value="en" selected>English</option>
+                    <option value="zh">Chinese</option>
+                    <option value="ja">Japanese</option>
+                    <option value="ar">Arabic</option>
+                    <option value="es">Spanish</option>
+                    <option value="fr">French</option>
+                    <option value="ru">Russian</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="de">German</option>
+                    <option value="hi">Hindi</option>
                 </select>
                 <button type="button" class="theme-toggle" aria-label="Toggle theme"><i class="fas fa-adjust"></i></button>
             </form>
@@ -266,24 +528,24 @@
 
     <div class="article-content">
         <div class="container">
-            <h1>马来西亚独立</h1>
-            <p class="subtitle">马来西亚的独立之路</p>
+            <h1>Malaysia Independence</h1>
+            <p class="subtitle">The Journey to Malaysia's Independence</p>
             <div class="article-section">
-                <h2>早期抗争</h2>
-                <p>马来西亚人民在殖民时期展开了多次反抗运动，为争取独立奠定了基础。</p>
+                <h2>Early Struggles</h2>
+                <p>The people of Malaysia launched several resistance movements during the colonial period, laying the foundation for independence.</p>
                 <img src="images/article-2-resistance.jpg" alt="Early Resistance" class="article-image">
             </div>
             <div class="article-section">
-                <h2>联盟的形成</h2>
-                <p>各民族团结一致，成立了马来亚联合邦，为独立运动提供了坚实的组织保障。</p>
+                <h2>Formation of the Alliance</h2>
+                <p>Various ethnic groups united to form the Federation of Malaya, providing a strong organizational framework for the independence movement.</p>
                 <img src="images/article-2-alliance.jpg" alt="Formation of the Alliance" class="article-image">
             </div>
             <div class="article-section">
-                <h2>独立日</h2>
-                <p>1957年8月31日，马来西亚正式宣布独立，成为主权国家。</p>
+                <h2>Independence Day</h2>
+                <p>On August 31, 1957, Malaysia officially declared independence, becoming a sovereign nation.</p>
                 <img src="images/article-2-independence.jpg" alt="Independence Day" class="article-image">
             </div>
-            <a href="history.html" class="back-link">返回历史</a>
+            <a href="history.html" class="back-link">Back to History</a>
         </div>
     </div>
 
